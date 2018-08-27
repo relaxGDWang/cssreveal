@@ -1,0 +1,62 @@
+html, body, h1, h2, h3, h4 {
+  margin: 0; }
+
+html, body {
+  padding: 0;
+  width: 100%;
+  height: 100%; }
+
+body {
+  background-color: #fff;
+  font-size: 14px; }
+
+* {
+  font-family: "Microsoft YaHei",tahoma,arial,'Hiragino Sans GB','\5b8b\4f53',sans-serif;
+  box-sizing: border-box; }
+
+*:after, *:before {
+  box-sizing: border-box; }
+
+#app {
+  min-width: 1200px;
+  height: 100%; }
+
+#app:after {
+  content: '';
+  display: block;
+  line-height: 0;
+  font-size: 0;
+  clear: both; }
+
+#content {
+  float: left;
+  width: 75%;
+  height: 100%; }
+  #content h2 {
+    font-size: 20px;
+    font-weight: normal;
+    line-height: 50px;
+    background: linear-gradient(#eee, #ccc) #ddd;
+    padding: 0 2em; }
+  #content h2 strong {
+    display: inline-block;
+    width: 1.2em;
+    height: 1.2em;
+    border-radius: 50%;
+    background-color: red;
+    color: white;
+    line-height: 1.2em;
+    text-align: center; }
+  #content .mainContent {
+    padding-top: 50px;
+    padding-bottom: 60px;
+    height: 100%;
+    background: #def; }
+
+#nav {
+  float: right;
+  width: 25%;
+  background-color: #fee;
+  height: 100%; }
+
+/*# sourceMappingURL=index.css.map */

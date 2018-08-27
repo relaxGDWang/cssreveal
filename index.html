@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>css揭秘 例子实践</title>
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+    <div id="app">
+        <div id="content">
+            <h2><strong>{{showIndex}}</strong><span>{{show[sel].title}}</span></h2>
+            <div class="mainContent">sdfsdf</div>
+            <div class="descript"></div>
+        </div>
+        <div id="nav">
+            <span v-for="(x,key) in show">{{key}}</span>
+        </div>
+    </div>
+    <script src="vue-2.5.9.min.js"></script>
+    <script src="index.js"></script>
+</body>
+</html>
