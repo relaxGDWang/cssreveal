@@ -9,11 +9,23 @@
     <div id="app">
         <div id="content">
             <h2><strong>{{showIndex}}</strong><span>{{show[sel].title}}</span></h2>
-            <div class="mainContent">sdfsdf</div>
-            <div class="descript"></div>
+            <div class="mainContent">
+                <div class="outside">
+                    <!-- e1 -->
+                    <div id="e1">
+                        <div>边框透明，但看不出效果，原因在于背景颜色</div>
+                        <div>更改背景的裁剪范围，看上去就好多了</div>
+                    </div>
+                    <!-- e2 -->
+                    <div id="e2">多个边框</div>
+                </div>
+            </div>
+            <div class="descript">
+                <span class="descwords">{{show[sel].des}}</span>
+            </div>
         </div>
         <div id="nav">
-            <span v-for="(x,key) in show">{{key}}</span>
+            <button v-for="(val,key) in show" v-on:click="showPage(key)">{{key}}</button>
         </div>
     </div>
     <script src="vue-2.5.9.min.js"></script>

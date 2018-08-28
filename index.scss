@@ -1,20 +1,29 @@
 html,body,h1,h2,h3,h4{ margin:0;}
 html,body{ padding:0; width:100%; height:100%;}
 body{ background-color:#fff; font-size:14px;}
-
 *{ font-family:"Microsoft YaHei",tahoma,arial,'Hiragino Sans GB','\5b8b\4f53',sans-serif; box-sizing:border-box;}
 *:after,*:before{ box-sizing:border-box;}
+
 #app{ min-width:1200px; height:100%;}
 #app:after{ content:''; display:block; line-height:0; font-size:0; clear:both;}
 #content{
   $hTop:50px;
   $hBottom:60px;
 
-  float:left; width:75%; height:100%;
+  float:left; width:75%; height:100%; padding-top:$hTop; padding-bottom:$hBottom;
 
-  h2{ font-size:20px; font-weight:normal; line-height:$hTop; background:linear-gradient(#eee,#ccc) #ddd; padding:0 2em;}
+  h2{ font-size:20px; font-weight:normal; line-height:$hTop; background:linear-gradient(#eee,#ccc) #ddd; padding:0 2em; margin-top:-$hTop;}
   h2 strong{ display:inline-block; width:1.2em; height:1.2em; border-radius:50%; background-color:red; color:white; line-height:1.2em; text-align:center;}
-
-  .mainContent{ padding-top:$hTop; padding-bottom:$hBottom; height:100%; background:#def;}
+  .mainContent{ height:100%; display:table; width:100%;}
+  .descript{ height:$hBottom; background:#D23C3D; color:#fff; text-align:center;}
+  .descript:before{ content:''; display:inline-block; vertical-align:middle; height:100%; width:0; overflow:hidden;}
+  .descwords{ display:inline-block; text-align:center; max-width:90%; vertical-align:middle;}
 }
-#nav{ float:right; width:25%; background-color:#fee; height:100%;}
+#nav{
+  float:right; width:25%; background-color:#ccc; height:100%; padding:10px;
+  button{ border-radius:6px; padding:5px;}
+}
+
+.outside{ display:table-cell; text-align:center; vertical-align:middle;}
+.outside>div{ display:none;}
+.outside>.show{ display:block;}
