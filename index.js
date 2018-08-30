@@ -1,5 +1,5 @@
 var showData={
-    e1:{title:'透明边框',des:'background-clip 属性不被IE8及以下浏览器所支持'},
+    e1:{title:'透明边框',des:'background-clip 属性不被IE8及以下版本的浏览器所支持'},
     e2:{title:'多边框',des:''}
 };
 var vu=new Vue({
