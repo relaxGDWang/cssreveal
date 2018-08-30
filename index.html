@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="zh" xmlns:v-on="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>css揭秘 例子实践</title>
@@ -12,12 +12,17 @@
             <div class="mainContent">
                 <div class="outside">
                     <!-- e1 -->
-                    <div id="e1">
-                        <div>边框透明，但看不出效果，原因在于背景颜色</div>
-                        <div>更改背景的裁剪范围，看上去就好多了</div>
+                    <div id="e1" class="clearFloat" ref="e1">
+                        <div class="normalClip">边框透明，但看不出效果，原因在于背景颜色的裁剪模式，默认为background-clip:border-box</div>
+                        <div class="paddingClip">更改背景的裁剪范围，看上去就好多了，此时的裁剪模式为background-clip:padding-box;</div>
+                        <div class="ie8">
+                            <div class="ct">针对IE8做兼容调整，用z-index:-1不增加html的结构下，虽然也能勉强实现，但副作用太大，目前采取还是多包一层dom的方法，并采用IE滤镜，但只能模拟实线边框</div>
+                        </div>
                     </div>
                     <!-- e2 -->
-                    <div id="e2">多个边框</div>
+                    <div id="e2" ref="e2">
+                        <div class="ct"></div>
+                    </div>
                 </div>
             </div>
             <div class="descript">

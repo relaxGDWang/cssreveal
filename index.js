@@ -1,13 +1,12 @@
 var showData={
-    e1:{title:'透明边框',des:'暂时不支持IE8及以下'},
+    e1:{title:'透明边框',des:'background-clip 属性不被IE8及以下浏览器所支持'},
     e2:{title:'多边框',des:''}
 };
 var vu=new Vue({
     el: "#app",
     data:{
         show: showData,
-        sel: '',
-        element: {}
+        sel: 'e1'
     },
     computed:{
         showIndex: function(){
@@ -16,23 +15,16 @@ var vu=new Vue({
     },
     methods:{
         showPage: function(selNum){
-            if (!selNum) selNum='e1';
-            if (!this.element[selNum]) return;
+            if (!selNum || !this.$refs[selNum] || this.sel===selNum) return;
             if (this.sel){
-                this.element[this.sel].className='';
+                this.$refs[this.sel].className=this.$refs[this.sel].className.replace(/\s?show/,'');
             }
             this.sel=selNum;
-            this.element[this.sel].className='show';
-            alert(this.element[this.sel].outerHTML);
+            this.$refs[this.sel].className+=' show';
         }
     },
-    created:function(){
-        var tempArray=document.querySelector('.outside').children;
-        var i,len;
-        for (i=0,len=tempArray.length; i<len; i++){
-            this.element[tempArray[i].id]=tempArray[i];
-        }
-        this.showPage('e2');
+    mounted:function(){
+        this.$refs[this.sel].className='show';
     },
     watch:{
 

@@ -1,96 +1,46 @@
-html, body, h1, h2, h3, h4 {
-  margin: 0; }
+html, body, h1, h2, h3, h4 { margin: 0; }
 
-html, body {
-  padding: 0;
-  width: 100%;
-  height: 100%; }
+html, body { padding: 0; width: 100%; height: 100%; }
 
-body {
-  background-color: #fff;
-  font-size: 14px; }
+body { background-color: #fff; font-size: 14px; }
 
-* {
-  font-family: "Microsoft YaHei",tahoma,arial,'Hiragino Sans GB','\5b8b\4f53',sans-serif;
-  box-sizing: border-box; }
+* { font-family: "Microsoft YaHei",tahoma,arial,'Hiragino Sans GB','\5b8b\4f53',sans-serif; box-sizing: border-box; }
 
-*:after, *:before {
-  box-sizing: border-box; }
+*:after, *:before { box-sizing: border-box; }
 
-#app {
-  min-width: 1200px;
-  height: 100%; }
+#app { min-width: 1200px; height: 100%; }
 
-#app:after {
-  content: '';
-  display: block;
-  line-height: 0;
-  font-size: 0;
-  clear: both; }
+#app:after { content: ''; display: block; line-height: 0; font-size: 0; clear: both; }
 
-#content {
-  float: left;
-  width: 75%;
-  height: 100%;
-  padding-top: 50px;
-  padding-bottom: 60px; }
-  #content h2 {
-    font-size: 20px;
-    font-weight: normal;
-    line-height: 50px;
-    background: linear-gradient(#eee, #ccc) #ddd;
-    padding: 0 2em;
-    margin-top: -50px; }
-  #content h2 strong {
-    display: inline-block;
-    width: 1.2em;
-    height: 1.2em;
-    border-radius: 50%;
-    background-color: red;
-    color: white;
-    line-height: 1.2em;
-    text-align: center; }
-  #content .mainContent {
-    height: 100%;
-    display: table;
-    width: 100%; }
-  #content .descript {
-    height: 60px;
-    background: #D23C3D;
-    color: #fff;
-    text-align: center; }
-  #content .descript:before {
-    content: '';
-    display: inline-block;
-    vertical-align: middle;
-    height: 100%;
-    width: 0;
-    overflow: hidden; }
-  #content .descwords {
-    display: inline-block;
-    text-align: center;
-    max-width: 90%;
-    vertical-align: middle; }
+#content { float: left; width: 75%; height: 100%; padding-top: 50px; padding-bottom: 60px; }
+#content h2 { font-size: 20px; font-weight: normal; line-height: 50px; background: linear-gradient(#eee, #ccc) #ddd; padding: 0 2em; margin-top: -50px; }
+#content h2 strong { display: inline-block; width: 1.2em; height: 1.2em; border-radius: 50%; background-color: red; color: white; line-height: 1.2em; text-align: center; }
+#content .mainContent { height: 100%; display: table; width: 100%; }
+#content .descript { height: 60px; background: #D23C3D; color: #fff; text-align: center; }
+#content .descript:before { content: ''; display: inline-block; vertical-align: middle; height: 100%; width: 0; overflow: hidden; }
+#content .descwords { display: inline-block; text-align: center; max-width: 90%; vertical-align: middle; }
 
-#nav {
-  float: right;
-  width: 25%;
-  background-color: #ccc;
-  height: 100%;
-  padding: 10px; }
-  #nav button {
-    border-radius: 6px;
-    padding: 5px; }
+#nav { float: right; width: 25%; background-color: #ccc; height: 100%; padding: 10px; }
+#nav button { border-radius: 6px; padding: 5px; margin: 5px; }
 
-.outside {
-  display: table-cell;
-  text-align: center;
-  vertical-align: middle; }
+.outside { display: table-cell; text-align: center; vertical-align: middle; }
 
-.outside > div {
-  display: none; }
+.outside > div { display: none; }
 
-.outside > .show {
-  display: block; }
+.outside > .show { display: inline-block; }
+
+.clearFloat:after { content: ''; height: 0; width: 100%; clear: both; }
+
+#e1 { background: url(images/back1.jpg); padding: 20px; position: relative; }
+
+#e1 > div { float: left; margin: 20px; width: 200px; height: 200px; background-color: #fff; text-align: left; }
+
+#e1 > .normalClip { border: 20px dashed #eee; border-color: rgba(255, 255, 255, 0.5); }
+
+#e1 > .paddingClip { border: 20px dashed #eee; border-color: rgba(255, 255, 255, 0.5); background-clip: padding-box; }
+
+#e1 > .ie8 { background: transparent; background-color: rgba(255, 255, 255, 0.5); filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#80ffffff,endColorstr=#80ffffff); padding: 20px; }
+
+#e1 .ct { background: #fff; width: 100%; height: 100%; }
 
 /*# sourceMappingURL=index.css.map */
