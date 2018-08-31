@@ -36,3 +36,12 @@ body{ background-color:#fff; font-size:14px;}
 #e1>.paddingClip{ border:20px dashed #eee; border-color:rgba(255,255,255,.5); background-clip:padding-box;}
 #e1>.ie8{ background:transparent; background-color:rgba(255,255,255,.5); filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#80ffffff,endColorstr=#80ffffff); padding:20px;}
 #e1 .ct{ background:#fff; width:100%; height:100%;}
+
+#e2{ padding:20px; background:#fff;}
+#e2>div{ float:left; margin:20px; width:200px; height:200px; text-align:left; text-shadow:0 0 3px #fff;}
+#e2>.shadow{ width:160px; height:160px; border:10px solid #655; box-shadow:0 0 0 10px deeppink,0 0 0 20px brown;}
+#e2>.shadow:hover{ background:#666; color:#fff;}
+#e2>.shadowin{ border:10px solid #655; box-shadow:0 0 0 10px green inset, 0 0 0 20px orange inset;}
+#e2>.shadowin:hover{ background:deepskyblue;}
+#e2>.shadowin.round{ border-radius:40px;}
+#e2>.ie8{ background:#D23C3D; filter: progid:DXImageTransform.Microsoft.Shadow(color='#ff0000', Direction=0, Strength=9);}
