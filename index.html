@@ -9,6 +9,7 @@
     <div id="app">
         <div id="content">
             <h2><strong>{{showIndex}}</strong><span>{{show[sel].title}}</span></h2>
+            <h1>CSS揭秘</h1>
             <div class="mainContent">
                 <div class="outside">
                     <!-- e1 -->
@@ -24,7 +25,12 @@
                         <div class="shadow">用box-shadow的扩展来模拟多层边框</div>
                         <div class="shadowin">用inset把阴影设置在元素内部，从而让整个元素的事件响应范围保持正常</div>
                         <div class="shadowin round">使用box-shadow的边框可以适应圆角</div>
-                        <div class="ie8">ie8只能用</div>
+                        <div class="outline">outline实现的边框能使用边框样式，但无法适应圆角定义</div>
+                        <div class="outline2">通过outline的outline-offset的设置，完美实现缝纫线装饰</div>
+                    </div>
+                    <!-- e3 -->
+                    <div id="e3" class="clearFloat" ref="e3">
+                        <div class="p1">background-position扩展的特性可以被用来定位背景图和边框的距离</div>
                     </div>
                 </div>
             </div>
