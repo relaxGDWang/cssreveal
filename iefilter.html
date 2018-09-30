@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:v-on="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>IE滤镜大全</title>
+<style type="text/css">
+.AlphaImageLoader{ width:400px; height:300px; border:5px solid #f90; background-color:#eee; padding:10px;}
+  .opbar{ line-height:40px; margin-bottom:10px;}
+  .opbar strong{ margin-right:5px; margin-left:30px;}
+  .opbar button{ margin-left:30px;}
+  .intro{ margin-top:20px;}
+</style>
+</head>
+<body>
+<h1>IE滤镜大全</h1>
+<ol>
+	<li>
+		<h2>AlphaImageLoader</h2>
+		<div class="AlphaImageLoader">这里是文本内容，注意截断</div>
+    <ol class="intro">
+      <li>该滤镜主要用于协调IE6的png图像透明背景的正确展示</li>
+      <li>sizingMethod默认为image，但这个属性实际效果会截取样式所定义的dom的显示大小为滤镜中的图片大小，但dom占位不变</li>
+      <li>该滤镜的图片的相对路径的出发点是当前的html文件，非引用的css文件</li>
+      <li>由sizingMethod的scale属性特性可以把该滤镜用于对background-size的部分兼容，但注意会破坏图片的原始纵横比例</li>
+    </ol>
+	</li>
+  <li>
+    <h2>Gradient</h2>
+    <div class="Gradient">这里是文本内容，注意截断</div>
+  </li>
+</ol>
+<script src="jquery-1.12.4.min.js"></script>
+<script>
+  $(function(){
+    var setObj={
+      'AlphaImageLoader':{
+        'title':'AlphaImageLoader(enabled="$1$",sizingMethod="$2$",src="images/grapes.png")',
+        'name':['enabled','sizingMethod'],
+        'val':[['','true','false'],['','crop','image','scale']],
+        'nowval':['true','image']
+      }
+    };
+
+    for (var x in setObj){
+      var classStr=x;
+      if ($('.'+classStr).length<=0) continue;
+      var dom=$('.'+x).eq(0);
+      dom.prev().after('<div class="opbar"></div>');
+      var tempDom=dom.prev();
+      for (var i=0; i<setObj[x].name.length; i++){
+        var addDom=createValueShow(setObj[x],i);
+        for (var j=0; j<addDom.length; j++){
+          tempDom.append(addDom[j]);
+        }
+      }
+      var btnObj=document.createElement('button');
+      btnObj.innerText='提交';
+      $(btnObj).bind('click',function(){
+        fitStyle(dom);
+      });
+      tempDom.append(btnObj);
+      fitStyle(dom);
+    }
+
+    //生成可选对象DOM
+    function createValueShow(obj,i){
+      var labelObj=document.createElement('strong');
+      labelObj.innerText=obj.name[i];
+      if (obj.val[i].join){
+        var selectObj=document.createElement('select');
+        for (var j=0; j<obj.val[i].length; j++){
+          selectObj.options[j]=new Option(obj.val[i][j],obj.val[i][j]);
+          if (obj.nowval[i]===obj.val[i][j]) selectObj.selectedIndex=j;
+        }
+        $(selectObj).bind('change',function(){
+          obj.nowval[i]=$(this).val();
+        });
+      }
+      return [labelObj,selectObj];
+    }
+
+    //加工对象
+    function fitStyle(dom){
+      var classStr=dom[0].className;
+      var tempObj=setObj[classStr];
+      var styleStr='progid:DXImageTransform.Microsoft.' + tempObj.title;
+      for (var i=0; i<tempObj.name.length; i++){
+        var indexStr=i+1;
+        styleStr=styleStr.replace('$'+indexStr+'$',tempObj.nowval[i]);
+      }
+      dom.css('filter',styleStr);
+    }
+  });
+</script>
+</body>
+</html>

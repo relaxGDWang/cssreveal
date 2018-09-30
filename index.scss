@@ -13,7 +13,7 @@ body{ background-color:#fff; font-size:14px;}
   float:left; width:75%; height:100%; padding-top:$hTop; padding-bottom:$hBottom; position:relative;
 
   h2{ font-size:20px; font-weight:normal; line-height:$hTop; background:linear-gradient(#eee,#ccc) #ddd; padding:0 2em; margin-top:-$hTop;}
-  h2 strong{ display:inline-block; width:1.2em; height:1.2em; border-radius:50%; background-color:red; color:white; line-height:1.2em; text-align:center;}
+  h2 strong{ display:inline-block; width:1.2em; height:1.2em; border-radius:50%; background-color:red; color:white; line-height:1.2em; text-align:center; margin-right:5px;}
   .mainContent{ height:100%; display:table; width:100%;}
   .descript{ height:$hBottom; background:#D23C3D; color:#fff; text-align:center;}
   .descript:before{ content:''; display:inline-block; vertical-align:middle; height:100%; width:0; overflow:hidden;}
@@ -56,6 +56,29 @@ h1{ position:absolute; top:5px; right:20px; color:#db61a3;}
 }
 
 #e3{
-  &>div{ float:left; margin:20px; width:300px; height:180px; text-align:left; padding:10px;}
+  &>div{ float:left; margin:20px; width:25%; height:180px; text-align:left; padding:10px; text-shadow:0 0 5px #fff;}
   &>.p1{ background:url(images/watermelon.png) no-repeat bottom right #96cc86; background-position:bottom 10px right 10px; }
+  &>.p2{ background:url(images/grapes.png) no-repeat bottom right #C182E0; background-origin:content-box; padding:20px;}
+  &>.p3{ background:url(images/pineapple.png) no-repeat bottom right #FFE878; background-position:calc(100% - 20px),calc(100% - 20px); padding:20px;}
+}
+
+#e4{
+  &>div{ float:left; margin:20px; width:300px; height:180px; padding:10px; text-shadow:0 0 5px #fff; text-align:justify;}
+  &>div:hover{ background:#f90;}
+  &>.p1{ background:#655; }
+  & .p1inside{ background:tan; height:100%; border-radius:.8em; padding:1em;}
+  &>.p2{ background:tan; border-radius:.8em; padding:1em; box-shadow:0 0 0 .5em #655; outline:.6em solid #655;}
+}
+
+#e5{
+  &>div{ float:left; margin:20px; width:200px; height:200px; padding:10px; text-shadow:0 0 5px #fff; text-align:justify; box-shadow:0 0 10px rgba(0,0,0,.4);}
+  &>.p1{ background:linear-gradient(#fb3, #58a);}
+  &>.p2{ background:linear-gradient(#fb3, #58a, #9F18B3);}
+  &>.p3{ background:linear-gradient(#fb3 50%, #58a 0);}
+  &>.p4{ background:linear-gradient(#fb3 33.33%, #58a 0, #58a 66.66%, #9F18B3 0);}
+  &>.p5{ background:linear-gradient(#fb3 50%, #58a 0); background-size:100% 40px;}
+  &>.p6{ background:linear-gradient(90deg, #fb3 50%, #58a 0); background-size:40px 100%;}
+  &>.p7{ background:linear-gradient(45deg, #fb3 50%, #58a 0); background-size:40px 100%;}
+  &>.p8{ background:linear-gradient(45deg, #fb3 50%, #58a 0); background-size:40px 40px;}
+  &>.p9{ background:linear-gradient(45deg, #fb3 25%, #58a 0, #58a 50%, #fb3 0, #fb3 75%, #58a 0); background-size:56.56px 56.56px;}
 }
