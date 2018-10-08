@@ -37,21 +37,38 @@
           <div class="p3">使用calc来实现针对左上角的背景定位自适应</div>
         </div>
         <!-- e4 -->
-        <div id="e4" class="clearFload" ref="e4">
+        <div id="e4" class="clearFloat" ref="e4">
           <div class="p1">
             <div class="p1inside">用嵌套的两层dom实现内圆角框，好处在于兼容性比较优良，只要能支持圆角的浏览器就能正常响应</div>
           </div>
           <div class="p2">采用单层dom，使用样式outline和box-shadow实现的内圆角</div>
         </div>
         <!-- e5 -->
-        <div id="e5" class="clearFload" ref="e5">
+        <div id="e5" class="clearFloat" ref="e5">
           <div class="p1">普通线性渐变，设置两端的颜色值即可，浏览器会默认把两个颜色的占比平均分</div>
           <div class="p3">渐变过渡值为0，所以两端的值直接跳变了，看不到渐变的样子，全赖百分比设置</div>
           <div class="p5">使用background-size来固定背景图片的大小，然后让其产生重复，就达到了这个效果</div>
           <div class="p6">仅需增加linear-gradient的角度设定即可，注意把background-size也按竖向调整下</div>
           <div class="p8">调整了background-size后，依然不是我们想要的结果</div>
-          <div class="p9"></div>
-          <div class="p9"></div>
+          <div class="p9">通过块状循环平铺和勾股定理的计算，45度的斜向可算完美展现，但并不适合于自定义角度</div>
+          <div class="p10">使用repeating-linear-gradient实现渐变线条的角度更加简单</div>
+          <div class="p11">更常用的同色系条纹，用背景色配合透明度的白色（黑色）条纹实现</div>
+        </div>
+        <!-- e6 -->
+        <div id="e6" class="clearFloat" ref="e6">
+          <div class="p1">使用CSS3的背景图片重叠很容易实现格子图案的背景</div>
+          <div class="p2">透明的渐变纵横重叠之后，形成格子背景</div>
+          <div class="p3"></div>
+          <div class="p4"></div>
+          <div class="p5"></div>
+          <div class="p6"></div>
+          <div class="p7"></div>
+        </div>
+        <!-- e7 -->
+        <div id="e7" class="clearFloat" ref="e7">
+          <div class="p1">规律的条纹背景，会形成视觉疲劳</div>
+          <div class="p2">虽然进行了处理，不过依然可以发现规律，210像素的重复</div>
+          <div class="p3">虽然使用蝉原则进行了协调，虽然整体似乎无规律，但实际第一背景条的间隔依然能辨识</div>
         </div>
       </div>
     </div>

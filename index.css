@@ -74,5 +74,21 @@ h1 { position: absolute; top: 5px; right: 20px; color: #db61a3; }
 #e5 > .p7 { background: linear-gradient(45deg, #fb3 50%, #58a 0); background-size: 40px 100%; }
 #e5 > .p8 { background: linear-gradient(45deg, #fb3 50%, #58a 0); background-size: 40px 40px; }
 #e5 > .p9 { background: linear-gradient(45deg, #fb3 25%, #58a 0, #58a 50%, #fb3 0, #fb3 75%, #58a 0); background-size: 56.56px 56.56px; }
+#e5 > .p10 { background: repeating-linear-gradient(-60deg, #fb3, #fb3 20px, #58a 0, #58a 40px); }
+#e5 > .p11 { background: #58a; background-image: repeating-linear-gradient(-38deg, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5) 20px, transparent 0, transparent 40px); }
+
+#e6 > div { float: left; margin: 20px; width: 200px; height: 200px; padding: 10px; text-shadow: 0 0 5px #fff; text-align: justify; box-shadow: 0 0 10px rgba(0, 0, 0, 0.4); }
+#e6 > .p1 { background: white; background-image: linear-gradient(90deg, rgba(200, 0, 0, 0.5) 50%, transparent 0), linear-gradient(rgba(200, 0, 0, 0.5) 50%, transparent 0); background-size: 40px 40px; }
+#e6 > .p2 { background: #58a; background-image: linear-gradient(transparent 39px, white 0), linear-gradient(90deg, transparent 39px, white 0); background-size: 40px 40px; }
+#e6 > .p3 { background: #58a; background-image: linear-gradient(transparent 48px, white 0), linear-gradient(90deg, transparent 48px, white 0), linear-gradient(transparent 24px, rgba(255, 255, 255, 0.4) 0), linear-gradient(90deg, transparent 24px, rgba(255, 255, 255, 0.4) 0); background-size: 50px 50px,50px 50px,25px 25px,25px 25px; }
+#e6 > .p4 { background: #655; background-image: radial-gradient(tan 30%, transparent 0); background-size: 40px 40px; }
+#e6 > .p5 { background: #655; background-image: radial-gradient(tan 30%, transparent 0), radial-gradient(tan 30%, transparent 0); background-size: 40px 40px, 40px 40px; background-position: 0 0, 20px 20px; }
+#e6 > .p6 { background: #58a; background-image: linear-gradient(45deg, tan 25%, transparent 0, transparent 75%, tan 0), linear-gradient(45deg, tan 25%, transparent 0, transparent 75%, tan 0); background-position: 0 0, 20px 20px; background-size: 40px 40px; }
+#e6 > .p7 { background: #eee url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" fill-opacity=".25"><rect x="50" width="50" height="50"/><rect y="50" width="50" height="50"/></svg>'); background-size: 40px 40px; }
+
+#e7 > div { margin: 20px; width: 700px; height: 200px; padding: 10px; text-shadow: 0 0 5px #fff; text-align: justify; box-shadow: 0 0 10px rgba(0, 0, 0, 0.4); }
+#e7 > .p1 { background: #f0e2db; background-image: linear-gradient(90deg, #fb3 15%, #655 0, #655 40%, #ab4 0, #ab4 65%, transparent 0); background-size: 80px 100%; }
+#e7 > .p2 { background: #f0e2db; background-image: linear-gradient(90deg, #fb3 10px, transparent 0), linear-gradient(90deg, #ab4 20px, transparent 0), linear-gradient(90deg, #655 20px, transparent 0); background-size: 80px 100%,60px 100%,40px 100%; }
+#e7 > .p3 { background: #f0e2db; background-image: linear-gradient(90deg, #fb3 11px, transparent 0), linear-gradient(90deg, #ab4 23px, transparent 0), linear-gradient(90deg, #655 41px, transparent 0); background-size: 41px 100%,61px 100%,83px 100%; }
 
 /*# sourceMappingURL=index.css.map */
