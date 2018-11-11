@@ -114,3 +114,14 @@ h1{ position:absolute; top:5px; right:20px; color:#db61a3;}
   &>.p2{ background:hsl(20,40%,90%); background-image:linear-gradient(90deg, #fb3 10px, transparent 0), linear-gradient(90deg, #ab4 20px,transparent 0),linear-gradient(90deg, #655 20px, transparent 0); background-size:80px 100%,60px 100%,40px 100%;}
   &>.p3{ background:hsl(20,40%,90%); background-image:linear-gradient(90deg,#fb3 11px,transparent 0),linear-gradient(90deg,#ab4 23px,transparent 0),linear-gradient(90deg,#655 41px,transparent 0); background-size:41px 100%,61px 100%,83px 100%;}
 }
+
+#e8{
+  &>div{ margin:20px; width:240px; height:140px; padding:10px; text-align:justify; box-shadow:0 0 10px rgba(0,0,0,.4); float:left;}
+  &>.p1{ border:20px solid #eee; border-image-source:url('images/back2.jpg'); border-image-slice:20; border-image-repeat: round; background:rgba(255,255,255,.6);}
+  &>.p2{ border:20px solid #eee; border-image-source:url('images/test.png'); border-image-slice:25 50 50 50;}
+  &>.p3{ border:20px solid #eee; border-image-source:url('images/test.png'); border-image-slice:50 25 50 50;}
+  &>.p4{ border:20px solid #eee; border-image-source:url('images/test.png'); border-image-slice:50 50 25 50;}
+  &>.p5{ border:20px solid #eee; border-image-source:url('images/test.png'); border-image-slice:50 50 50 25;}
+  &>.p6{ border:20px solid #eee; border-image-source:url('images/test.png'); border-image-slice:50 25 25 50;}
+  &>.p7{ border:20px solid #eee; border-image-source:url('images/test.png'); border-image-slice:25 50 50 25;}
+}
