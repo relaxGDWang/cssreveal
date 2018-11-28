@@ -118,7 +118,7 @@ h1{ position:absolute; top:5px; right:20px; color:#db61a3;}
 #e8{
   &>div{ margin:20px; width:240px; height:140px; padding:10px; text-align:justify; box-shadow:0 0 10px rgba(0,0,0,.4); float:left;}
   &>.p1{ border:20px solid #eee; border-image-source:url('images/back2.jpg'); border-image-slice:20; border-image-repeat: round; background:rgba(255,255,255,.6);}
-  &>.p2{ border:20px solid #eee; border-image-source:url('images/test.png'); border-image-slice:25 50 50 50;}
+  &>.p2{ border:20px solid #eee; border-image-source:url('images/test.png'); border-image-slice:25 25 25 25;}
   &>.p3{ border:20px solid #eee; border-image-source:url('images/test.png'); border-image-slice:50 25 50 50;}
   &>.p4{ border:20px solid #eee; border-image-source:url('images/test.png'); border-image-slice:50 50 25 50;}
   &>.p5{ border:20px solid #eee; border-image-source:url('images/test.png'); border-image-slice:50 50 50 25;}
