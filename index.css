@@ -91,13 +91,36 @@ h1 { position: absolute; top: 5px; right: 20px; color: #db61a3; }
 #e7 > .p2 { background: #f0e2db; background-image: linear-gradient(90deg, #fb3 10px, transparent 0), linear-gradient(90deg, #ab4 20px, transparent 0), linear-gradient(90deg, #655 20px, transparent 0); background-size: 80px 100%,60px 100%,40px 100%; }
 #e7 > .p3 { background: #f0e2db; background-image: linear-gradient(90deg, #fb3 11px, transparent 0), linear-gradient(90deg, #ab4 23px, transparent 0), linear-gradient(90deg, #655 41px, transparent 0); background-size: 41px 100%,61px 100%,83px 100%; }
 
-#e8 > div { margin: 20px; width: 240px; height: 140px; padding: 10px; text-align: justify; box-shadow: 0 0 10px rgba(0, 0, 0, 0.4); float: left; }
-#e8 > .p1 { border: 20px solid #eee; border-image-source: url("images/back2.jpg"); border-image-slice: 20; border-image-repeat: round; background: rgba(255, 255, 255, 0.6); }
-#e8 > .p2 { border: 20px solid #eee; border-image-source: url("images/test.png"); border-image-slice: 25 25 25 25; }
-#e8 > .p3 { border: 20px solid #eee; border-image-source: url("images/test.png"); border-image-slice: 50 25 50 50; }
-#e8 > .p4 { border: 20px solid #eee; border-image-source: url("images/test.png"); border-image-slice: 50 50 25 50; }
-#e8 > .p5 { border: 20px solid #eee; border-image-source: url("images/test.png"); border-image-slice: 50 50 50 25; }
-#e8 > .p6 { border: 20px solid #eee; border-image-source: url("images/test.png"); border-image-slice: 50 25 25 50; }
-#e8 > .p7 { border: 20px solid #eee; border-image-source: url("images/test.png"); border-image-slice: 25 50 50 25; }
+/*
+#e8{ &>div{ margin:20px; width:240px; height:140px; padding:10px; text-align:justify; box-shadow:0 0 10px rgba(0,0,0,.4); float:left;} &>.p1{ border:20px solid #eee; border-image-source:url('images/back2.jpg'); border-image-slice:20; border-image-repeat: round; background:rgba(255,255,255,.6);} &>.p2{ border:20px solid #eee; border-image-source:url('images/test.png'); border-image-slice:25 25 25 25;} &>.p3{ border:20px solid #eee; border-image-source:url('images/test.png'); border-image-slice:50 25 50 50;} &>.p4{ border:20px solid #eee; border-image-source:url('images/test.png'); border-image-slice:50 50 25 50;} &>.p5{ border:20px solid #eee; border-image-source:url('images/test.png'); border-image-slice:50 50 50 25;} &>.p6{ border:20px solid #eee; border-image-source:url('images/test.png'); border-image-slice:50 25 25 50;} &>.p7{ border:20px solid #eee; border-image-source:url('images/test.png'); border-image-slice:25 50 50 25;}
+}
+*/
+@keyframes ants { to { background-position: 100%; } }
+#e8 > div { margin: 20px; width: 240px; text-align: left; box-shadow: 0 0 10px rgba(0, 0, 0, 0.4); float: left; }
+#e8 > .p1 { background: url("images/back.png") no-repeat; background-size: cover; padding: 1em; }
+#e8 > .p1 p { padding: 1em; background: #fff; margin: 0; }
+#e8 > .p2 { padding: 1em; border: 1em solid transparent; background: linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9)), url("images/back.png"); background-size: cover; background-clip: padding-box, border-box; }
+#e8 > .p3 { padding: 1em; border: 1em solid transparent; background: linear-gradient(white, white), url("images/back.png"); background-size: cover; background-clip: padding-box, border-box; background-origin: border-box; }
+#e8 > .p4 { border: 1em solid transparent; padding: 1em; background: linear-gradient(white, white) padding-box, repeating-linear-gradient(-45deg, red 0, red 12.5%, transparent 0, transparent 25%, #58a 0, #58a 37.5%, transparent 0, transparent 50%) 0/5em 5em; }
+#e8 > .p5 { padding: 1em; border: 14px solid transparent; border-image: 14 repeating-linear-gradient(-45deg, red 0, red 1em, transparent 0, transparent 2em, #58a 0, #58a 3em, transparent 0, transparent 4em); }
+#e8 > .p6 { padding: 1em; border: 1px solid transparent; background: linear-gradient(white, white) padding-box, repeating-linear-gradient(-45deg, black 0, black 25%, white 0, white 50%) 0/0.6em 0.6em; animation: ants 12s linear infinite; }
+
+#e9 > div { margin: 20px; width: 240px; float: left; text-align: center; }
+#e9 > .p1 { background: #f90; border-radius: 50%; width: 220px; padding: 2em; }
+#e9 > .p2 { background: #f90; border-radius: 50% / 100% 100% 0 0; width: 220px; padding: 2em; }
+#e9 > .p3 { background: #f90; border-radius: 100% 0 0 100% / 50%; width: 220px; padding: 2em; }
+#e9 > .p4 { background: #f90; border-radius: 100% 0 0 0; width: 220px; padding: 2em; }
+#e9 > .p5 { background: #f69; border-radius: 34% 66% 22% 78% / 40% 32% 60% 68%; width: 220px; padding: 2em; transition-property: border-radius,background; transition-duration: 1s; }
+#e9 > .p5:hover { background: #ff9900; border-radius: 66% 34% 78% 22% / 60% 68% 40% 32%; }
+
+#e10 > div { margin: 20px; width: 200px; float: left; text-align: center; }
+#e10 > .p1 { background: #f90; transform: skewX(-45deg); padding: 20px; height: 100px; }
+#e10 > .p2 { background: #ff3; transform: skewX(-45deg); padding: 20px; height: 100px; }
+#e10 > .p2 > div { transform: skewX(45deg); }
+#e10 > .p2:hover { transform: skewX(45deg); }
+#e10 > .p2:hover > div { transform: skewX(-45deg); }
+#e10 > .p3 { padding: 20px; height: 100px; position: relative; }
+#e10 > .p3:before { content: ''; position: absolute; z-index: -1; top: 0; left: 0; right: 0; bottom: 0; background: green; transform: skewX(-45deg); transition: transform 1s; }
+#e10 > .p3:hover:before { transform: skewX(45deg); }
 
 /*# sourceMappingURL=index.css.map */
