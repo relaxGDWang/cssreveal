@@ -1,122 +1,140 @@
 <!DOCTYPE html>
 <html lang="zh" xmlns:v-on="http://www.w3.org/1999/xhtml">
 <head>
-  <meta charset="UTF-8">
-  <title>css揭秘 例子实践</title>
-  <link rel="stylesheet" href="index.css">
+    <meta charset="UTF-8">
+    <title>css揭秘 例子实践</title>
+    <link rel="stylesheet" href="index.css">
 </head>
 <body>
 <div id="app">
-  <div id="content">
-    <h2><strong>{{showIndex}}</strong><span>{{show[sel].title}}</span></h2>
-    <h1>CSS揭秘</h1>
-    <div class="mainContent">
-      <div class="outside">
-        <!-- e1 -->
-        <div id="e1" class="clearFloat" ref="e1">
-          <div class="normalClip">边框透明，但看不出效果，原因在于背景颜色的裁剪模式，默认为background-clip:border-box</div>
-          <div class="paddingClip">更改背景的裁剪范围，看上去就好多了，此时的裁剪模式为background-clip:padding-box;</div>
-          <div class="ie8">
-            <div class="ct">针对IE8做兼容调整，用z-index:-1不扩展html的结构下，虽然也能勉强实现，但副作用太大，目前采取还是多包一层dom的方法，并采用IE滤镜，但只能模拟实线边框</div>
-          </div>
+    <div id="content">
+        <h2><strong>{{showIndex}}</strong><span>{{show[sel].title}}</span></h2>
+        <h1>CSS揭秘</h1>
+        <div class="mainContent">
+            <div class="outside">
+                <!-- e1 -->
+                <div id="e1" class="clearFloat" ref="e1">
+                    <div class="normalClip">边框透明，但看不出效果，原因在于背景颜色的裁剪模式，默认为background-clip:border-box</div>
+                    <div class="paddingClip">更改背景的裁剪范围，看上去就好多了，此时的裁剪模式为background-clip:padding-box;</div>
+                    <div class="ie8">
+                        <div class="ct">
+                            针对IE8做兼容调整，用z-index:-1不扩展html的结构下，虽然也能勉强实现，但副作用太大，目前采取还是多包一层dom的方法，并采用IE滤镜，但只能模拟实线边框
+                        </div>
+                    </div>
+                </div>
+                <!-- e2 -->
+                <div id="e2" class="clearFloat" ref="e2">
+                    <div class="shadow">用box-shadow的扩展来模拟多层边框</div>
+                    <div class="shadowin">用inset把阴影设置在元素内部，从而让整个元素的事件响应范围保持正常</div>
+                    <div class="shadowin round">使用box-shadow的边框可以适应圆角</div>
+                    <div class="outline">outline实现的边框能使用边框样式，但无法适应圆角定义</div>
+                    <div class="outline2">通过outline的outline-offset的设置，完美实现缝纫线装饰</div>
+                </div>
+                <!-- e3 -->
+                <div id="e3" class="clearFloat" ref="e3">
+                    <div class="p1">background-position扩展的特性可以被用来定位背景图和边框的距离，例如background-position:top 10px right
+                        20px;
+                    </div>
+                    <div class="p2">
+                        使用background-origin来实现背景定位不同参照点的设定，当前是以padding-box的右下角作为参照点。如果背景图片大于容器大小，背景图片在background-clip设定的前提进行外溢
+                    </div>
+                    <div class="p3">使用calc来实现针对左上角的背景定位自适应</div>
+                </div>
+                <!-- e4 -->
+                <div id="e4" class="clearFloat" ref="e4">
+                    <div class="p1">
+                        <div class="p1inside">用嵌套的两层dom实现内圆角框，好处在于兼容性比较优良，只要能支持圆角的浏览器就能正常响应</div>
+                    </div>
+                    <div class="p2">采用单层dom，使用样式outline和box-shadow实现的内圆角</div>
+                </div>
+                <!-- e5 -->
+                <div id="e5" class="clearFloat" ref="e5">
+                    <div class="p1">普通线性渐变，设置两端的颜色值即可，浏览器会默认把两个颜色的占比平均分</div>
+                    <div class="p3">渐变过渡值为0，所以两端的值直接跳变了，看不到渐变的样子，全赖百分比设置</div>
+                    <div class="p5">使用background-size来固定背景图片的大小，然后让其产生重复，就达到了这个效果</div>
+                    <div class="p6">仅需增加linear-gradient的角度设定即可，注意把background-size也按竖向调整下</div>
+                    <div class="p8">调整了background-size后，依然不是我们想要的结果</div>
+                    <div class="p9">通过块状循环平铺和勾股定理的计算，45度的斜向可算完美展现，但并不适合于自定义角度</div>
+                    <div class="p10">使用repeating-linear-gradient实现渐变线条的角度更加简单</div>
+                    <div class="p11">更常用的同色系条纹，用背景色配合透明度的白色（黑色）条纹实现</div>
+                </div>
+                <!-- e6 -->
+                <div id="e6" class="clearFloat" ref="e6">
+                    <div class="p1">使用CSS3的背景图片重叠很容易实现格子图案的背景</div>
+                    <div class="p2">透明的渐变纵横重叠之后，形成格子背景</div>
+                    <div class="p3"></div>
+                    <div class="p4"></div>
+                    <div class="p5"></div>
+                    <div class="p6"></div>
+                    <div class="p7"></div>
+                </div>
+                <!-- e7 -->
+                <div id="e7" class="clearFloat" ref="e7">
+                    <div class="p1">规律的条纹背景，会形成视觉疲劳，这里是测试文本</div>
+                    <div class="p2">虽然进行了处理，不过依然可以发现规律，210像素的重复</div>
+                    <div class="p3">虽然使用蝉原则进行了协调，虽然整体似乎无规律，但实际第一背景条的间隔依然能辨识</div>
+                </div>
+                <!-- e8 -->
+                <div id="e8" class="clearFloat" ref="e8">
+                    <!--
+                    <div class="p1">50 all</div>
+                    <div class="p2">25 50 50 50</div>
+                    <div class="p3">50 25 50 50</div>
+                    <div class="p4">50 50 25 50</div>
+                    <div class="p5">50 50 50 25</div>
+                    <div class="p6">50 25 25 50</div>
+                    <div class="p7">25 50 50 25</div>
+                    -->
+                    <div class="p1"><p>I have a nice stone art border,don't i look pretty?</p></div>
+                    <div class="p1"><p>I have a nice stone art border, don't i look pretty? Bacon ipsum dolor amet
+                        fatback alcatra tenderloin chicken shank, sausage pork meatball leberkas </p></div>
+                    <div class="p2">this is another test div,it didn't contain a inside sub div</div>
+                    <div class="p3">this is another test div,it didn't contain a inside sub div</div>
+                    <div class="p4">My border is reminiscent of vintage envelops, how cool is that?</div>
+                    <div class="p5">用border-image实现的老式信封边框</div>
+                    <div class="p6">蚂蚁行军虚线框，结合多层背景和背景clip技术，并采用animation动画，实现某些图像编辑软件中常用的选中框</div>
+                </div>
+                <!-- e9 -->
+                <div id="e9" class="clearFloat" ref="e9">
+                    <div class="p1">这是一个自适应的椭圆，不过当dom的高和宽相同时，会变成一个正圆</div>
+                    <div class="p2">这是一个自适应的半圆，关键在于理解圆角设置的横向半径和纵向半径</div>
+                    <div class="p3">纵向半圆，概念同上一个半圆一样，只是圆角半径设置变换下</div>
+                    <div class="p4">1/4的圆</div>
+                    <div class="p5">不规则的形状</div>
+                </div>
+                <!-- e10 -->
+                <div id="e10" class="clearFloat" ref="e10">
+                    <div class="p1">使用transform:skewX实现平行四边形</div>
+                    <div class="p2">
+                        <div>使用嵌套的dom，在内部使用反向transform来抵消外层的变换</div>
+                    </div>
+                    <div class="p3">使用伪元素来实现斜切变换，并不影响主元素内容</div>
+                </div>
+                <!-- e11 -->
+                <div id="e11" class="clearFloat" ref="e11">
+                    <div class="p1"><img src="images/back2.jpg"/></div>
+                    <div class="p2"><img src="images/back2.jpg"/></div>
+                    <div class="p3"><img src="images/back2.jpg"/></div>
+                    <img class="p4" src="images/back2.jpg"/>
+                </div>
+                <!-- e12 -->
+                <div id="e12" class="clearFloat" ref="e12">
+                    <div class="p1">使用背景的渐变色很容易的可以实现任何角度的切角效果</div>
+                    <div class="p2">使用两层背景，背景大小为整体大小的一半，如此实现底部的2个切角效果</div>
+                    <div class="p3">把背景设置为不重复后的底部2个切角效果，否则重复的背景会呈现如图2的问题</div>
+                    <div class="p4">4个切角，用4个背景渐变实现，虽然书写麻烦一些，但依然能达到效果</div>
+                    <div class="p5">内圆切角，用径向渐变代替线性渐变就可以简单实现</div>
+                    <div class="p6">通过定位径向渐变的圆心位置，就可以简单实现是在四个角上的内圆切角还是在四条边上的</div>
+                </div>
+            </div>
         </div>
-        <!-- e2 -->
-        <div id="e2" class="clearFloat" ref="e2">
-          <div class="shadow">用box-shadow的扩展来模拟多层边框</div>
-          <div class="shadowin">用inset把阴影设置在元素内部，从而让整个元素的事件响应范围保持正常</div>
-          <div class="shadowin round">使用box-shadow的边框可以适应圆角</div>
-          <div class="outline">outline实现的边框能使用边框样式，但无法适应圆角定义</div>
-          <div class="outline2">通过outline的outline-offset的设置，完美实现缝纫线装饰</div>
+        <div class="descript">
+            <span class="descwords">{{show[sel].des}}</span>
         </div>
-        <!-- e3 -->
-        <div id="e3" class="clearFloat" ref="e3">
-          <div class="p1">background-position扩展的特性可以被用来定位背景图和边框的距离，例如background-position:top 10px right 20px;</div>
-          <div class="p2">
-            使用background-origin来实现背景定位不同参照点的设定，当前是以padding-box的右下角作为参照点。如果背景图片大于容器大小，背景图片在background-clip设定的前提进行外溢
-          </div>
-          <div class="p3">使用calc来实现针对左上角的背景定位自适应</div>
-        </div>
-        <!-- e4 -->
-        <div id="e4" class="clearFloat" ref="e4">
-          <div class="p1">
-            <div class="p1inside">用嵌套的两层dom实现内圆角框，好处在于兼容性比较优良，只要能支持圆角的浏览器就能正常响应</div>
-          </div>
-          <div class="p2">采用单层dom，使用样式outline和box-shadow实现的内圆角</div>
-        </div>
-        <!-- e5 -->
-        <div id="e5" class="clearFloat" ref="e5">
-          <div class="p1">普通线性渐变，设置两端的颜色值即可，浏览器会默认把两个颜色的占比平均分</div>
-          <div class="p3">渐变过渡值为0，所以两端的值直接跳变了，看不到渐变的样子，全赖百分比设置</div>
-          <div class="p5">使用background-size来固定背景图片的大小，然后让其产生重复，就达到了这个效果</div>
-          <div class="p6">仅需增加linear-gradient的角度设定即可，注意把background-size也按竖向调整下</div>
-          <div class="p8">调整了background-size后，依然不是我们想要的结果</div>
-          <div class="p9">通过块状循环平铺和勾股定理的计算，45度的斜向可算完美展现，但并不适合于自定义角度</div>
-          <div class="p10">使用repeating-linear-gradient实现渐变线条的角度更加简单</div>
-          <div class="p11">更常用的同色系条纹，用背景色配合透明度的白色（黑色）条纹实现</div>
-        </div>
-        <!-- e6 -->
-        <div id="e6" class="clearFloat" ref="e6">
-          <div class="p1">使用CSS3的背景图片重叠很容易实现格子图案的背景</div>
-          <div class="p2">透明的渐变纵横重叠之后，形成格子背景</div>
-          <div class="p3"></div>
-          <div class="p4"></div>
-          <div class="p5"></div>
-          <div class="p6"></div>
-          <div class="p7"></div>
-        </div>
-        <!-- e7 -->
-        <div id="e7" class="clearFloat" ref="e7">
-          <div class="p1">规律的条纹背景，会形成视觉疲劳，这里是测试文本</div>
-          <div class="p2">虽然进行了处理，不过依然可以发现规律，210像素的重复</div>
-          <div class="p3">虽然使用蝉原则进行了协调，虽然整体似乎无规律，但实际第一背景条的间隔依然能辨识</div>
-        </div>
-		<!-- e8 -->
-        <div id="e8" class="clearFloat" ref="e8">
-          <!--
-          <div class="p1">50 all</div>
-          <div class="p2">25 50 50 50</div>
-          <div class="p3">50 25 50 50</div>
-          <div class="p4">50 50 25 50</div>
-          <div class="p5">50 50 50 25</div>
-          <div class="p6">50 25 25 50</div>
-          <div class="p7">25 50 50 25</div>
-          -->
-          <div class="p1"><p>I have a nice stone art border,don't i look pretty?</p></div>
-          <div class="p1"><p>I have a nice stone art border, don't i look pretty? Bacon ipsum dolor amet fatback alcatra tenderloin chicken shank, sausage pork meatball leberkas </p></div>
-          <div class="p2">this is another test div,it didn't contain a inside sub div</div>
-          <div class="p3">this is another test div,it didn't contain a inside sub div</div>
-          <div class="p4">My border is reminiscent of vintage envelops, how cool is that?</div>
-          <div class="p5">用border-image实现的老式信封边框</div>
-          <div class="p6">蚂蚁行军虚线框，结合多层背景和背景clip技术，并采用animation动画，实现某些图像编辑软件中常用的选中框</div>
-        </div>
-        <!-- e9 -->
-        <div id="e9" class="clearFloat" ref="e9">
-          <div class="p1">这是一个自适应的椭圆，不过当dom的高和宽相同时，会变成一个正圆</div>
-          <div class="p2">这是一个自适应的半圆，关键在于理解圆角设置的横向半径和纵向半径</div>
-          <div class="p3">纵向半圆，概念同上一个半圆一样，只是圆角半径设置变换下</div>
-          <div class="p4">1/4的圆</div>
-          <div class="p5">不规则的形状</div>
-        </div>
-        <!-- e10 -->
-        <div id="e10" class="clearFloat" ref="e10">
-          <div class="p1">使用transform:skewX实现平行四边形</div>
-          <div class="p2"><div>使用嵌套的dom，在内部使用反向transform来抵消外层的变换</div></div>
-          <div class="p3">使用伪元素来实现斜切变换，并不影响主元素内容</div>
-        </div>
-        <!-- e11 -->
-        <div id="e11" class="clearFloat" ref="e11">
-          <div class="p1"><img src="images/back2.jpg"/></div>
-          <div class="p2"><img src="images/back2.jpg"/></div>
-        </div>
-      </div>
     </div>
-    <div class="descript">
-      <span class="descwords">{{show[sel].des}}</span>
+    <div id="nav">
+        <button v-for="(val,key) in show" v-on:click="showPage(key)">{{key}}</button>
     </div>
-  </div>
-  <div id="nav">
-    <button v-for="(val,key) in show" v-on:click="showPage(key)">{{key}}</button>
-  </div>
 </div>
 <script src="vue-2.5.9.min.js"></script>
 <script src="index.js"></script>

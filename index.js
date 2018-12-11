@@ -12,9 +12,10 @@ var showData = {
 	e8: {title:'连续的图像边框', des:'通过background实现的图像边框往往比border-image的用法更好理解，某些动画效果在控制背景图运动下也变得相对简单，仅是注意多层背景的垂直排序，写在越靠前的背景位于越上层'},
     e9: {title:'自适应椭圆', des:'如果是8分发分别定义4个角的横向半径和纵向半径，应该注意同向半径值之和最多为DOM宽或者高的100%'},
     e10:{title:'平行四边形', des:'z-index=-1的情况，注意垂直层级的问题'},
-    e11:{title:'菱形图片', des:''}
+    e11:{title:'菱形图片', des:'对于通过更改max-width试图想达到充满容器的目的没有实现，简易通过scale缩放则能达到目的，另外clip-path的属性目前Edge似乎还不支持，移动端暂时未作测试'},
+    e12:{title:'切角效果', des:''}
 };
-var nowSel = 'e11';
+var nowSel = 'e12';
 
 var expt = {
     el: "#app",

@@ -184,12 +184,33 @@ h1{ position:absolute; top:5px; right:20px; color:#db61a3;}
 #e11{
   & > div {
     margin: 20px;
-    width: 200px;
+    width: 140px;
+    height: 140px;
+    border:1px solid #ccc;
+    transform:rotate(-45deg);
+    transform-origin:center;
+    overflow:hidden;
     float: left;
     text-align: center;
   }
-  &>.p1{ height:200px; transform:rotate(-45deg); overflow:hidden;}
-  &>.p1>img{ display:block;transform:rotate(45deg); max-width:100%;}
-  &>.p1{ height:200px; transform:rotate(-45deg); overflow:hidden;}
-  &>.p1>img{ display:block;transform:rotate(45deg); max-width:100%;}
+  &>.p1>img{ transform:rotate(45deg); max-width:100%; transform-origin:center;}
+  &>.p2>img{ transform:rotate(45deg); max-width:141.5%; transform-origin:center;}
+  &>.p3>img{ transform:rotate(45deg) scale(1.42); max-width:100%; transform-origin:center;}
+  &>.p4{ float:left; width:180px; margin-left:30px; clip-path:polygon(50% 0, 75% 25%, 100% 50%, 75% 75%, 50% 100%, 25% 75%, 0 50%, 25% 25%); transition:clip-path 2s;}
+  &>.p4:hover{ clip-path:polygon(0 0, 50% 10%, 100% 0, 90% 50%, 100% 100%, 50% 90%, 0 100%, 10% 50%); }
+}
+
+#e12{
+  & > div {
+    margin: 20px;
+    width: 200px;
+    float: left;
+    text-align:center;
+  }
+  &>.p1{ background:#f90 linear-gradient(-45deg, white 0, white 20px, transparent 0, transparent 100%); padding:1em;}
+  &>.p2{ background:linear-gradient(-45deg, transparent 15px, #58a 0) right, linear-gradient(45deg, transparent 15px, #f8a 0) left; background-size:50% 100%; padding:1em;}
+  &>.p3{ background:linear-gradient(-45deg, transparent 15px, #58a 0) right, linear-gradient(45deg, transparent 15px, #f8a 0) left; background-size:50% 100%; padding:1em; background-repeat:no-repeat;}
+  &>.p4{ background:linear-gradient(-45deg, transparent 15px, #58a 0) right bottom, linear-gradient(45deg, transparent 15px, #58a 0) left bottom, linear-gradient(-135deg, transparent 15px, #58a 0) right top, linear-gradient(135deg, transparent 15px, #58a 0) left top; background-size:50% 50%; padding:1em; background-repeat:no-repeat;}
+  &>.p5{ background:radial-gradient(circle at right, transparent 15px, #58a 0); padding:1em;}
+  &>.p6{ background:radial-gradient(circle at left top, transparent 15px, #58a 0) left top, radial-gradient(circle at right top, transparent 15px, #58a 0) right top, radial-gradient(circle at right bottom, transparent 15px, #58a 0) right bottom, radial-gradient(circle at left bottom, transparent 15px, #58a 0) left bottom; background-size:50% 50%; background-repeat:no-repeat; padding:1em;}
 }
