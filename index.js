@@ -13,7 +13,7 @@ var showData = {
     e9: {title:'自适应椭圆', des:'如果是8分发分别定义4个角的横向半径和纵向半径，应该注意同向半径值之和最多为DOM宽或者高的100%'},
     e10:{title:'平行四边形', des:'z-index=-1的情况，注意垂直层级的问题'},
     e11:{title:'菱形图片', des:'对于通过更改max-width试图想达到充满容器的目的没有实现，简易通过scale缩放则能达到目的，另外clip-path的属性目前Edge似乎还不支持，移动端暂时未作测试'},
-    e12:{title:'切角效果', des:''}
+    e12:{title:'切角效果', des:'支持border-image且该属性设置正确的情况下，浏览器会忽略boeder的style和color，这样可以进行优雅回退。另外，chrome对于斜线和曲面的描绘会有锯齿，而firefox和Edge则没有这个问题'}
 };
 var nowSel = 'e12';
 
