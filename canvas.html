@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:v-on="http://www.w3.org/1999/xhtml">
+<head>
+	<meta charset="UTF-8">
+    <title>canvas绘制</title>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+<style type="text/css">
+#mytest{ border:1px solid #999; margin:20px;}
+</style>
+</head>
+<body>
+<canvas id="mytest"></canvas>
+<script src="jquery-1.12.4.min.js"></script>
+<script>
+//重置canvas画布大小
+//ctx 2d绘制区域
+//backColor 绘制区域背景色
+//W,H 画布宽和高
+function resetCanvas(ctx,backColor,W,H){
+	var cav=ctx.canvas;
+	if (W && !isNaN(W-0)) cav.width=W;
+	if (H && !isNaN(H-0)) cav.height=H;
+	ctx.beginPath();
+	ctx.fillStyle=backColor;
+    ctx.rect(0,0,W,H);
+    ctx.fill();
+}
+//绘制放射线条
+//ctx 2d绘制区域
+//config参数
+//ct{x,y} 圆心坐标
+//r 半径
+//count 绘制数量
+//color 线的颜色
+//width 线宽
+function drawRadial(ctx, config){
+	var arg={
+		ct:{x:0, y:0},
+		r:100,
+		count:12,
+		color:'#000',
+		width:1
+	};
+	for (var x in config){
+		if (arg[x]!==undefined) arg[x]=config[x];
+	}
+	ctx.beginPath();
+	ctx.lineWidth=arg.width;
+	ctx.strokeStyle=arg.color;
+	var angle, radian;
+	for (var i=0; i<arg.count; i++){
+		angle=i*(360/arg.count);  //获得角度值
+		radian=angle*Math.PI/180; //计算角度的弧度值
+		ctx.moveTo(arg.ct.x,arg.ct.y);
+		ctx.lineTo(Math.cos(radian)*arg.r+arg.ct.x,Math.sin(radian)*arg.r+arg.ct.y);
+	}
+	ctx.stroke();
+}
+//绘制圆
+function drawCircle(ctx, config){
+	var arg={
+		ct:{x:0, y:0},
+		r:100,
+		width:1,
+		color:'#000',
+		fill:'#fff'
+	};
+	for (var x in config){
+		if (arg[x]!==undefined) arg[x]=config[x];
+	}
+	
+	ctx.beginPath();
+	ctx.fillStyle=arg.fill;
+	ctx.arc(arg.ct.x, arg.ct.y, arg.r, 0, 2*Math.PI);
+	ctx.fill();
+	if (arg.width>0){
+		ctx.strokeStyle=arg.color;
+		ctx.lineWidth=arg.width;
+		ctx.stroke();
+	}
+}
+//绘制扇形
+function drawFan(ctx, config){
+	var arg={
+		ct:{x:0, y:0},
+		r:100,
+		width:1,
+		color:'#000',
+		fill:'#fff',
+		start:0,
+		end:360
+	};
+	for (var x in config){
+		if (arg[x]!==undefined) arg[x]=config[x];
+	}
+	var radianStart=arg.start*Math.PI/180;
+	var radianEnd=arg.end*Math.PI/180;
+	ctx.beginPath();
+	ctx.fillStyle=arg.fill;
+	ctx.arc(arg.ct.x, arg.ct.y, arg.r, radianStart, radianEnd);
+	ctx.lineTo(arg.ct.x, arg.ct.y);
+	ctx.lineTo(arg.ct.x+Math.cos(radianStart)*arg.r, arg.ct.y+Math.sin(radianStart)*arg.r);
+	ctx.fill();
+	if (arg.width>0){
+		ctx.strokeStyle=arg.color;
+		ctx.lineWidth=arg.width;
+		ctx.stroke();
+	}
+}
+
+var canvas=$("#mytest")[0];
+var context=canvas.getContext("2d");
+resetCanvas(context,"#fff",1000,800);
+
+drawRadial(context,{
+	ct:{x:440,y:400},
+	r:1200,
+	count:24,
+	color:'red',
+	width:40
+});
+
+drawCircle(context,{
+	ct:{x:440, y:400},
+	r:200,
+	width:0
+});
+
+drawCircle(context,{
+	ct:{x:440, y:400},
+	r:160,
+	width:0,
+	fill:'red'
+});
+
+drawFan(context,{
+	ct:{x:440, y:400},
+	r:100,
+	width:5,
+	fill:'yellow',
+	start:45,
+	end:370,
+});
+/*
+context.beginPath();
+context.fillStyle='#333';
+context.arc(-300, 400, 800, 0, 2*Math.PI);
+context.fill();
+
+context.beginPath();
+context.fillStyle='#333';
+context.moveTo(450,1000);
+context.lineTo(660,1000);
+context.lineTo(660,500);
+context.lineTo(450,1000);
+context.fill();
+*/
+</script>
+</body>
+</html>

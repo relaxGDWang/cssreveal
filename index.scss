@@ -132,11 +132,11 @@ h1{ position:absolute; top:5px; right:20px; color:#db61a3;}
 #e8 {
   &>div{ margin:20px; width:240px; text-align:left; box-shadow:0 0 10px rgba(0,0,0,.4); float:left;}
   &>.p1{
-    background: url('images/back.png') no-repeat; background-size:cover; padding:1em;
+    background: url('images/backpic.jpg') no-repeat; background-size:cover; padding:1em;
     p{ padding:1em; background:#fff; margin:0;}
   }
-  &>.p2{ padding:1em; border:1em solid transparent; background:linear-gradient(rgba(255,255,255,.9),rgba(255,255,255,.9)),url('images/back.png'); background-size:cover; background-clip:padding-box, border-box;}
-  &>.p3{ padding:1em; border:1em solid transparent; background:linear-gradient(rgba(255,255,255,1),rgba(255,255,255,1)),url('images/back.png'); background-size:cover; background-clip:padding-box, border-box; background-origin:border-box;}
+  &>.p2{ padding:1em; border:1em solid transparent; background:linear-gradient(rgba(255,255,255,.9),rgba(255,255,255,.9)),url('images/backpic.jpg'); background-size:cover; background-clip:padding-box, border-box;}
+  &>.p3{ padding:1em; border:1em solid transparent; background:linear-gradient(rgba(255,255,255,1),rgba(255,255,255,1)),url('images/backpic.jpg'); background-size:cover; background-clip:padding-box, border-box; background-origin:border-box;}
   &>.p4{ border:1em solid transparent; padding:1em; background:linear-gradient(white,white) padding-box,repeating-linear-gradient(-45deg,red 0, red 12.5%,transparent 0, transparent 25%,#58a 0,#58a 37.5%,transparent 0,transparent 50%) 0 / 5em 5em;}
   &>.p5{ padding:1em; border:14px solid transparent; border-image:14 repeating-linear-gradient(-45deg, red 0, red 1em, transparent 0, transparent 2em, #58a 0, #58a 3em, transparent 0, transparent 4em);}
   &>.p6{ padding:1em; border:1px solid transparent; background:linear-gradient(white, white) padding-box, repeating-linear-gradient(-45deg, black 0, black 25%, white 0, white 50%) 0 / .6em .6em; animation: ants 12s linear infinite;}
