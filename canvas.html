@@ -16,15 +16,38 @@
 //重置canvas画布大小
 //ctx 2d绘制区域
 //backColor 绘制区域背景色
-//W,H 画布宽和高
-function resetCanvas(ctx,backColor,W,H){
+//size number 或者 {W,H} 调整画布的高和宽
+function resetCanvas(ctx,backColor,size){
 	var cav=ctx.canvas;
-	if (W && !isNaN(W-0)) cav.width=W;
-	if (H && !isNaN(H-0)) cav.height=H;
+	bcolor='transparent';
+	var defaultSize=500;
+	csize=defaultSize;
+	if (backColor) bcolor=backColor;
+	if (size){
+		if (typeof(size)==='object'){
+			if (size.W===undefined || size.H===undefined){
+			}else{
+				csize=size;
+			}
+		}else if(typeof(size)==='number'){
+			csize=size;
+		}
+	}
+	if (typeof(csize)==='number'){
+		cav.width=csize;
+		cav.height=csize;
+	}else{
+		cav.width=parseInt(csize.W)? parseInt(csize.W) : defaultSize;
+		cav.height=parseInt(csize.H)? parseInt(csize.H) : defaultSize;
+	}
 	ctx.beginPath();
-	ctx.fillStyle=backColor;
-    ctx.rect(0,0,W,H);
-    ctx.fill();
+	if (bcolor==='transparent'){
+		ctx.clearRect(0, 0, cav.width, cav.height);
+	}else{
+		ctx.fillStyle=bcolor;
+		ctx.rect(0,0,cav.width,cav.height);
+		ctx.fill();
+	}
 }
 //绘制放射线条
 //ctx 2d绘制区域
@@ -98,9 +121,9 @@ function drawFan(ctx, config){
 	var radianEnd=arg.end*Math.PI/180;
 	ctx.beginPath();
 	ctx.fillStyle=arg.fill;
+	ctx.moveTo(arg.ct.x, arg.ct.y);
 	ctx.arc(arg.ct.x, arg.ct.y, arg.r, radianStart, radianEnd);
 	ctx.lineTo(arg.ct.x, arg.ct.y);
-	ctx.lineTo(arg.ct.x+Math.cos(radianStart)*arg.r, arg.ct.y+Math.sin(radianStart)*arg.r);
 	ctx.fill();
 	if (arg.width>0){
 		ctx.strokeStyle=arg.color;
@@ -108,11 +131,16 @@ function drawFan(ctx, config){
 		ctx.stroke();
 	}
 }
+//绘制矩形
+//绘制椭圆
+//绘制五角星
+
 
 var canvas=$("#mytest")[0];
 var context=canvas.getContext("2d");
-resetCanvas(context,"#fff",1000,800);
+resetCanvas(context);
 
+/*
 drawRadial(context,{
 	ct:{x:440,y:400},
 	r:1200,
@@ -134,28 +162,34 @@ drawCircle(context,{
 	fill:'red'
 });
 
-drawFan(context,{
-	ct:{x:440, y:400},
-	r:100,
-	width:5,
-	fill:'yellow',
-	start:45,
-	end:370,
-});
-/*
-context.beginPath();
-context.fillStyle='#333';
-context.arc(-300, 400, 800, 0, 2*Math.PI);
-context.fill();
-
-context.beginPath();
-context.fillStyle='#333';
-context.moveTo(450,1000);
-context.lineTo(660,1000);
-context.lineTo(660,500);
-context.lineTo(450,1000);
-context.fill();
 */
+/*
+var end=345;
+var i=0;
+var s=2;
+var timeID=setInterval(function(){
+	resetCanvas(context,"#fff",1000,800);
+	drawFan(context,{
+		ct:{x:440, y:400},
+		r:100,
+		width:1,
+		fill:'yellow',
+		start: i,
+		end: end,
+	});
+	i=i+s;
+	if (i>100 || i<=0){
+		s=s*-1;
+	}
+},5);
+*/
+
+context.moveTo(10, 200); //起始点
+var cp1x = 40, cp1y = 100;  //控制点
+var x = 200, y = 200; // 结束点
+//绘制二次贝塞尔曲线
+context.quadraticCurveTo(cp1x, cp1y, x, y);
+context.stroke();
 </script>
 </body>
 </html>
