@@ -6,168 +6,49 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
 <style type="text/css">
-#mytest{ border:1px solid #999; margin:20px;}
+#mytest{ border:1px solid #999; margin:0;}
+input[type='text']{ width:30px; height:22px; padding:5px; text-align:right; border:0;}
 </style>
 </head>
 <body>
-<canvas id="mytest"></canvas>
+<div>
+	<input id="a" type="text" width="40" placeholder="a"/>x<sup>2</sup>+<input id="b" type="text" width="40" placeholder="b"/>x+<input id="c" type="text" width="40" placeholder="c"/>=y
+	<button onclick="drawCurve()">显示</button>
+</div>
+<div>
+	<canvas id="mytest">本浏览器不支持canvas</canvas>
+</div>
 <script src="jquery-1.12.4.min.js"></script>
+<script src="canvas.js"></script>
 <script>
-//重置canvas画布大小
-//ctx 2d绘制区域
-//backColor 绘制区域背景色
-//size number 或者 {W,H} 调整画布的高和宽
-function resetCanvas(ctx,backColor,size){
-	var cav=ctx.canvas;
-	bcolor='transparent';
-	var defaultSize=500;
-	csize=defaultSize;
-	if (backColor) bcolor=backColor;
-	if (size){
-		if (typeof(size)==='object'){
-			if (size.W===undefined || size.H===undefined){
-			}else{
-				csize=size;
-			}
-		}else if(typeof(size)==='number'){
-			csize=size;
-		}
-	}
-	if (typeof(csize)==='number'){
-		cav.width=csize;
-		cav.height=csize;
-	}else{
-		cav.width=parseInt(csize.W)? parseInt(csize.W) : defaultSize;
-		cav.height=parseInt(csize.H)? parseInt(csize.H) : defaultSize;
-	}
-	ctx.beginPath();
-	if (bcolor==='transparent'){
-		ctx.clearRect(0, 0, cav.width, cav.height);
-	}else{
-		ctx.fillStyle=bcolor;
-		ctx.rect(0,0,cav.width,cav.height);
-		ctx.fill();
-	}
-}
-//绘制放射线条
-//ctx 2d绘制区域
-//config参数
-//ct{x,y} 圆心坐标
-//r 半径
-//count 绘制数量
-//color 线的颜色
-//width 线宽
-function drawRadial(ctx, config){
-	var arg={
-		ct:{x:0, y:0},
-		r:100,
-		count:12,
-		color:'#000',
-		width:1
-	};
-	for (var x in config){
-		if (arg[x]!==undefined) arg[x]=config[x];
-	}
-	ctx.beginPath();
-	ctx.lineWidth=arg.width;
-	ctx.strokeStyle=arg.color;
-	var angle, radian;
-	for (var i=0; i<arg.count; i++){
-		angle=i*(360/arg.count);  //获得角度值
-		radian=angle*Math.PI/180; //计算角度的弧度值
-		ctx.moveTo(arg.ct.x,arg.ct.y);
-		ctx.lineTo(Math.cos(radian)*arg.r+arg.ct.x,Math.sin(radian)*arg.r+arg.ct.y);
-	}
-	ctx.stroke();
-}
-//绘制圆
-function drawCircle(ctx, config){
-	var arg={
-		ct:{x:0, y:0},
-		r:100,
-		width:1,
-		color:'#000',
-		fill:'#fff'
-	};
-	for (var x in config){
-		if (arg[x]!==undefined) arg[x]=config[x];
-	}
-	
-	ctx.beginPath();
-	ctx.fillStyle=arg.fill;
-	ctx.arc(arg.ct.x, arg.ct.y, arg.r, 0, 2*Math.PI);
-	ctx.fill();
-	if (arg.width>0){
-		ctx.strokeStyle=arg.color;
-		ctx.lineWidth=arg.width;
-		ctx.stroke();
-	}
-}
-//绘制扇形
-function drawFan(ctx, config){
-	var arg={
-		ct:{x:0, y:0},
-		r:100,
-		width:1,
-		color:'#000',
-		fill:'#fff',
-		start:0,
-		end:360
-	};
-	for (var x in config){
-		if (arg[x]!==undefined) arg[x]=config[x];
-	}
-	var radianStart=arg.start*Math.PI/180;
-	var radianEnd=arg.end*Math.PI/180;
-	ctx.beginPath();
-	ctx.fillStyle=arg.fill;
-	ctx.moveTo(arg.ct.x, arg.ct.y);
-	ctx.arc(arg.ct.x, arg.ct.y, arg.r, radianStart, radianEnd);
-	ctx.lineTo(arg.ct.x, arg.ct.y);
-	ctx.fill();
-	if (arg.width>0){
-		ctx.strokeStyle=arg.color;
-		ctx.lineWidth=arg.width;
-		ctx.stroke();
-	}
-}
+
 //绘制矩形
 //绘制椭圆
 //绘制五角星
 
 
+//坐标系转化
+function changeCoordinate(nowPos,origin){
+	var org={
+		x:0,
+		y:0
+	};
+	if (origin){
+		org.x=origin.x;
+		org.y=origin.y;
+	}
+	nowPos.x=nowPos.x+org.x;
+	nowPos.y=nowPos.y*-1+org.y;
+}
 var canvas=$("#mytest")[0];
 var context=canvas.getContext("2d");
-resetCanvas(context);
+CVS.reset(context,'#fff',300);
 
-/*
-drawRadial(context,{
-	ct:{x:440,y:400},
-	r:1200,
-	count:24,
-	color:'red',
-	width:40
-});
-
-drawCircle(context,{
-	ct:{x:440, y:400},
-	r:200,
-	width:0
-});
-
-drawCircle(context,{
-	ct:{x:440, y:400},
-	r:160,
-	width:0,
-	fill:'red'
-});
-
-*/
 /*
 var end=345;
 var i=0;
 var s=2;
-var timeID=setInterval(function(){
+function doCanvas(){
 	resetCanvas(context,"#fff",1000,800);
 	drawFan(context,{
 		ct:{x:440, y:400},
@@ -181,15 +62,87 @@ var timeID=setInterval(function(){
 	if (i>100 || i<=0){
 		s=s*-1;
 	}
-},5);
+	requestAnimationFrame(doCanvas);
+}
+doCanvas();
 */
 
-context.moveTo(10, 200); //起始点
-var cp1x = 40, cp1y = 100;  //控制点
-var x = 200, y = 200; // 结束点
-//绘制二次贝塞尔曲线
-context.quadraticCurveTo(cp1x, cp1y, x, y);
+context.beginPath();
+//context.strokeStyle='#000';
+//context.lineWidth=1;
+
+/*
+var count=9;
+var dis=30;
+var x,y;
+for (var i=1; i<=count; i++){
+	context.moveTo(250,100);
+	x=250+i*dis;
+	y=200;
+	context.quadraticCurveTo(x, y, 250, 300);
+}
+for (var i=1; i<=count; i++){
+	context.moveTo(250,100);
+	x=250-i*dis;
+	y=200;
+	context.quadraticCurveTo(x, y, 250, 300);
+}
+for (var i=1; i<=count; i++){
+	context.moveTo(100,200);
+	x=250;
+	y=200-i*dis;
+	context.quadraticCurveTo(x, y, 400, 200);
+}
+for (var i=1; i<=count; i++){
+	context.moveTo(100,200);
+	x=250;
+	y=200+i*dis;
+	context.quadraticCurveTo(x, y, 400, 200);
+}
+context.fillStyle='red';
+context.fill()
+context.moveTo(250,100);
+context.lineTo(250,300);
 context.stroke();
+*/
+/*
+context.beginPath();
+context.moveTo(250, 50); //起始点
+var cp1x = 20, cp1y = 150;  //控制点1
+var cp2x = 480, cp2y = 350;  //控制点2
+//绘制二次贝塞尔曲线
+context.bezierCurveTo(cp1x, cp1y, cp2x, cp2y, 250, 450);
+context.stroke();
+*/
+
+//绘制解析几何图
+function drawCurve(){
+	CVS.reset(context,'#fff',300);
+	//获得参数
+	var a=document.getElementById('a').value-0;
+	var b=document.getElementById('b').value-0;
+	var c=document.getElementById('c').value-0;
+	var zero={x:150, y:150};
+	var count=0;
+	context.beginPath();
+	context.moveTo(150,0);
+	context.lineTo(150,300);
+	context.moveTo(0,150);
+	context.lineTo(300,150);
+	var pos={x:0,y:0};
+	for (var i=-150; i<=150; i++){
+		pos.x=i;
+		pos.y=a*i*i+b*i+c;
+		changeCoordinate(pos,zero);
+		if (count===0){
+			context.moveTo(pos.x, pos.y);
+		}else{
+			context.lineTo(pos.x, pos.y);
+		}
+		count++;
+	}
+	context.stroke();
+}
 </script>
 </body>
 </html>
