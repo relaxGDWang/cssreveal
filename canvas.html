@@ -40,10 +40,66 @@ function changeCoordinate(nowPos,origin){
 	nowPos.x=nowPos.x+org.x;
 	nowPos.y=nowPos.y*-1+org.y;
 }
+//绘制坐标线
+function drawCoordinate(ctx,origin){
+	var cvsW=ctx.canvas.width, cvsH=ctx.canvas.height;
+	context.beginPath();
+	ctx.strokeStyle='#000';
+	ctx.lineWidth=1;
+	ctx.moveTo(origin.x,0);
+	ctx.lineTo(origin.x,cvsH);
+	ctx.moveTo(0,origin.y);
+	ctx.lineTo(cvsW,origin.y);
+	ctx.stroke();
+}
 var canvas=$("#mytest")[0];
 var context=canvas.getContext("2d");
 CVS.reset(context,'#fff',300);
 
+//绘制纵向抛物线
+function draw1(){
+	var originPot={x:150,y:150};
+	drawCoordinate(context, originPot);
+	drawIt(context, originPot);
+	
+	function drawIt(ctx,origin){
+		var a=0.01
+		var b=0;
+		var c=-20;
+		var pos={x:0,y:0};
+		var count=0;
+		for (var i=-150; i<=150; i++){
+			pos.x=i;
+			pos.y=a*i*i+b*i+c;
+			changeCoordinate(pos,origin);
+			if (count===0){
+				context.moveTo(pos.x, pos.y);
+			}else{
+				context.lineTo(pos.x, pos.y);
+			}
+			count++;
+		}
+		context.stroke();
+	}
+}
+//绘制横向抛物线
+function draw2(){
+	var originPot={x:50,y:150};
+	drawCoordinate(context, originPot);
+	drawIt(context, originPot);
+	
+	function drawIt(){
+		var a=0.01;
+		var b=20;
+		var pos={x:0, y:0};
+		var count=0;
+		for (var i=50; i<=250; i++){
+			pos.x=i;
+			pos.y=a*i*i+b*i+c;
+		}
+	}
+}
+draw1();
 /*
 var end=345;
 var i=0;
@@ -67,7 +123,6 @@ function doCanvas(){
 doCanvas();
 */
 
-context.beginPath();
 //context.strokeStyle='#000';
 //context.lineWidth=1;
 
@@ -114,35 +169,6 @@ var cp2x = 480, cp2y = 350;  //控制点2
 context.bezierCurveTo(cp1x, cp1y, cp2x, cp2y, 250, 450);
 context.stroke();
 */
-
-//绘制解析几何图
-function drawCurve(){
-	CVS.reset(context,'#fff',300);
-	//获得参数
-	var a=document.getElementById('a').value-0;
-	var b=document.getElementById('b').value-0;
-	var c=document.getElementById('c').value-0;
-	var zero={x:150, y:150};
-	var count=0;
-	context.beginPath();
-	context.moveTo(150,0);
-	context.lineTo(150,300);
-	context.moveTo(0,150);
-	context.lineTo(300,150);
-	var pos={x:0,y:0};
-	for (var i=-150; i<=150; i++){
-		pos.x=i;
-		pos.y=a*i*i+b*i+c;
-		changeCoordinate(pos,zero);
-		if (count===0){
-			context.moveTo(pos.x, pos.y);
-		}else{
-			context.lineTo(pos.x, pos.y);
-		}
-		count++;
-	}
-	context.stroke();
-}
 </script>
 </body>
 </html>
