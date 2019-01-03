@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:v-on="http://www.w3.org/1999/xhtml">
+<head>
+	<meta charset="UTF-8">
+    <title>canvas加载图片处理</title>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+<style type="text/css">
+#mytest{ border:1px solid #999; margin:0; background-color:#fff;}
+</style>
+</head>
+<body>
+<div>
+	<canvas id="mytest">本浏览器不支持canvas</canvas>
+	<button id="reset">重置</button>
+</div>
+<script src="jquery-1.12.4.min.js"></script>
+<script src="canvas.js"></script>
+<script>
+var canvas=$("#mytest")[0];
+var context=canvas.getContext("2d");
+CVS.reset(context,'',500);
+
+loadImage('images/strawberry.png',function(img){
+	console.log(img.width+','+img.height);
+	context.drawImage(img,0,0,500,500);
+});
+
+function loadImage(src,doFun){
+	var img=new Image();
+	img.onload=function(){doFun(img)};
+	img.src=src;
+}
+
+$("#reset").click(function(){
+	CVS.reset(context,'',300);
+});
+</script>
+</body>
+</html>
