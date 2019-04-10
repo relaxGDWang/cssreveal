@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:v-on="http://www.w3.org/1999/xhtml">
+<head>
+	<meta charset="UTF-8">
+    <title>svg绘制</title>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+<style type="text/css">
+embed{ width:100px;}
+#main{ border:1px solid #ccc;}
+#mycircle{ fill:rgba(0,0,0,.3); box-shadow:5px 5px 10px rgba(0,0,0,.4);}
+</style>
+</head>
+<body>
+	<svg id="main" xmlns="http://www.w3.org/2000/svg" version="1.1">
+	  <circle id="mycircle" cx="100" cy="100" r="100" stroke="black" stroke-width="2"/>
+	</svg>
+	<p>这里是动态添加的svg画布</p>
+	<div id="show"></div>
+<script src="jquery-1.12.4.min.js"></script>
+<script>	
+var SVG=(function(){
+	function create(config){
+		var arg={
+			width: undefined,
+			height: undefined,
+			border: undefined,
+			viewBox: undefined,
+			back: undefined
+		};
+		for (var x in arg){
+			if (config[x]!==undefined) arg[x]=config[x];
+		}
+		var svgDom=document.createElementNS('http://www.w3.org/2000/svg','svg');
+		for (var x in arg){
+			if (!arg[x]) continue;
+			switch(x){
+				case 'width':
+					svgDom.setAttribute('width',arg.width);
+					break;
+				case 'height':
+					svgDom.setAttribute('height',arg.height);
+					break;
+				case 'border':
+					svgDom.style.border=arg.border;
+					break;
+				case 'viewBox':
+					svgDom.setAttribute('viewBox')
+					break;
+				case 'back':
+					svgDom.style.background=arg.back;
+					break;
+			}
+		}
+		return svgDom;
+	}
+	
+	return {
+		create: create
+	};
+})();
+
+var dom=$('#show')[0];
+dom.appendChild(SVG.create({width:'500px', height:'500px', border:'1px solid #ccc'}));
+</script>
+</body>
+</html>
