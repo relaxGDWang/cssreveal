@@ -222,3 +222,14 @@ h1{ position:absolute; top:5px; right:20px; color:#db61a3;}
     clip-path: polygon($borderClip 0, calc(100% - #{$borderClip}) 0, 100% $borderClip, 100% calc(100% - #{$borderClip}), calc(100% - #{$borderClip}) 100%, $borderClip 100%, 0 calc(100% - #{$borderClip}), 0 $borderClip);
   }
 }
+
+#e13{
+  & > div {
+    margin: 20px;
+    width: 240px;
+    overflow:hidden;
+    float: left;
+    text-align: center;
+  }
+  &>.p1{ transform: perspective(.5em) rotateX(5deg); background:blue; color:#fff;}
+}

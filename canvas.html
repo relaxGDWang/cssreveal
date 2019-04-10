@@ -58,8 +58,10 @@ CVS.reset(context,'#fff',300);
 
 //绘制纵向抛物线
 function draw1(){
+	context.beginPath();
 	var originPot={x:150,y:150};
 	drawCoordinate(context, originPot);
+	context.beginPath();
 	drawIt(context, originPot);
 	
 	function drawIt(ctx,origin){
@@ -73,33 +75,141 @@ function draw1(){
 			pos.y=a*i*i+b*i+c;
 			changeCoordinate(pos,origin);
 			if (count===0){
-				context.moveTo(pos.x, pos.y);
+				ctx.moveTo(pos.x, pos.y);
 			}else{
-				context.lineTo(pos.x, pos.y);
+				ctx.lineTo(pos.x, pos.y);
 			}
 			count++;
 		}
-		context.stroke();
+		ctx.stroke();
 	}
 }
 //绘制横向抛物线
 function draw2(){
+	context.beginPath();
 	var originPot={x:50,y:150};
 	drawCoordinate(context, originPot);
+	context.beginPath();
 	drawIt(context, originPot);
 	
-	function drawIt(){
-		var a=0.01;
-		var b=20;
+	function drawIt(ctx,origin){
+		var a=20;
+		var b=0;
 		var pos={x:0, y:0};
 		var count=0;
-		for (var i=50; i<=250; i++){
+		for (var i=0; i<=250; i++){
 			pos.x=i;
-			pos.y=a*i*i+b*i+c;
+			pos.y=Math.sqrt(a*i+b);
+			changeCoordinate(pos,origin);
+			if (count===0){
+				ctx.moveTo(pos.x, pos.y);
+			}else{
+				ctx.lineTo(pos.x, pos.y);
+			}
+			count++;
 		}
+		ctx.stroke();
+		ctx.beginPath();
+		for (var i=0; i<=250; i++){
+			pos.x=i;
+			pos.y=-Math.sqrt(a*i+b);
+			changeCoordinate(pos,origin);
+			if (count===0){
+				ctx.moveTo(pos.x, pos.y);
+			}else{
+				ctx.lineTo(pos.x, pos.y);
+			}
+			count++;
+		}
+		ctx.stroke();
 	}
 }
-draw1();
+
+//绘制正弦函数
+function draw3(){
+	context.beginPath();
+	var originPot={x:150,y:150};
+	drawCoordinate(context, originPot);
+	context.beginPath();
+	drawIt(context, originPot);
+	
+	function drawIt(ctx,origin){
+		var per=3;
+		var a=100;
+		var pos={x:0, y:0};
+		var count=0;
+		for (var i=-150; i<=150; i++){
+			pos.x=i;
+			pos.y=a*Math.sin(i*per*Math.PI/180);
+			changeCoordinate(pos,origin);
+			if (count===0){
+				ctx.moveTo(pos.x, pos.y);
+			}else{
+				ctx.lineTo(pos.x, pos.y);
+			}
+			count++;
+		}
+		ctx.stroke();
+	}
+}
+//绘制余弦函数
+function draw4(){
+	context.beginPath();
+	var originPot={x:150,y:150};
+	drawCoordinate(context, originPot);
+	context.beginPath();
+	drawIt(context, originPot);
+	
+	function drawIt(ctx,origin){
+		var per=3;
+		var a=100;
+		var pos={x:0, y:0};
+		var count=0;
+		for (var i=-150; i<=150; i++){
+			pos.x=i;
+			pos.y=a*Math.cos(i*per*Math.PI/180);
+			changeCoordinate(pos,origin);
+			if (count===0){
+				ctx.moveTo(pos.x, pos.y);
+			}else{
+				ctx.lineTo(pos.x, pos.y);
+			}
+			count++;
+		}
+		ctx.stroke();
+	}
+}
+//绘制正切函数
+function draw5(){
+	context.beginPath();
+	var originPot={x:150,y:150};
+	drawCoordinate(context, originPot);
+	context.beginPath();
+	drawIt(context, originPot);
+	
+	function drawIt(ctx,origin){
+		var per=1;
+		var a=5;
+		var pos={x:0, y:0};
+		var count=0;
+		for (var i=-150; i<=150; i++){
+			pos.x=i;
+			pos.y=a*Math.tan(i*per*Math.PI/180);
+			console.log(pos.x, pos.y);
+			changeCoordinate(pos,origin);
+			if (count===0){
+				ctx.moveTo(pos.x, pos.y);
+			}else{
+				ctx.lineTo(pos.x, pos.y);
+			}
+			count++;
+		}
+		ctx.stroke();
+	}
+}
+draw5();
+
+
 /*
 var end=345;
 var i=0;
