@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="600" height="600">
+<title>cat show</title>
+<style>
+</style>
+<circle cx="200" cy="200" r="100" fill="#fff" stroke="#000" stroke-width="1"/>
+<circle cx="240" cy="150" r="10" fill="#000"/>
+<circle cx="170" cy="150" r="10" fill="#000"/>
+<g id="whiskers">
+	<line x1="240" y1="190" x2="330" y2="160" stroke="black"/>
+	<line x1="240" y1="190" x2="340" y2="190" stroke="black"/>
+	<line x1="240" y1="190" x2="330" y2="220" stroke="black"/>
+</g>
+<use xlink:href="#whiskers" transform="scale(-1 1) translate(-410 0)"/>
+<polyline points="140,220 170,234 200,220 230,234 260,220" stroke="black" fill="none"/>
+<polyline id="ear" points="130,127 150,40 190,100" stroke="black" fill="none"/>
+<use xlink:href="#ear" transform="scale(-1 1) translate(-400 0)"/>
+<ellipse cx="200" cy="190" rx="20" ry="10" stroke="black" fill="none"/>
+</svg>
