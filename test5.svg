@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="600" height="600">
+<title>background img</title>
+<style>
+</style>
+<polygon points="0,20, 50,0 400,0 350,50 400,100 50,100 0,50" stroke="black" stroke-width="2" fill="url(#img1)"/>
+
+<defs>
+  <pattern id="img1" patternUnits="userSpaceOnUse" width="50" height="100">
+    <image xlink:href="images/left.png" x="0" y="0" width="50" height="100"/>
+  </pattern>
+</defs>
+</svg>

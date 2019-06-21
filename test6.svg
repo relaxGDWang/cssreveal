@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="600" height="600">
+<title>svg精髓测试</title>
+<style>
+line{ stroke:red; stroke-width:5px; stroke-dasharray:14,6,5,6;}
+rect{ stroke:blue; stroke-opacity:.5; stroke-width:10px; fill:#f90; fill-opacity:0.4;}
+circle{ fill:yellow; stroke:#666; stroke-width:1px;}
+</style>
+<line x1="100" y1="30" x2="260" y2="400"/>
+<rect x="100" y="100" width="200" height="200" rx="20" ry="40"/>
+<circle cx="300" cy="300" r="100"/>
+
+<!-- 
+边框的宽度会以边框中线为边缘，向内外扩展，内容的填充色不受边框宽度的影响
+
+-->
+</svg>
