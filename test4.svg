@@ -15,5 +15,5 @@
 <polyline points="140,220 170,234 200,220 230,234 260,220" stroke="black" fill="none"/>
 <polyline id="ear" points="130,127 150,40 190,100" stroke="black" fill="none"/>
 <use xlink:href="#ear" transform="scale(-1 1) translate(-400 0)"/>
-<ellipse cx="200" cy="190" rx="20" ry="10" stroke="black" fill="none"/>
+<ellipse cx="200" cy="190" rx="20" ry="10" stroke="black" fill="#f00"/>
 </svg>
