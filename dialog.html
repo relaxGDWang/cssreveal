@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:v-on="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>自隐藏弹框设计</title>
+    <link rel="stylesheet" href="animate.css">
+<style type="text/css">
+html, body, h1, h2, h3, h4 { margin: 0; }
+html, body { padding: 0; width: 100%; height: 100%; font-size:14px;}
+body { background-color: #fff; font-size: 14px; }
+* { font-family: "Microsoft YaHei",tahoma,arial,'Hiragino Sans GB','\5b8b\4f53',sans-serif; box-sizing: border-box; }
+*:after, *:before { box-sizing: border-box;}
+
+.outframe{ width:100%; height:100%; overflow:hidden; position:relative;}
+.mainContent{ width:100%; height:100%; overflow-x:hidden; overflow-y:auto;}
+
+.dialog{ position:absolute; bottom:20px; background:#333; color:#fff; padding:10px 20px; width:400px; text-align:center; border-radius:10px; left:calc(50% - 200px); visibility:hidden; box-shadow:0 0 10px rgba(0,0,0,0.4);}
+.dialog.bounceIn{ visibility:visible;}
+.dialog.style1{ transform:translate(-50%,300px); transition-property:transform; transition-duration:1s;}
+.dialog.style1.show{ transform:translate(-50%,0px);}
+
+</style>
+</head>
+<body>
+	<div class="outframe">
+		<div class="mainContent">
+			<strong>这里显示主要内容</strong>
+			<button id="showDialog">显示</button>
+		</div>
+		
+		<div class="dialog">这里是自隐藏弹框信息</div>
+	</div>
+<script>
+function showDialog(){
+	dialog.className=dialog.className+' bounceIn';
+	setTimeout(function(){
+		dialog.className='dialog';
+	},3000);
+}
+var dialog=document.querySelector('.dialog');
+document.getElementById('showDialog').addEventListener('click',showDialog);
+</script>
+</body>
+</html>
