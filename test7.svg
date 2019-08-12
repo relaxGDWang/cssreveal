@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="600" height="600">
+<title>use使用</title>
+<style type="text/css">
+.st1{ fill:rgba(255,0,0,.4);}
+.st2{ fill:rgba(255,255,0,.4);}
+symbol .test{ fill:inherit;}
+</style>
+<symbol id="test">
+	<circle class="test" fill="#f90" cx="100" cy="100" r="100"/>
+</symbol>
+<use xlink:href="#test" x="-100" y="100" class="st1"/>
+<use xlink:href="#test" x="100" y="100" class="st2"/>
+</svg>
+
+
+https://www.cnblogs.com/jiemao/p/5048062.html
