@@ -84,6 +84,20 @@ $(function(){
 	var btnAdd=$('#add');
 	var btnReset=$('#reset');
 	
+	cavCtx.beginPath();
+	cavCtx.strokeStyle='red';
+	cavCtx.lineWidth=2;
+	cavCtx.moveTo(100,100);
+	cavCtx.lineTo(200,200);
+	cavCtx.stroke();
+	cavCtx.beginPath();
+	cavCtx.strokeStyle='green';
+	cavCtx.lineWidth=4;
+	cavCtx.moveTo(200,300);
+	cavCtx.lineTo(400,500);
+	cavCtx.lineTo(300,450);
+	cavCtx.stroke();
+	
 	btnDraw.click(function(){
 		var w=inputW.val();
 		var h=inputH.val();
