@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:v-on="http://www.w3.org/1999/xhtml">
+<head>
+	<meta charset="UTF-8">
+    <title>svg图像绘制</title>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+<style type="text/css">
+*{ box-sizing:border-box;}
+html,body{ width:100%; height:100%; font-size:14px; padding:0; margin:0; overflow:hidden;}
+body{ background:#ccc; font-size:14px;}
+.outFrame{ width:100%; height:100%; position:relative;}
+.leftShow{ width:800px; height:100%; background:#999; padding:10px; padding-top:50px; position:relative;}
+canvas{ background-color:#fff;}
+.setting{ float:right; width:calc(100% - 800px); height:100%; padding:10px;}
+h1{ font-size:20px; font-weight:normal; border-bottom:1px solid #333; padding-bottom:10px; padding-top:0; margin:0px; position:relative;} 
+.listShow{ list-style-type:decimal; padding:10px; padding-left:20px; margin:0;}
+.listShow li{ font-size:14px; padding-bottom:5px;}
+.listShow li>*{ font-size:inherit; padding:5px;}
+.listShow li>input{ width:calc(100% - 85px);}
+.buttonBar{ text-align:center; position:absolute; right:10px; top:0;}
+.buttonBar button{ padding:5px; line-height:16px; text-align:center; min-width:50px;}
+
+.top{ line-height:40px; position:absolute; left:0; right:0; top:0; background:rgba(0,0,0,.6); color:#fff;}
+.top span{ margin-right:20px;}
+.top input{ width:60px; padding:6px; line-height:16px;}
+.top button{ line-height:16px; padding:6px;}
+</style>
+</head>
+<body>
+<div class="outFrame">
+	<div class="setting">
+		<h1>
+			设置绘制信息
+			<div class="buttonBar">
+				<button id="add" type="button">+</button>
+				<button id="draw" type="button">测试</button>
+			</div>
+		</h1>
+		<ul class="listShow">
+			<li>
+				<select>
+					<option value="1">polygon</option>
+					<option value="2">polyline</option>
+				</select>
+				<input type="text"/>
+			</li>
+		</ul>
+	</div>
+	<div class="leftShow">
+		<div class="top">
+			<span>画布设置</span>
+			<span>宽 <input type="text" id="cavW"/></span>
+			<span>高 <input type="text" id="cavH"/></span>
+			<span>偏移x <input type="text" id="pyX"/></span>
+			<span>偏移y <input type="text" id="pyY"/></span>
+			<button id="reset" type="button">重置画布</button>
+		</div>
+		<canvas id="canvasDom" width="700" height="700"></canvas>
+	</div>
+</div>
+<script src="jquery-1.12.4.min.js"></script>
+<script src="canvas.js"></script>
+<script>
+$(function(){
+	var cav=$('#canvasDom')[0];
+	var cavCtx=cav.getContext('2d');
+	var template=$('.listShow li').html();
+	template=template.replace(/\s+</g,'<').replace(/>\s+/g,'>');
+	var list=$('.listShow').eq(0);
+	list.html('');
+	var index=0,px=100,py=100;
+	
+	var inputW=$('#cavW');
+	var inputH=$('#cavH');
+	var pyX=$('#pyX');
+	var pyY=$('#pyY');
+	inputW.val(cav.width);
+	inputH.val(cav.height);
+	pyX.val(px);
+	pyY.val(py);
+	
+	var btnDraw=$('#draw');
+	var btnAdd=$('#add');
+	var btnReset=$('#reset');
+	
+	btnDraw.click(function(){
+		var w=inputW.val();
+		var h=inputH.val();
+		CVS.reset(cavCtx,'#fff',{W:w,H:h});  //清除画布
+		
+		var tempArray=list.children('li');
+		var drawList=[];
+		var i;
+		for (i=0; i<tempArray.length; i++){
+			var valStr=$.trim($(tempArray[i]).children('input').val());
+			if (!valStr) continue;
+			
+			var temp={};
+			temp.type=$(tempArray[i]).children('select').val();
+			temp.list=valStr.split(/\s/);
+			drawList.push(temp);
+		}
+		cavCtx.beginPath();
+		cavCtx.lineWidth=2;
+		cavCtx.strokeStyle='#000';
+		cavCtx.fillStyle='#f90';
+		for (i=0; i<drawList.length; i++){
+			var p=drawList[i].list[0].split(',');
+			cavCtx.moveTo(p[0]-0+px,p[1]-0+py);
+			for (var j=1; j<drawList[i].list.length; j++){
+				p=drawList[i].list[j].split(',');
+				cavCtx.lineTo(p[0]-0+px,p[1]-0+py);
+			}
+		}
+		cavCtx.stroke();
+	});
+	btnAdd.click(function(){
+		var li=document.createElement('li');
+		li.className='index'+index;
+		index++;
+		li.innerHTML=template;
+		list .append(li);
+	});
+	btnReset.click(function(){
+		var w=inputW.val();
+		var h=inputH.val();
+		if (isNaN(w-0)) w=cav.width;
+		if (isNaN(h-0)) h=cav.height;
+		
+		var x=pyX.val();
+		var y=pyY.val();
+		if (isNaN(pyX.val()-0)) x=px;
+		if (isNaN(pyY.val()-0)) y=py;
+		px=x-0;
+		py=y-0;
+		
+		inputW.val(w);
+		inputH.val(h);
+		pyX.val(px);
+		pyY.val(py);
+		
+		if (w===cav.width && h===cav.height) return;
+		CVS.reset(cavCtx,'#fff',{W:w,H:h});
+	});
+});
+</script>
+</body>
+</html>

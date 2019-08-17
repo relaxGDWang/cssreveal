@@ -52,9 +52,6 @@ function drawCoordinate(ctx,origin){
 	ctx.lineTo(cvsW,origin.y);
 	ctx.stroke();
 }
-var canvas=$("#mytest")[0];
-var context=canvas.getContext("2d");
-CVS.reset(context,'#fff',300);
 
 //绘制纵向抛物线
 function draw1(){
@@ -207,6 +204,10 @@ function draw5(){
 		ctx.stroke();
 	}
 }
+
+var canvas=$("#mytest")[0];
+var context=canvas.getContext("2d");
+CVS.reset(context,'#fff',300);
 draw5();
 
 
