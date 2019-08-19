@@ -9,6 +9,7 @@
 embed{ width:100px;}
 #main{ border:1px solid #ccc;}
 #mycircle{ fill:rgba(0,0,0,.3); box-shadow:5px 5px 10px rgba(0,0,0,.4);}
+svg line{ stroke-width:2px; stroke:#000;}
 </style>
 </head>
 <body>
@@ -18,7 +19,7 @@ embed{ width:100px;}
 	<p>这里是动态添加的svg画布</p>
 	<div id="show"></div>
 <script src="jquery-1.12.4.min.js"></script>
-<script>	
+<script>
 var SVG=(function(){
 	function create(config){
 		var arg={
@@ -62,6 +63,15 @@ var SVG=(function(){
 
 var dom=$('#show')[0];
 dom.appendChild(SVG.create({width:'500px', height:'500px', border:'1px solid #ccc'}));
+
+//绘制直线
+var main=$('#main')[0];
+var lineDom=document.createElementNS('http://www.w3.org/2000/svg','line');
+lineDom.setAttribute('x1',100);
+lineDom.setAttribute('x2',300);
+lineDom.setAttribute('y1',100);
+lineDom.setAttribute('y2',300);
+main.appendChild(lineDom);
 </script>
 </body>
 </html>

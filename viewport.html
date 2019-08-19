@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:v-on="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>测试viewport</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+<style type="text/css">
+*{ box-sizing:border-box;}
+html,body{ padding:0; margin:0;}
+.show{ width:100%; height:300px; background:red;}
+</style>
+</head>
+<body>
+    <div class="show">show it</div>
+<script src="jquery-1.12.4.min.js"></script>
+<script>
+/*
+var a=$(window);
+alert(a.width()+','+a.height());
+*/
+$(function(){
+	if ("ontouchstart" in window){  //判定是否是移动端
+		//判定是否是电视屏幕
+		//使用window.navigator.userAgent 做字符串特殊值的判定
+		var dom=$('meta[name="viewport"]');  //获取meta的viewport标签
+		var setting=dom.attr('content');  //获得当前设定值
+		var DPR=1/window.devicePixelRatio;  //计算缩放比例
+		//var width=window.screen.width*window.devicePixelRatio;   //计算屏幕的实际像素，按目前看来实际只要设置initial-scale和放大缩小比例即可，width可以保持默认
+		setting=setting.replace(/1\.0/g,DPR);  //加工content设置字符串
+		//setting=setting.replace('device-width',width+'px');  
+		dom.attr('content',setting);  //重新设置新的viewport
+	}
+});
+//alert(window.screen.width + ',' + window.devicePixelRatio);
+//alert($('.show').width());
+</script>
+</body>
+</html>
