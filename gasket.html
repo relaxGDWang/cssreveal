@@ -8,32 +8,41 @@
 *{ box-sizing:border-box;}
 html,body{ padding:0; margin:0;}
 svg{ border:1px solid #999;}
-svg .st1{fill:none;stroke:#000000;stroke-width:0.5;stroke-miterlimit:10;}
-svg .st2{fill:url(#leftArrow);stroke:#000000;stroke-width:0.7548;stroke-miterlimit:10;}
+svg .st1{fill:none;stroke:#000000;stroke-width:0.5;}
+svg .st2{fill:url(#leftArrow); stroke:#000000; stroke-width:0.7548;}
 </style>
 </head>
 <body>
     <div class="show">
 		<svg id="gasket" class="gasket typeA" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="600" height="600">
-			<polygon class="st2" points="94.434,13.585 29.518,13.585 6.167,40 29.518,66.415 94.434,66.415 71.083,40 "/>
+			<polygon class="st2" points="0,-100 200,-100 200,100 0,100"/>
 		</svg>
 	</div>
 <script src="jquery-1.12.4.min.js"></script>
 <script>
 var perX=5;
-var perY=Math.sin(Math.PI*60/180)*perX*2;
-var len=1;
+var perWidth=30;
+var perY=Math.sin(Math.PI*60/180)*perWidth*2;
+alert(perY*2);
+var len=Math.ceil(perWidth/perX);
 var pattern=createNS('pattern');
 pattern.setAttribute('id','leftArrow');
-pattern.setAttribute('width','10');
+pattern.setAttribute('width',perWidth);
 pattern.setAttribute('height',perY*2);
 pattern.setAttribute('patternUnits','userSpaceOnUse');
-pattern.setAttribute('viewBox','0 '+(-perY)+' 10 '+(perY*2));
+pattern.setAttribute('viewBox','0 '+(-perY)+' '+perWidth+' '+perY);
 var g=createNS('g');
 for (var i=0; i<len; i++){
 	var temp=createNS('polyline');
 	temp.setAttribute('class','st1');
-	temp.setAttribute('points',(i+1)*perX+','+(-perY)+' '+i*perX+',0 '+(i+1)*perX+','+perY);
+	temp.setAttribute('points',(perWidth+i*perX)+','+(-perY)+' '+i*perX+',0 '+(perWidth+i*perX)+','+perY);
+	g.appendChild(temp);
+}
+//绘制负长度
+for (var i=0; i<len-1; i++){
+	var temp=createNS('polyline');
+	temp.setAttribute('class','st1');
+	temp.setAttribute('points',(perWidth-(i+1)*perX)+','+(-perY)+' '+(-i-1)*perX+',0 '+(perWidth-(i+1)*perX)+','+perY);
 	g.appendChild(temp);
 }
 pattern.appendChild(g);
@@ -42,7 +51,7 @@ var gasket=$('#gasket');
 //polygon.setAttribute('class','st2');
 //polygon.setAttribute('points','10,10 100,40 200,320 30,190');
 //gasket.append(polygon);
-gasket.append(pattern);
+gasket.prepend(pattern);
 
 function createNS(tagName){
 	return document.createElementNS('http://www.w3.org/2000/svg',tagName);
