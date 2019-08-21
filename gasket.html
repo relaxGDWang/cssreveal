@@ -15,7 +15,8 @@ svg .st2{fill:url(#leftArrow); stroke:#000000; stroke-width:0.7548;}
 <body>
     <div class="show">
 		<svg id="gasket" class="gasket typeA" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="600" height="600">
-			<polygon class="st2" points="0,-100 200,-100 200,100 0,100"/>
+			<defs id="des1"></defs>
+			<rect class="st2" x="0" y="10" width="100" height="100"/>
 		</svg>
 	</div>
 <script src="jquery-1.12.4.min.js"></script>
@@ -27,10 +28,12 @@ alert(perY*2);
 var len=Math.ceil(perWidth/perX);
 var pattern=createNS('pattern');
 pattern.setAttribute('id','leftArrow');
+pattern.setAttribute('x',0);
+pattern.setAttribute('y',4);
 pattern.setAttribute('width',perWidth);
 pattern.setAttribute('height',perY*2);
 pattern.setAttribute('patternUnits','userSpaceOnUse');
-pattern.setAttribute('viewBox','0 '+(-perY)+' '+perWidth+' '+perY);
+pattern.setAttribute('viewBox','0 '+(-perY)+' '+perWidth+' '+perY*2);
 var g=createNS('g');
 for (var i=0; i<len; i++){
 	var temp=createNS('polyline');
@@ -46,7 +49,7 @@ for (var i=0; i<len-1; i++){
 	g.appendChild(temp);
 }
 pattern.appendChild(g);
-var gasket=$('#gasket');
+var gasket=$('#des1');
 //var polygon=document.createElementNS('http://www.w3.org/2000/svg','polygon');
 //polygon.setAttribute('class','st2');
 //polygon.setAttribute('points','10,10 100,40 200,320 30,190');
