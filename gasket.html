@@ -7,57 +7,76 @@
 <style type="text/css">
 *{ box-sizing:border-box;}
 html,body{ padding:0; margin:0;}
-svg{ border:1px solid #999;}
-svg .st1{fill:none;stroke:#000000;stroke-width:0.5;}
-svg .st2{fill:url(#leftArrow); stroke:#000000; stroke-width:0.7548;}
+svg{ border:1px solid #999; margin:10px;}
+svg .backShow{ stroke:#666; fill:#fff;}
+svg .sealing{ stroke:#000;}
+svg .sealing:hover{ stroke:red;}
+svg .sealing rect{ fill:#ccc;}
 </style>
 </head>
 <body>
     <div class="show">
-		<svg id="gasket" class="gasket typeA" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="600" height="600">
-			<defs id="des1"></defs>
-			<rect class="st2" x="0" y="10" width="100" height="100"/>
+		<svg id="gasket" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1">
 		</svg>
 	</div>
 <script src="jquery-1.12.4.min.js"></script>
 <script>
-var perX=5;
-var perWidth=30;
-var perY=Math.sin(Math.PI*60/180)*perWidth*2;
-alert(perY*2);
-var len=Math.ceil(perWidth/perX);
-var pattern=createNS('pattern');
-pattern.setAttribute('id','leftArrow');
-pattern.setAttribute('x',0);
-pattern.setAttribute('y',4);
-pattern.setAttribute('width',perWidth);
-pattern.setAttribute('height',perY*2);
-pattern.setAttribute('patternUnits','userSpaceOnUse');
-pattern.setAttribute('viewBox','0 '+(-perY)+' '+perWidth+' '+perY*2);
-var g=createNS('g');
-for (var i=0; i<len; i++){
-	var temp=createNS('polyline');
-	temp.setAttribute('class','st1');
-	temp.setAttribute('points',(perWidth+i*perX)+','+(-perY)+' '+i*perX+',0 '+(perWidth+i*perX)+','+perY);
-	g.appendChild(temp);
-}
-//绘制负长度
-for (var i=0; i<len-1; i++){
-	var temp=createNS('polyline');
-	temp.setAttribute('class','st1');
-	temp.setAttribute('points',(perWidth-(i+1)*perX)+','+(-perY)+' '+(-i-1)*perX+',0 '+(perWidth-(i+1)*perX)+','+perY);
-	g.appendChild(temp);
-}
-pattern.appendChild(g);
-var gasket=$('#des1');
-//var polygon=document.createElementNS('http://www.w3.org/2000/svg','polygon');
-//polygon.setAttribute('class','st2');
-//polygon.setAttribute('points','10,10 100,40 200,320 30,190');
-//gasket.append(polygon);
-gasket.prepend(pattern);
+var allW=800;
+var allH=400;
+var svg=$('#gasket')[0];
+svg.setAttribute('width',allW);
+svg.setAttribute('height',allH);
 
-function createNS(tagName){
-	return document.createElementNS('http://www.w3.org/2000/svg',tagName);
+var d2=540,d3=220,E=60;
+var g=drawGasketA(d2,d3,E);
+
+//居中g
+var mw=(allW-d2)/2;
+var mh=(allH-E)/2;
+g.setAttribute('transform','translate('+mw+' '+mh+')');
+svg.appendChild(g);
+
+
+//建立svg标签对象
+function createPath(name,attr){
+	var temp=document.createElementNS('http://www.w3.org/2000/svg',name);
+	for (let x in attr){
+		temp.setAttribute(x,attr[x]);
+	}
+	return temp;
+}
+
+//绘制基本型垫片
+function drawGasketA(d2,d3,E){
+	var angle=60;  //设定单边角度数
+	var dw=(d2-d3)/2;
+	var dh=E;
+	var g1=createPath('g',{class:'outframe'});
+	var g2=createPath('g',{class:'sealing'});
+	var rectMid=createPath('rect',{
+		x:0,
+		y:0,
+		width:d2,
+		height:dh,
+		class:'backShow'
+	});
+	g1.appendChild(rectMid);
+	var rectLeft=createPath('rect',{
+		x:0,
+		y:0,
+		width:dw,
+		height:dh
+	});
+	var rectRight=createPath('rect',{
+		x:d2-dw,
+		y:0,
+		width:dw,
+		height:dh
+	});
+	g2.appendChild(rectLeft);
+	g2.appendChild(rectRight);
+	g1.appendChild(g2);
+	return g1;
 }
 </script>
 </body>
