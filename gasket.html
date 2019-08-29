@@ -16,42 +16,22 @@ svg .sealing .partRight{ fill:url(#rightPattern);}
 svg .sealing rect{ fill:#ccc;}
 svg pattern{ stroke:#333; stroke-width:1; fill:none;}
 svg line{ stroke:#999; stroke-width:1;}
+
+svg #grid{ stroke-width:0.5; stroke:#666; fill:none;}  /*网格样式*/
+svg #outRing{ stroke-width:1; stroke:#000; fill:url(#metalPatternTRBL);}  /* 外环样式 */
+
 </style>
 </head>
 <body>
     <div class="show">
 		<svg id="gasket" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1">
 			<defs>
-				<pattern id="myPattern" patternUnits="userSpaceOnUse">
-				</pattern>
-				<pattern id="leftPattern" xlink:href="#myPattern"></pattern>
-				<pattern id="rightPattern" xlink:href="#myPattern"></pattern>
+				<pattern id="spiralPattern" patternUnits="userSpaceOnUse"></pattern>
+				<pattern id="leftSpiral" xlink:href="#spiralPattern"></pattern>
+				<pattern id="rightSpiral" xlink:href="#spiralPattern"></pattern>
+				<pattern id="metalPatternTRBL" patternUnits="userSpaceOnUse"></pattern>
+				<pattern id="metalPatternTLBR" xlink:href="#metalPatternTRBL" patternTransform="rotate(90)"></pattern>
 			</defs>
-			<g class="grid">
-				<line x1="50" y1="0" x2="50" y2="400"/>
-				<line x1="100" y1="0" x2="100" y2="400"/>
-				<line x1="150" y1="0" x2="150" y2="400"/>
-				<line x1="200" y1="0" x2="200" y2="400"/>
-				<line x1="250" y1="0" x2="250" y2="400"/>
-				<line x1="300" y1="0" x2="300" y2="400"/>
-				<line x1="350" y1="0" x2="350" y2="400"/>
-				<line x1="400" y1="0" x2="400" y2="400"/>
-				<line x1="450" y1="0" x2="450" y2="400"/>
-				<line x1="500" y1="0" x2="500" y2="400"/>
-				<line x1="550" y1="0" x2="550" y2="400"/>
-				<line x1="600" y1="0" x2="600" y2="400"/>
-				<line x1="650" y1="0" x2="650" y2="400"/>
-				<line x1="700" y1="0" x2="700" y2="400"/>
-				<line x1="750" y1="0" x2="750" y2="400"/>
-				
-				<line x1="0" y1="50" x2="800" y2="50"/>
-				<line x1="0" y1="100" x2="800" y2="100"/>
-				<line x1="0" y1="150" x2="800" y2="150"/>
-				<line x1="0" y1="200" x2="800" y2="200"/>
-				<line x1="0" y1="250" x2="800" y2="250"/>
-				<line x1="0" y1="300" x2="800" y2="300"/>
-				<line x1="0" y1="350" x2="800" y2="350"/>
-			</g>
 		</svg>
 	</div>
 <script src="jquery-1.12.4.min.js"></script>
@@ -62,28 +42,45 @@ var svg=$('#gasket')[0];
 svg.setAttribute('width',allW);
 svg.setAttribute('height',allH);
 
-var gasket={d1:100,d2:180,d3:420,d4:700,e:60,E:34};
-var g=drawGasketA('D',gasket);
+createGrid(svg,50);
 
-//居中g
-var mw=(allW-gasket.d4)/2;
-var mh=(allH-gasket.e)/2;
-//g.setAttribute('transform','translate('+mw+' '+mh+')');
-svg.appendChild(g);
+var angle=60;  //角度
+var gasket={d1:100,d2:180,d3:420,d4:700,e:60,E:34};  //垫片默认尺寸
 
-var ph=drawPattern(30,10);
-//居中图案
-$('#leftPattern')[0].setAttribute('patternTransform','translate(0,-'+(ph-gasket.e)/2+')');
-$('#rightPattern')[0].setAttribute('patternTransform','translate(5,-'+(ph-gasket.e)/2+') rotate(180)');
+//绘制金属底纹
+drawMetalPattern($('svg #metalPatternTRBL')[0],60,10);
+//绘制缠绕底纹
+var patternHeight=drawSpiralPattern($('svg #spiralPattern')[0],30,10);
+//垂直居中图案
+$('svg #leftSpiral')[0].setAttribute('patternTransform','translate(0,-'+(patternHeight-gasket.e)/2+')');
+$('svg #rightSpiral')[0].setAttribute('patternTransform','translate(5,-'+(patternHeight-gasket.e)/2+') rotate(180)');
+//绘制外环
+(function(){
+	let h=(gasket.e-gasket.E)/2;
+	let attr={
+		x: 0,
+		y: h,
+		width: gasket.d4,
+		height: gasket.E+h,
+		id: 'outRing'
+	};
+	var outRing=createPath('rect',attr);
+	svg.appendChild(outRing);
+})();
+//绘制缠绕垫
+(function(){
+	
+})();
 
 
-//绘制底纹
-function drawPattern(w,perW,angle){
-	if (!angle) angle=60;
-	var pattern=$('#myPattern')[0];
+//绘制缠绕底纹
+//pattern SVG中设置的底纹dom对象
+//w底纹宽度，底纹高度会按角度值自行计算
+//perW每个箭头线的水平间隔举例，请以能被w整除来进行设置
+function drawSpiralPattern(pattern,w,perW){
 	var g=createPath('g');
 	var count=w/perW*2+1;
-	var h=Math.tan(Math.PI/180*60)*w;
+	var h=Math.tan(Math.PI/180*angle)*w;
 	var p=[];
 	p[0]=[[0,0],[-w,h],[0,h*2]];
 	for (let i=1; i<count; i++){
@@ -109,6 +106,27 @@ function drawPattern(w,perW,angle){
 	pattern.setAttribute('height',h*2);
 	pattern.setAttribute('viewbox','0 0 '+w+' '+h*2);
 	return h*2;
+}
+
+//绘制金属底纹
+function drawMetalPattern(pattern,w,perW){
+	var g=createPath('g');
+	var count=w/perW*2+1;
+	var h=Math.tan(Math.PI/180*45)*w;
+	for (let i=0; i<count; i++){
+		var temp={};
+		temp.x1=-w+i*perW;
+		temp.y1=h;
+		temp.x2=0+i*perW;
+		temp.y2=0;
+		var line=createPath('line',temp);
+		g.appendChild(line);
+	}
+	pattern.appendChild(g);
+	pattern.setAttribute('width',w);
+	pattern.setAttribute('height',h);
+	pattern.setAttribute('viewbox','0 0 '+w+' '+h);
+	return h;
 }
 
 
@@ -248,6 +266,50 @@ function createRing(size,op,py){
 		return p;
 	}
 }
+
+//绘制网格
+function createGrid(svg,per){
+	var g=createPath('g',{
+		id: 'grid'
+	});
+	var w=svg.getAttribute('width')-0;
+	var h=svg.getAttribute('height')-0;
+	for (let i=per; i<=h; i+=per){
+		let temp=createPath('line',{
+			x1:0,
+			y1:i,
+			x2:w,
+			y2:i,
+		});
+		g.appendChild(temp);
+	}
+	for (let i=per; i<=w; i+=per){
+		let temp=createPath('line',{
+			x1:i,
+			y1:0,
+			x2:i,
+			y2:h,
+		});
+		g.appendChild(temp);
+	}
+	svg.appendChild(g);
+}
+
+/*
+var gasket={d1:100,d2:180,d3:420,d4:700,e:60,E:34};
+var g=drawGasketA('D',gasket);
+
+//居中g
+var mw=(allW-gasket.d4)/2;
+var mh=(allH-gasket.e)/2;
+//g.setAttribute('transform','translate('+mw+' '+mh+')');
+svg.appendChild(g);
+
+var ph=drawPattern(30,10);
+//居中图案
+$('#leftPattern')[0].setAttribute('patternTransform','translate(0,-'+(ph-gasket.e)/2+')');
+$('#rightPattern')[0].setAttribute('patternTransform','translate(5,-'+(ph-gasket.e)/2+') rotate(180)');
+*/
 </script>
 </body>
 </html>
