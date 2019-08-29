@@ -62,19 +62,19 @@ var svg=$('#gasket')[0];
 svg.setAttribute('width',allW);
 svg.setAttribute('height',allH);
 
-var gasket={d1:100,d2:180,d3:420,d4:600,E:60,e:42};
+var gasket={d1:100,d2:180,d3:420,d4:700,e:60,E:34};
 var g=drawGasketA('D',gasket);
 
 //居中g
 var mw=(allW-gasket.d4)/2;
-var mh=(allH-gasket.E)/2;
+var mh=(allH-gasket.e)/2;
 //g.setAttribute('transform','translate('+mw+' '+mh+')');
 svg.appendChild(g);
 
 var ph=drawPattern(30,10);
 //居中图案
-$('#leftPattern')[0].setAttribute('patternTransform','translate(0,-'+(ph-gasket.E)/2+')');
-$('#rightPattern')[0].setAttribute('patternTransform','translate(5,-'+(ph-gasket.E)/2+') rotate(180)');
+$('#leftPattern')[0].setAttribute('patternTransform','translate(0,-'+(ph-gasket.e)/2+')');
+$('#rightPattern')[0].setAttribute('patternTransform','translate(5,-'+(ph-gasket.e)/2+') rotate(180)');
 
 
 //绘制底纹
@@ -135,7 +135,7 @@ function drawGasketA(type,size){
 	var xp2=size.E/2/Math.tan(Math.PI/180*60);
 	
 	//绘制底部背景
-	let pointsArray=markPoints({w:size.d3,h:size.E},'middle',{x:(size.d4-size.d3)/2-xp,y:0});
+	let pointsArray=markPoints({w:size.d3,h:size.e},'middle',{x:(size.d4-size.d3)/2-xp,y:0});
 	var partMiddle=createPath('polygon',{
 		points:pointsArray.join(' '),
 		class:'backShow'
@@ -143,25 +143,26 @@ function drawGasketA(type,size){
 	
 	//绘制密封圈左侧
 	var perGS=(size.d3-size.d2)/2;
-	pointsArray=markPoints({w:perGS,h:size.E},'left',{x:(size.d4-size.d3)/2-xp,y:0});
+	pointsArray=markPoints({w:perGS,h:size.e},'left',{x:(size.d4-size.d3)/2-xp,y:0});
 	var partLeft=createPath('polygon',{
 		class: 'partLeft',
 		points:pointsArray.join(' ')
 	});
 	
 	//绘制密封圈右侧
-	pointsArray=markPoints({w:perGS,h:size.E},'right',{x:(size.d4-size.d3)/2-xp+size.d3-perGS,y:0});
+	pointsArray=markPoints({w:perGS,h:size.e},'right',{x:(size.d4-size.d3)/2-xp+size.d3-perGS,y:0});
 	var partRight=createPath('polygon',{
 		class: 'partRight',
 		points:pointsArray.join(' ')
 	});
 	
 	//绘制内环
-	var ringIn=createRing(size,'insdie',{x:});
+	var ringIn=createRing(size,'inside',{x:(size.d4-size.d2)/2,y:(size.e-size.E)/2});
 	
 	gSealing.appendChild(partMiddle);
 	gSealing.appendChild(partLeft);
 	gSealing.appendChild(partRight);
+	gSealing.appendChild(ringIn);
 	
 	gAll.appendChild(gSealing);
 	return gAll;
@@ -198,7 +199,6 @@ function markPoints(size,op,py,angle){
 			p[2][0]+=perX;
 			break;
 	}
-	console.log(p);
 	for (let i=0; i<p.length; i++){
 		p[i][0]+=py.x;
 		p[i][1]+=py.y;
@@ -208,43 +208,45 @@ function markPoints(size,op,py,angle){
 }
 
 //建立内外环
-function createRing(op,size){
+function createRing(size,op,py){
+	var pyEx=size.e/2/Math.tan(Math.PI/180*60);
+	var pointsArray=setPoints({w:(size.d2-size.d1)/2,h:size.E},'left',py);
+	var leftPart=createPath('polygon',{
+		points:pointsArray.join(' '),
+		fill:'#f90'
+	});
+	return leftPart;
 	
-	
-	function setPoints(){
+	function setPoints(size,op,py,angle){
+		if (!py) py={x:0,y:0};
+		if (!angle) angle=60;
+
+		var perY=size.h/2;
+		var perX=perY/Math.tan(Math.PI/180*angle);
+		var p=[];
+		p[0]=[0,0];
+		p[1]=[size.w,0];
+		p[2]=[size.w,perY];
+		p[3]=[size.w,size.h];
+		p[4]=[0,size.h];
+		p[5]=[0,perY];
+		console.log(p);
+		switch(op){
+			case 'left':
+				p[0][0]-=pyEx;
+				p[5][0]-=(perX+pyEx);
+				p[4][0]-=pyEx;
+				break;
+			case 'right':
+				p[2][0]+=perX;
+		}
+		for (let i=0; i<p.length; i++){
+			p[i][0]+=py.x;
+			p[i][1]+=py.y;
+			p[i]=p[i].join(',');
+		}
+		return p;
 	}
-}
-//size{w,h}   绘制缠绕垫片内外环
-//op 箭头方向
-//py{x,y} 偏移量
-//angle 单层夹角
-function markPoints2(size,op,py,angle){
-	if (!py) py={x:0,y:0};
-	if (!angle) angle=60;
-	
-	var perY=size.h/2;
-	var perX=perY/Math.tan(Math.PI/180*angle);
-	var p=[];
-	p[0]=[0,0];
-	p[1]=[size.w,0];
-	p[2]=[size.w,perY];
-	p[3]=[size.w,size.h];
-	p[4]=[0,size.h];
-	p[5]=[0,perY];
-	switch(op){
-		case 'left':
-			p[2][0]+=perX;
-			break;
-		case 'right':
-			p[5][0]-=perX;
-			break;
-	}
-	for (let i=0; i<p.length; i++){
-		p[i][0]+=py.x;
-		p[i][1]+=py.y;
-		p[i]=p[i].join(',');
-	}
-	return p;
 }
 </script>
 </body>
