@@ -8,18 +8,21 @@
 *{ box-sizing:border-box;}
 html,body{ padding:0; margin:0;}
 svg{ border:1px solid #999; margin:10px;}
-svg .backShow{ stroke:#666; fill:#fff;}
-svg .sealing{ stroke:#000;}
-svg .sealing:hover{ stroke:red; stroke-width:2;}
-svg .sealing .partLeft{ fill:url(#leftPattern);}
-svg .sealing .partRight{ fill:url(#rightPattern);}
-svg .sealing rect{ fill:#ccc;}
+svg .backShow{ stroke:#666; fill:#fff;}  /* 背景块样式 */
 svg pattern{ stroke:#333; stroke-width:1; fill:none;}
-svg line{ stroke:#999; stroke-width:1;}
+svg pattern line{ stroke:#666; stroke-width:1;}
+svg pattern polyline{ stroke:#000; stroke-width:2;}
 
-svg #grid{ stroke-width:0.5; stroke:#666; fill:none;}  /*网格样式*/
-svg #outRing{ stroke-width:1; stroke:#000; fill:url(#metalPatternTRBL);}  /* 外环样式 */
-
+svg .outRing{ stroke-width:2; stroke:#000; fill:url(#metalPatternTRBL);}  /* 外环样式 */
+svg .outRing:hover{ stroke:red; fill:#fff;}
+svg .inRing .left, svg .inRing .right{ stroke-width:2; stroke:#000; fill:url(#metalPatternTLBR);} /* 内环样式 */
+svg .inRing:hover .left, svg .inRing:hover .right{ stroke:red; fill:#fff;}
+svg .sealing{ stroke:#000; stroke-width:2;}
+svg .sealing:hover{ stroke:red;}
+svg .sealing:hover .partLeft, svg .sealing:hover .partRight{ fill:#fff;}
+svg .sealing .partLeft{ fill:url(#leftSpiral);}
+svg .sealing .partRight{ fill:url(#rightSpiral);}
+svg .rulerTips{ stroke:#000; stroke-width:0.5;}
 </style>
 </head>
 <body>
@@ -36,24 +39,30 @@ svg #outRing{ stroke-width:1; stroke:#000; fill:url(#metalPatternTRBL);}  /* 外
 	</div>
 <script src="jquery-1.12.4.min.js"></script>
 <script>
-var allW=800;
+var allW=1000;
 var allH=400;
 var svg=$('#gasket')[0];
 svg.setAttribute('width',allW);
 svg.setAttribute('height',allH);
-
-createGrid(svg,50);
-
 var angle=60;  //角度
-var gasket={d1:100,d2:180,d3:420,d4:700,e:60,E:34};  //垫片默认尺寸
+var gasket={d1:100,d2:180,d3:420,d4:800,e:50,E:36};  //垫片默认尺寸
+//绘制网格
+//createGrid(svg,50);
+
+var allG=createPath('g',{
+	transform: 'translate('+(allW-gasket.d4)/2+','+(allH-gasket.e)/2+')'
+});
+svg.appendChild(allG);
+
 
 //绘制金属底纹
-drawMetalPattern($('svg #metalPatternTRBL')[0],60,10);
+drawMetalPattern($('svg #metalPatternTRBL')[0],60,15);
 //绘制缠绕底纹
 var patternHeight=drawSpiralPattern($('svg #spiralPattern')[0],30,10);
 //垂直居中图案
 $('svg #leftSpiral')[0].setAttribute('patternTransform','translate(0,-'+(patternHeight-gasket.e)/2+')');
-$('svg #rightSpiral')[0].setAttribute('patternTransform','translate(5,-'+(patternHeight-gasket.e)/2+') rotate(180)');
+$('svg #rightSpiral')[0].setAttribute('patternTransform','translate(0,-'+(patternHeight-gasket.e)/2+') rotate(180)');
+
 //绘制外环
 (function(){
 	let h=(gasket.e-gasket.E)/2;
@@ -61,17 +70,87 @@ $('svg #rightSpiral')[0].setAttribute('patternTransform','translate(5,-'+(patter
 		x: 0,
 		y: h,
 		width: gasket.d4,
-		height: gasket.E+h,
-		id: 'outRing'
+		height: gasket.E,
+		class: 'outRing'
 	};
 	var outRing=createPath('rect',attr);
-	svg.appendChild(outRing);
+	allG.appendChild(outRing);
 })();
 //绘制缠绕垫
 (function(){
+	//绘制底部背景
+	let pointsArray=markPoints({w:gasket.d3,h:gasket.e},'middle',{x:(gasket.d4-gasket.d3)/2,y:0});
+	var gasketBack=createPath('polygon',{
+		points:pointsArray.join(' '),
+		class:'backShow'
+	});
+	var g=createPath('g',{
+		class: 'sealing',
+		transform: 'translate('+(gasket.d4-gasket.d3)/2+',0)'
+	});
+	//绘制左侧缠绕垫
+	pointsArray=markPoints({w:(gasket.d3-gasket.d2)/2,h:gasket.e},'left');
+	var partLeft=createPath('polygon',{
+		class: 'partLeft',
+		points:pointsArray.join(' ')
+	});
+	//绘制密封圈右侧
+	pointsArray=markPoints({w:(gasket.d3-gasket.d2)/2,h:gasket.e},'right',{x:(gasket.d3-gasket.d2)/2+gasket.d2,y:0});
+	var partRight=createPath('polygon',{
+		class: 'partRight',
+		points:pointsArray.join(' ')
+	});
 	
+	g.appendChild(partLeft);
+	g.appendChild(partRight);
+	allG.appendChild(gasketBack);
+	allG.appendChild(g);
+})();
+//绘制内环
+(function(){
+	//计算偏量值
+	var pyVal=(gasket.e-gasket.E)/2/Math.tan(Math.PI/180*angle);
+	var g=createPath('g',{
+		class: 'inRing',
+		transform: 'translate('+((gasket.d4-gasket.d2)/2-pyVal)+','+(gasket.e-gasket.E)/2+')'
+	});
+	//绘制底部背景
+	let pointsArray=markPoints({w:gasket.d2+pyVal*2,h:gasket.E},'middle');
+	var ringBack=createPath('polygon',{
+		points:pointsArray.join(' '),
+		class:'backShow'
+	});
+	//绘制左侧内环
+	pointsArray=markPoints({w:(gasket.d2-gasket.d1)/2+pyVal,h:gasket.E},'metalLeft');
+	var ringLeft=createPath('polygon',{
+		points:pointsArray.join(' '),
+		class:'left'
+	});
+	//绘制右侧内环
+	pointsArray=markPoints({w:(gasket.d2-gasket.d1)/2+pyVal,h:gasket.E},'metalRight',{x:(gasket.d2-gasket.d1)/2+gasket.d1+pyVal,y:0});
+	var ringRight=createPath('polygon',{
+		points:pointsArray.join(' '),
+		class:'right'
+	});
+	g.appendChild(ringBack);
+	g.appendChild(ringLeft);
+	g.appendChild(ringRight);
+	allG.appendChild(g);
 })();
 
+//绘制尺寸提示线
+(function(){
+	var g1=markLines({w:gasket.d1,h:50},'d1','col',{x:(gasket.d4-gasket.d1)/2,y:gasket.e-(gasket.e-gasket.E)/2});
+	var g2=markLines({w:gasket.d2,h:70},'d2','col',{x:(gasket.d4-gasket.d2)/2,y:gasket.e});
+	var g3=markLines({w:gasket.d3,h:100},'d3','col',{x:(gasket.d4-gasket.d3)/2,y:gasket.e});
+	var g4=markLines({w:gasket.d4,h:130},'d4','col',{x:0,y:gasket.e-(gasket.e-gasket.E)/2});
+	var g5=markLines({w:gasket.d3,h:100},'d3','col',{x:(gasket.d4-gasket.d3)/2,y:gasket.e});
+	var g6=markLines({w:gasket.d4,h:130},'d4','col',{x:0,y:gasket.e-(gasket.e-gasket.E)/2});
+	allG.appendChild(g1);
+	allG.appendChild(g2);
+	allG.appendChild(g3);
+	allG.appendChild(g4);
+})();
 
 //绘制缠绕底纹
 //pattern SVG中设置的底纹dom对象
@@ -139,60 +218,13 @@ function createPath(name,attr){
 	return temp;
 }
 
-//绘制基本型垫片
-//type A,B,C,D
-//size d1,d2,d3,d4,E,e
-function drawGasketA(type,size){
-	var gAll=createPath('g',{class:'outframe'});
-	var gSealing=createPath('g',{class:'sealing'});
-	var gOutside=createPath('g',{class:'outside'});
-	var gInside=createPath('g',{class:'inside'});
-	
-	//计算x轴方向侵入偏移
-	var xp=size.e/2/Math.tan(Math.PI/180*60);
-	var xp2=size.E/2/Math.tan(Math.PI/180*60);
-	
-	//绘制底部背景
-	let pointsArray=markPoints({w:size.d3,h:size.e},'middle',{x:(size.d4-size.d3)/2-xp,y:0});
-	var partMiddle=createPath('polygon',{
-		points:pointsArray.join(' '),
-		class:'backShow'
-	});
-	
-	//绘制密封圈左侧
-	var perGS=(size.d3-size.d2)/2;
-	pointsArray=markPoints({w:perGS,h:size.e},'left',{x:(size.d4-size.d3)/2-xp,y:0});
-	var partLeft=createPath('polygon',{
-		class: 'partLeft',
-		points:pointsArray.join(' ')
-	});
-	
-	//绘制密封圈右侧
-	pointsArray=markPoints({w:perGS,h:size.e},'right',{x:(size.d4-size.d3)/2-xp+size.d3-perGS,y:0});
-	var partRight=createPath('polygon',{
-		class: 'partRight',
-		points:pointsArray.join(' ')
-	});
-	
-	//绘制内环
-	var ringIn=createRing(size,'inside',{x:(size.d4-size.d2)/2,y:(size.e-size.E)/2});
-	
-	gSealing.appendChild(partMiddle);
-	gSealing.appendChild(partLeft);
-	gSealing.appendChild(partRight);
-	gSealing.appendChild(ringIn);
-	
-	gAll.appendChild(gSealing);
-	return gAll;
-}
 
 //size{w,h}   绘制缠绕垫片密封环
 //op 箭头方向
 //py{x,y} 偏移量
 //angle 单层夹角
-function markPoints(size,op,py,angle){
+function markPoints(size,op,py){
 	if (!py) py={x:0,y:0};
-	if (!angle) angle=60;
 	
 	var perY=size.h/2;
 	var perX=perY/Math.tan(Math.PI/180*angle);
@@ -216,6 +248,12 @@ function markPoints(size,op,py,angle){
 			p[5][0]-=perX;
 			p[2][0]+=perX;
 			break;
+		case 'metalLeft':
+			p[5][0]-=perX;
+			break;
+		case 'metalRight':
+			p[2][0]+=perX;
+			break;
 	}
 	for (let i=0; i<p.length; i++){
 		p[i][0]+=py.x;
@@ -223,48 +261,6 @@ function markPoints(size,op,py,angle){
 		p[i]=p[i].join(',');
 	}
 	return p;
-}
-
-//建立内外环
-function createRing(size,op,py){
-	var pyEx=size.e/2/Math.tan(Math.PI/180*60);
-	var pointsArray=setPoints({w:(size.d2-size.d1)/2,h:size.E},'left',py);
-	var leftPart=createPath('polygon',{
-		points:pointsArray.join(' '),
-		fill:'#f90'
-	});
-	return leftPart;
-	
-	function setPoints(size,op,py,angle){
-		if (!py) py={x:0,y:0};
-		if (!angle) angle=60;
-
-		var perY=size.h/2;
-		var perX=perY/Math.tan(Math.PI/180*angle);
-		var p=[];
-		p[0]=[0,0];
-		p[1]=[size.w,0];
-		p[2]=[size.w,perY];
-		p[3]=[size.w,size.h];
-		p[4]=[0,size.h];
-		p[5]=[0,perY];
-		console.log(p);
-		switch(op){
-			case 'left':
-				p[0][0]-=pyEx;
-				p[5][0]-=(perX+pyEx);
-				p[4][0]-=pyEx;
-				break;
-			case 'right':
-				p[2][0]+=perX;
-		}
-		for (let i=0; i<p.length; i++){
-			p[i][0]+=py.x;
-			p[i][1]+=py.y;
-			p[i]=p[i].join(',');
-		}
-		return p;
-	}
 }
 
 //绘制网格
@@ -295,21 +291,34 @@ function createGrid(svg,per){
 	svg.appendChild(g);
 }
 
-/*
-var gasket={d1:100,d2:180,d3:420,d4:700,e:60,E:34};
-var g=drawGasketA('D',gasket);
-
-//居中g
-var mw=(allW-gasket.d4)/2;
-var mh=(allH-gasket.e)/2;
-//g.setAttribute('transform','translate('+mw+' '+mh+')');
-svg.appendChild(g);
-
-var ph=drawPattern(30,10);
-//居中图案
-$('#leftPattern')[0].setAttribute('patternTransform','translate(0,-'+(ph-gasket.e)/2+')');
-$('#rightPattern')[0].setAttribute('patternTransform','translate(5,-'+(ph-gasket.e)/2+') rotate(180)');
-*/
+//size 绘制区域尺寸 w宽度 h高度
+//character 需要标注的字符
+//op 绘制方向 col绘制纵向线条 row绘制横向线条
+//py 偏移量，x横向偏移值 y纵向偏移值
+function markLines(size,character,op,py){
+	var g=createPath('g',{class:'rulerTips'});
+	var lineStyle={};
+	if (op==='col'){
+		lineStyle.x1=
+	}else{
+	
+	}
+	var lineLeft=createPath('line',{
+		x1: 0+py.x,
+		y1: 0+py.y,
+		x2: 0+py.x,
+		y2: size.h+py.y
+	});
+	var lineRight=createPath('line',{
+		x1: size.w+py.x,
+		y1: 0+py.y,
+		x2: size.w+py.x,
+		y2: size.h+py.y
+	});
+	g.appendChild(lineLeft);
+	g.appendChild(lineRight);
+	return g;
+}
 </script>
 </body>
 </html>

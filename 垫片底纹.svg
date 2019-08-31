@@ -1,30 +1,61 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- Generator: Adobe Illustrator 19.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
-<svg version="1.1" id="图层_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-	 viewBox="0 0 300 80" style="enable-background:new 0 0 300 80;" xml:space="preserve">
+<svg id="gasket" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="1000" height="400">
 <style type="text/css">
-	.st0{fill:none;}
-	.st1{fill:none;stroke:#000000;stroke-width:0.5;stroke-miterlimit:10;}
-	.st2{fill:url(#leftArrow);stroke:#000000;stroke-width:0.7548;stroke-miterlimit:10;}
-	.st3{fill:url(#XMLID_10_);stroke:#000000;stroke-width:0.7548;stroke-miterlimit:10;}
+svg{ border:1px solid #999; margin:10px;}
+svg .backShow{ stroke:#666; fill:#fff;}  /* 背景块样式 */
+svg pattern{ stroke:#333; stroke-width:1; fill:none;}
+svg pattern line{ stroke:#666; stroke-width:1;}
+svg pattern polyline{ stroke:#000; stroke-width:2;}
+
+svg .outRing{ stroke-width:2; stroke:#000; fill:url(#metalPatternTRBL);}  /* 外环样式 */
+svg .outRing:hover{ stroke:red; fill:#eee;}
+svg .inRing .left, svg .inRing .right{ stroke-width:2; stroke:#000; fill:url(#metalPatternTLBR);} /* 内环样式 */
+svg .inRing:hover .left, svg .inRing:hover .right{ stroke:red; fill:#eee;}
+svg .sealing{ stroke:#000; stroke-width:2;}
+svg .sealing:hover{ stroke:red;}
+svg .sealing:hover .partLeft, svg .sealing:hover .partRight{ fill:#eee;}
+svg .sealing .partLeft{ fill:url(#leftSpiral);}
+svg .sealing .partRight{ fill:url(#rightSpiral);}
 </style>
-<pattern width="30" height="80" patternUnits="userSpaceOnUse" id="leftArrow" viewBox="35 -80 30 80">
-	<g id="XMLID_18_">
-		<polyline class="st1" points="95,0 60,-40 95,-80"/>
-		<polyline class="st1" points="89,0 54,-40 89,-80"/>
-		<polyline class="st1" points="83,0 48,-40 83,-80"/>
-		<polyline class="st1" points="77,0 42,-40 77,-80"/>
-		<polyline class="st1" points="71,0 36,-40 71,-80"/>
-		<polyline class="st1" points="65,0 30,-40 65,-80"/>
-		<polyline class="st1" points="59,0 24,-40 59,-80"/>
-		<polyline class="st1" points="53,0 18,-40 53,-80"/>
-		<polyline class="st1" points="47,0 12,-40 47,-80"/>
-		<polyline class="st1" points="41,0 6,-40 41,-80"/>
-		<polyline class="st1" points="35,0 0,-40 35,-80"/>
+	<defs>
+		<pattern id="spiralPattern" patternUnits="userSpaceOnUse" width="30" height="103.92304845413261" viewbox="0 0 30 103.92304845413261">
+			<g>
+				<polyline points="0,0 -30,51.961524227066306 0,103.92304845413261"></polyline>
+				<polyline points="10,0 -20,51.961524227066306 10,103.92304845413261"></polyline>
+				<polyline points="20,0 -10,51.961524227066306 20,103.92304845413261"></polyline>
+				<polyline points="30,0 0,51.961524227066306 30,103.92304845413261"></polyline>
+				<polyline points="40,0 10,51.961524227066306 40,103.92304845413261"></polyline>
+				<polyline points="50,0 20,51.961524227066306 50,103.92304845413261"></polyline>
+				<polyline points="60,0 30,51.961524227066306 60,103.92304845413261"></polyline>
+			</g>
+		</pattern>
+		<pattern id="leftSpiral" xlink:href="#spiralPattern" patternTransform="translate(0,-26.961524227066306)"></pattern>
+		<pattern id="rightSpiral" xlink:href="#spiralPattern" patternTransform="translate(0,-26.961524227066306) rotate(180)"></pattern>
+		<pattern id="metalPatternTRBL" patternUnits="userSpaceOnUse" width="60" height="59.99999999999999" viewbox="0 0 60 59.99999999999999">
+			<g>
+				<line x1="-60" y1="59.99999999999999" x2="0" y2="0"></line>
+				<line x1="-45" y1="59.99999999999999" x2="15" y2="0"></line>
+				<line x1="-30" y1="59.99999999999999" x2="30" y2="0"></line>
+				<line x1="-15" y1="59.99999999999999" x2="45" y2="0"></line>
+				<line x1="0" y1="59.99999999999999" x2="60" y2="0"></line>
+				<line x1="15" y1="59.99999999999999" x2="75" y2="0"></line>
+				<line x1="30" y1="59.99999999999999" x2="90" y2="0"></line>
+				<line x1="45" y1="59.99999999999999" x2="105" y2="0"></line>
+				<line x1="60" y1="59.99999999999999" x2="120" y2="0"></line>
+			</g>
+		</pattern>
+		<pattern id="metalPatternTLBR" xlink:href="#metalPatternTRBL" patternTransform="rotate(90)"></pattern>
+	</defs>
+	<g transform="translate(100,175)">
+		<rect x="0" y="7" width="800" height="36" class="outRing"></rect>
+		<polygon points="190,0 610,0 624.4337567297407,25 610,50 190,50 175.56624327025935,25" class="backShow"></polygon>
+		<g class="sealing" transform="translate(190,0)">
+			<polygon class="partLeft" points="0,0 120,0 105.56624327025935,25 120,50 0,50 -14.433756729740649,25"></polygon>
+			<polygon class="partRight" points="300,0 420,0 434.43375672974065,25 420,50 300,50 314.43375672974065,25"></polygon>
+		</g>
+		<g class="inRing" transform="translate(305.9585481156726,7)">
+			<polygon points="0,0 188.08290376865477,0 198.47520861406804,18 188.08290376865477,36 0,36 -10.392304845413268,18" class="backShow"></polygon>
+			<polygon points="0,0 44.04145188432738,0 44.04145188432738,18 44.04145188432738,36 0,36 -10.392304845413268,18" class="left"></polygon>
+			<polygon points="144.0414518843274,0 188.08290376865477,0 198.47520861406804,18 188.08290376865477,36 144.0414518843274,36 144.0414518843274,18" class="right"></polygon>
+		</g>
 	</g>
-</pattern>
-<polygon id="XMLID_4_" class="st2" points="94.434,13.585 29.518,13.585 6.167,40 29.518,66.415 94.434,66.415 71.083,40 "/>
-<pattern id="XMLID_10_" xlink:href="#leftArrow" patternTransform="matrix(-1 0 0 1 0 0)">
-</pattern>
-<polygon id="XMLID_5_" class="st3" points="270.482,13.585 205.566,13.585 228.917,40 205.566,66.415 270.482,66.415 293.833,40 "/>
 </svg>
