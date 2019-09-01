@@ -22,7 +22,10 @@ svg .sealing:hover{ stroke:red;}
 svg .sealing:hover .partLeft, svg .sealing:hover .partRight{ fill:#fff;}
 svg .sealing .partLeft{ fill:url(#leftSpiral);}
 svg .sealing .partRight{ fill:url(#rightSpiral);}
-svg .rulerTips{ stroke:#000; stroke-width:0.5;}
+svg .rulerTips{ stroke:#000; stroke-width:1; stroke-dasharray:4,2;}
+svg .rulerTips .tipLabel{ marker-start:url(#arrowRight); marker-end:url(#arrowLeft); stroke-dasharray:0;}
+svg .rulerTips text{ font-size:16px; fill:#000; stroke-dasharray:0;}
+svg .title{ font-size:24px;}
 </style>
 </head>
 <body>
@@ -34,6 +37,12 @@ svg .rulerTips{ stroke:#000; stroke-width:0.5;}
 				<pattern id="rightSpiral" xlink:href="#spiralPattern"></pattern>
 				<pattern id="metalPatternTRBL" patternUnits="userSpaceOnUse"></pattern>
 				<pattern id="metalPatternTLBR" xlink:href="#metalPatternTRBL" patternTransform="rotate(90)"></pattern>
+				<marker id="arrowLeft" markerWidth="10" markerHeight="10" refX="12" refY="6" orient="auto" markerUnits="strokeWidth" viewBox="0 0 12 12">
+					<polygon points="0,0 0,12 12,6"/>
+				</marker>
+				<marker id="arrowRight" markerWidth="10" markerHeight="10" refX="0" refY="6" orient="auto" markerUnits="strokeWidth" viewBox="0 0 12 12">
+					<polygon points="12,12 12,0 0,6"/>
+				</marker>
 			</defs>
 		</svg>
 	</div>
@@ -50,7 +59,7 @@ var gasket={d1:100,d2:180,d3:420,d4:800,e:50,E:36};  //垫片默认尺寸
 //createGrid(svg,50);
 
 var allG=createPath('g',{
-	transform: 'translate('+(allW-gasket.d4)/2+','+(allH-gasket.e)/2+')'
+	transform: 'translate('+(allW-gasket.d4)/2+','+(allH-gasket.e)*0.3+')'
 });
 svg.appendChild(allG);
 
@@ -140,16 +149,32 @@ $('svg #rightSpiral')[0].setAttribute('patternTransform','translate(0,-'+(patter
 
 //绘制尺寸提示线
 (function(){
-	var g1=markLines({w:gasket.d1,h:50},'d1','col',{x:(gasket.d4-gasket.d1)/2,y:gasket.e-(gasket.e-gasket.E)/2});
-	var g2=markLines({w:gasket.d2,h:70},'d2','col',{x:(gasket.d4-gasket.d2)/2,y:gasket.e});
-	var g3=markLines({w:gasket.d3,h:100},'d3','col',{x:(gasket.d4-gasket.d3)/2,y:gasket.e});
-	var g4=markLines({w:gasket.d4,h:130},'d4','col',{x:0,y:gasket.e-(gasket.e-gasket.E)/2});
-	var g5=markLines({w:gasket.d3,h:100},'d3','col',{x:(gasket.d4-gasket.d3)/2,y:gasket.e});
-	var g6=markLines({w:gasket.d4,h:130},'d4','col',{x:0,y:gasket.e-(gasket.e-gasket.E)/2});
-	allG.appendChild(g1);
-	allG.appendChild(g2);
-	allG.appendChild(g3);
-	allG.appendChild(g4);
+	var rulerG=createPath('g');
+	var g1=markLines({w:gasket.d1,h:50},'d1',{main:'col',line:'end'},{x:(gasket.d4-gasket.d1)/2,y:gasket.e-(gasket.e-gasket.E)/2});
+	var g2=markLines({w:gasket.d2,h:75},'d2',{main:'col',line:'end'},{x:(gasket.d4-gasket.d2)/2,y:gasket.e});
+	var g3=markLines({w:gasket.d3,h:110},'d3',{main:'col',line:'end'},{x:(gasket.d4-gasket.d3)/2,y:gasket.e});
+	var g4=markLines({w:gasket.d4,h:155},'d4',{main:'col',line:'end'},{x:0,y:gasket.e-(gasket.e-gasket.E)/2});
+	var g5=markLines({w:(gasket.d4-gasket.d3)/2+50,h:gasket.e},'e',{main:'row',line:'start'},{x:-50,y:0});
+	var g6=markLines({w:50,h:gasket.E},'E',{main:'row',line:'end'},{x:gasket.d4,y:(gasket.e-gasket.E)/2});
+	rulerG.appendChild(g1);
+	rulerG.appendChild(g2);
+	rulerG.appendChild(g3);
+	rulerG.appendChild(g4);
+	rulerG.appendChild(g5);
+	rulerG.appendChild(g6);
+	allG.appendChild(rulerG);
+})();
+
+//绘制主标题
+(function(){
+	var txt=createPath('text',{
+		class: 'title',
+		text: '金属缠绕垫片 内环与定位环型'
+	});
+	allG.appendChild(txt);
+	var size=txt.getBoundingClientRect();
+	txt.setAttribute('x',(gasket.d4-size.width)/2);
+	txt.setAttribute('y',-50);
 })();
 
 //绘制缠绕底纹
@@ -213,7 +238,11 @@ function drawMetalPattern(pattern,w,perW){
 function createPath(name,attr){
 	var temp=document.createElementNS('http://www.w3.org/2000/svg',name);
 	for (let x in attr){
+		if (x==='text') continue;
 		temp.setAttribute(x,attr[x]);
+	}
+	if (name==='text'){
+		temp.appendChild(document.createTextNode(attr.text));
 	}
 	return temp;
 }
@@ -293,30 +322,102 @@ function createGrid(svg,per){
 
 //size 绘制区域尺寸 w宽度 h高度
 //character 需要标注的字符
-//op 绘制方向 col绘制纵向线条 row绘制横向线条
+//op main绘制方向 col绘制纵向线条 row绘制横向线条
+//op line start 如果是col 表示绘制顶部标记线 如果是row表示绘制左侧标记线  end跟start唯一不同是相反方向
 //py 偏移量，x横向偏移值 y纵向偏移值
 function markLines(size,character,op,py){
 	var g=createPath('g',{class:'rulerTips'});
-	var lineStyle={};
-	if (op==='col'){
-		lineStyle.x1=
+	var p=[];
+	p[0]=[0+py.x,0+py.y];
+	p[1]=[size.w+py.x,0+py.y];
+	p[2]=[size.w+py.x,size.h+py.y];
+	p[3]=[0+py.x,size.h+py.y];
+	var line1,line2,line3,txt;
+	if (op.main==='col'){
+		line1=createPath('line',{
+			x1: p[0][0],
+			y1: p[0][1],
+			x2: p[3][0],
+			y2: p[3][1]
+		});
+		line2=createPath('line',{
+			x1: p[1][0],
+			y1: p[1][1],
+			x2: p[2][0],
+			y2: p[2][1]
+		});
+		if (op.line==='start'){
+			line3=createPath('line',{
+				x1: p[0][0],
+				y1: p[0][1],
+				x2: p[1][0],
+				y2: p[1][1],
+				class:'tipLabel'
+			});
+			txt=createPath('text',{
+				x: p[0][0]+size.w/2-8,
+				y: p[3][1]-6,
+				text: character
+			});
+		}else{
+			line3=createPath('line',{
+				x1: p[3][0],
+				y1: p[3][1],
+				x2: p[2][0],
+				y2: p[2][1],
+				class:'tipLabel'
+			});
+			txt=createPath('text',{
+				x: p[0][0]+size.w/2-8,
+				y: p[3][1]+18,
+				text: character
+			});
+		}
 	}else{
-	
+		line1=createPath('line',{
+			x1: p[0][0],
+			y1: p[0][1],
+			x2: p[1][0],
+			y2: p[1][1]
+		});
+		line2=createPath('line',{
+			x1: p[3][0],
+			y1: p[3][1],
+			x2: p[2][0],
+			y2: p[2][1]
+		});
+		if (op.line==='start'){
+			line3=createPath('line',{
+				x1: p[0][0],
+				y1: p[0][1],
+				x2: p[3][0],
+				y2: p[3][1],
+				class:'tipLabel'
+			});
+			txt=createPath('text',{
+				x: p[0][0]-16,
+				y: p[0][1]+size.h/2+size.h*0.1,
+				text: character
+			});
+		}else{
+			line3=createPath('line',{
+				x1: p[1][0],
+				y1: p[1][1],
+				x2: p[2][0],
+				y2: p[2][1],
+				class:'tipLabel'
+			});
+			txt=createPath('text',{
+				x: p[1][0]+16,
+				y: p[0][1]+size.h/2+size.h*0.1,
+				text: character
+			});
+		}
 	}
-	var lineLeft=createPath('line',{
-		x1: 0+py.x,
-		y1: 0+py.y,
-		x2: 0+py.x,
-		y2: size.h+py.y
-	});
-	var lineRight=createPath('line',{
-		x1: size.w+py.x,
-		y1: 0+py.y,
-		x2: size.w+py.x,
-		y2: size.h+py.y
-	});
-	g.appendChild(lineLeft);
-	g.appendChild(lineRight);
+	g.appendChild(line1);
+	g.appendChild(line2);
+	g.appendChild(line3);
+	g.appendChild(txt);
 	return g;
 }
 </script>
