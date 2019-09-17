@@ -25,6 +25,7 @@ $(function(){
 		var dom=$('meta[name="viewport"]');  //获取meta的viewport标签
 		var setting=dom.attr('content');  //获得当前设定值
 		var DPR=1/window.devicePixelRatio;  //计算缩放比例
+		alert(DPR);
 		//var width=window.screen.width*window.devicePixelRatio;   //计算屏幕的实际像素，按目前看来实际只要设置initial-scale和放大缩小比例即可，width可以保持默认
 		setting=setting.replace(/1\.0/g,DPR);  //加工content设置字符串
 		//setting=setting.replace('device-width',width+'px');  
