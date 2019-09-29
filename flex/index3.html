@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8"/>
+	<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+	<title>测试flex布局</title>
+	<link rel="stylesheet" type="text/css" href="style/fontIcon/iconfont.css"/>
+	<link rel="stylesheet" type="text/css" href="style/publicStyle3.css"/>
+<style>
+body{ overflow:auto;}
+.showImg{ width:100%; display:-webkit-flex; display:-moz-flex; display:flex; flex-wrap:wrap; justify-content:space-between; box-shadow:0 0 10px #000; background-color:#000; padding:5px;}
+.showImg > div{ flex-grow:1; overflow:hidden; width:200px; max-height:160px; margin:5px;}
+.showImg img{ width:100%;}
+</style>
+</head>
+<body>
+	<div class="showImg">
+		<div><img src="style/images/p1.jpg"/></div>
+		<div><img src="style/images/p2.jpg"/></div>
+		<div><img src="style/images/p3.jpg"/></div>
+		<div><img src="style/images/p4.jpg"/></div>
+		<div><img src="style/images/p5.jpg"/></div>
+	</div>
+	
+<script src="/_PUB/js/jquery/jquery-1.9.1.min.js"></script>
+<script src="/_PUB/js/relax_function.js"></script>
+<script>
+</script>
+</body>
+</html>

@@ -1,0 +1,69 @@
+@charset "utf-8";
+.col .ext{ cursor:pointer; -webkit-tap-highlight-color:rgba(255, 255, 255, 0);}
+.col .ext:active{ color:#d8717c;}
+.product label strong{ display:block; margin-bottom:-10px;}
+.rexCheckbox{ margin-bottom:10px;}
+.nextstep{ margin:0 auto; width:80%; max-width:300px; min-width:120px;}
+
+.inputArea{ border:1px solid #95727f; padding:5px; border-radius:6px; -webkit-user-modify:read-write-plaintext-only;}
+.readSFZ{ text-align:center;}
+.readSFZ .introPic{ display:block; margin:0 auto; max-width:90%;}
+.readSFZ .tipMsg{ display:inline-block; text-align:left; }
+.readSFZ .tipMsg img{ margin-right:5px; width:18px; vertical-align:text-bottom;}
+.readRetry{ position:relative;}
+.readRetry .rexButton{ position:absolute; right:0px; top:-3px; font-size:12px; font-weight:300;}
+
+.payPrice span{ display:inline-block; vertical-align:middle;}
+.payPrice .iconfont{ margin-left:10px; cursor:pointer; -webkit-tap-highlight-color:rgba(255,255,255,0);}
+.payPrice .iconfont:active{ color:#ab2836;}
+
+.areaSelList{ background-color:#95727f; padding:10px 5px;}
+.areaSelList li{ margin-right:5px;}
+.areaSelList .selTitle{ display:inline-block; vertical-align:middle; color:#fff;}
+.selectData li{padding:8px 10px; background-color:#fdf6f9; border-bottom:1px solid #b696a2;}
+.selectData li:active,.selectData li.sel{ background-color:#95727f; color:#fff;}
+
+/* -------- 身份证自适应布局 分3档 ------------------------------- */
+#sfz1,#sfz2{ width:500px; height:317px; background-size:contain; background-repeat:no-repeat; position:relative; margin:5px auto;}
+#sfz1{ background-image:url(images/sfz1.jpg);}
+#sfz2{ background-image:url(images/sfz2.jpg);}
+#sfz1 > span,#sfz2 > span{ font-size:16px; position:absolute;}
+#sfz1 [name="name"]{ top:40px; left:95px; font-size:20px;}
+#sfz1 [name="sex"]{ top:80px; left:93px;}
+#sfz1 [name="ethnic"]{ top:80px; left:193px;}
+#sfz1 [name="year"]{ top:119px; left:93px;}
+#sfz1 [name="month"]{ top:119px; left:172px;}
+#sfz1 [name="day"]{ top:119px; left:214px;}
+#sfz1 [name="address"]{ top:159px; left:93px; width:200px; text-align:left;}
+#sfz1 [name="cardnum"]{ bottom:36px; left:163px; font-size:20px; letter-spacing:0.15em;}
+#sfz2 [name="issue"]{ bottom:75px; left:205px;}
+#sfz2 [name="limit"]{ bottom:33px; left:205px;}
+
+@media screen and (max-width:620px){
+#sfz1,#sfz2{ width:400px; height:254px;}
+#sfz1 > span,#sfz2 > span{ font-size:14px;}
+#sfz1 [name="name"]{ top:30px; left:77px; font-size:17px;}
+#sfz1 [name="sex"]{ top:65px; left:76px;}
+#sfz1 [name="ethnic"]{ top:65px; left:158px;}
+#sfz1 [name="year"]{ top:95px; left:76px;}
+#sfz1 [name="month"]{ top:95px; left:137px;}
+#sfz1 [name="day"]{ top:95px; left:171px;}
+#sfz1 [name="address"]{ top:126px; left:76px; width:170px; text-align:left;}
+#sfz1 [name="cardnum"]{ bottom:27px; left:137px; font-size:17px; letter-spacing:0.15em;}
+#sfz2 [name="issue"]{ bottom:58px; left:165px;}
+#sfz2 [name="limit"]{ bottom:25px; left:165px;}
+}
+@media screen and (max-width:480px){
+#sfz1,#sfz2{ width:300px; height:191px;}
+#sfz1 > span,#sfz2 > span{ font-size:12px;}
+#sfz1 [name="name"]{ top:23px; left:56px; font-size:13px;}
+#sfz1 [name="sex"]{ top:47px; left:55px;}
+#sfz1 [name="ethnic"]{ top:47px; left:119px;}
+#sfz1 [name="year"]{ top:70px; left:55px;}
+#sfz1 [name="month"]{ top:70px; left:103px;}
+#sfz1 [name="day"]{ top:70px; left:128px;}
+#sfz1 [name="address"]{ top:95px; left:55px; width:148px; text-align:left;}
+#sfz1 [name="cardnum"]{ bottom:22px; left:97px; font-size:13px; letter-spacing:0.15em;}
+#sfz2 [name="issue"]{ bottom:44px; left:125px;}
+#sfz2 [name="limit"]{ bottom:19px; left:125px;}
+}
