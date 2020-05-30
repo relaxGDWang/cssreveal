@@ -75,188 +75,28 @@ flex-shrink 同上类似，只不过用于缩小
 .showImg{ width:100%; display:flex; flex-wrap:wrap; justify-content:space-between; box-shadow:0 0 10px #000; background-color:#000; padding:5px;}
 .showImg > div{ flex-grow:1; overflow:hidden; width:200px; max-height:160px; margin:5px;}
 .showImg img{ width:100%;}
+
+
+.outshow{ display:flex; width:400px; height:400px; border:1px solid #ccc; flex-wrap:wrap; justify-content:space-between;} 
+.outshow li{ padding:1em; background-color:#f90; color:#fff; margin:10px;}
+.tt{ overflow:hidden;}
+.tt:before{ content:attr(tips); color:#999;}
 </style>
 </head>
 <body>
-	<ul id="showPart" class="outframe">
+	<ul class="outshow">
+		<li>a</li>
+		<li>a</li>
+		<li>a</li>
+		<li>a</li>
+		<li class="tt" tips="物品">a<br/>bb<br/>cccc</li>
+		<li>a</li>
+		<li>a</li>
+		<li>a</li>
+		<li>a</li>
 	</ul>
-	<div class="showImg">
-		<div><img src="style/images/p1.jpg"/></div>
-		<div><img src="style/images/p2.jpg"/></div>
-		<div><img src="style/images/p3.jpg"/></div>
-		<div><img src="style/images/p4.jpg"/></div>
-		<div><img src="style/images/p5.jpg"/></div>
-	</div>
-	<div id="settingBar">
-		<div class="buttonBar"><span id="showSetting" class="iconfont icon-shousuo"></span></div>
-		<div class="contentPadding">
-			<div><label>设置子元素</label><input id="liCount" type="text" value="" style="width:50px"/><button id="go1">提交</button></div>
-			<div>
-				<label>&emsp;&emsp;&emsp;设置父对象</label>
-			</div>
-			<div>
-				<label>&emsp;flex-direction</label>
-				<select class="jsStyleChange" attrValue="flex-direction">
-					<option value=""></option>
-					<option value="row">row</option>
-					<option value="column">column</option>
-					<option value="row-reverse">row-reverse</option>
-					<option value="column-reverse">column-reverse</option>
-				</select>
-			</div>
-			<div>
-				<label>&emsp;flex-wrap</label>
-				<select class="jsStyleChange" attrValue="flex-wrap">
-					<option value=""></option>
-					<option value="nowrap">nowrap</option>
-					<option value="wrap">wrap</option>
-					<option value="wrap-reverse">wrap-reverse</option>
-				</select>
-			</div>
-			<div>
-				<label>&emsp;justify-content</label>
-				<select class="jsStyleChange" attrValue="justify-content">
-					<option value=""></option>
-					<option value="flex-start">flex-start</option>
-					<option value="flex-end">flex-end</option>
-					<option value="center">center</option>
-					<option value="space-between">space-between</option>
-					<option value="space-around">space-around</option>
-				</select>
-			</div>
-			<div>
-				<label>&emsp;align-items</label>
-				<select class="jsStyleChange" attrValue="align-items">
-					<option value=""></option>
-					<option value="flex-start">flex-start</option>
-					<option value="flex-end">flex-end</option>
-					<option value="center">center</option>
-					<option value="baseline">baseline</option>
-					<option value="stretch">stretch</option>
-				</select>
-			</div>
-			<div>
-				<label>&emsp;align-content</label>
-				<select class="jsStyleChange" attrValue="align-content">
-					<option value=""></option>
-					<option value="flex-start">flex-start</option>
-					<option value="flex-end">flex-end</option>
-					<option value="center">center</option>
-					<option value="space-between">space-between</option>
-					<option value="space-around">space-around</option>
-					<option value="stretch">stretch</option>
-				</select>
-			</div>
-			<div class="splitBar"></div>
-			<div>
-				<label>&emsp;order</label>
-				<input class="setLi" attrValue="order" type="text" value="" style="width:50px"/>
-			</div>
-			<div>
-				<label>&emsp;flex-grow</label>
-				<input class="setLi" attrValue="flex-grow" type="text" value="" style="width:50px"/>
-			</div>
-			<div>
-				<label>&emsp;flex-shrink</label>
-				<input class="setLi" attrValue="flex-shrink" type="text" value="" style="width:50px"/>
-			</div>
-			<div>
-				<button id="go2">提交</button>
-			</div>
-		</div>
-	</div>
 <script src="/_PUB/js/jquery/jquery-1.9.1.min.js"></script>
-<script src="/_PUB/js/relax_function.js"></script>
 <script>
-$(document).ready(function(){
-	var obj1=$("#settingBar");
-	$("#showSetting").click(function(){
-		if (obj1.hasClass("show")){
-			obj1.removeClass("show");
-			$(this).removeClass("icon-zhankai").addClass("icon-shousuo");
-		}else{
-			obj1.addClass("show");
-			$(this).removeClass("icon-shousuo").addClass("icon-zhankai");
-		}
-	});
-	
-	$("#go1").click(function(){
-		var makeCount=$("#liCount").val();
-		if (isNaN(makeCount-0)){
-			makeCount=6;
-		}
-		var obj2=$("#showPart");
-		obj2.html("");
-		for (var i=0; i<makeCount; i++){
-			var li=document.createElement("li");
-			obj2.append(li);
-			li.innerText="no."+(i+1);
-			var colorStr=getRandColor();
-			$(li).css("backgroundColor",colorStr);
-		}
-	});
-	
-	$(".jsStyleChange").change(function(){
-		var obj2=$("#showPart");
-		var cssName=$(this).attr("attrValue");
-		obj2.css(cssName,$(this).val());
-	});
-	
-	
-	$("#go2").click(function(){
-		var set={};
-		var tempArray=$(".setLi");
-		for (var i=0; i<tempArray.length; i++){
-			var attrValue=$(tempArray[i]).attr("attrValue");
-			var nowValue=$(tempArray[i]).val();
-			if (nowValue===""){
-				if (attrValue=="flex-shrink"){
-					nowValue=1;
-				}else{
-					nowValue=0;
-				}
-			}else{
-				nowValue=nowValue-0;
-			}
-			set[attrValue]=nowValue;
-		}
-		tempArray=$("#showPart li.sel");
-		for (var i=0; i<tempArray.length; i++){
-			tempArray[i].style.order=set["order"];
-			tempArray[i].style.flexGrow=set["flex-grow"];
-			tempArray[i].style.flexShrink=set["flex-shrink"];
-		}
-	});
-	
-	$("#showPart").click(function(e){
-		if (e.target.nodeName.toLowerCase()=="li"){
-			var nowObj=$(e.target);
-			if (nowObj.hasClass("sel")){
-				nowObj.removeClass("sel");
-			}else{
-				nowObj.addClass("sel");
-			}
-		}
-	});
-});
-
-
-
-//色彩获取函数
-//返回色彩的数据类型 string=返回#0103a1这类色彩值 rgb=rgb(255,34,12) object={r:24,g:56,b:55}
-function getRandColor(){
-	var r=Math.round(Math.random()*255);
-	var g=Math.round(Math.random()*255);
-	var b=Math.round(Math.random()*255);
-	var colorValue=(r<<16)+(g<<8)+b;
-	var colorStr=colorValue.toString(16);
-	while(colorStr.length<6){
-		colorStr="0"+colorStr;
-	}
-	colorStr="#"+colorStr;
-	return colorStr;
-}
-
 </script>
 </body>
 </html>
