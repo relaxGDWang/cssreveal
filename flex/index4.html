@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8"/>
+	<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+	<title>测试flex垂直布局</title>
+	<link rel="stylesheet" type="text/css" href="style/fontIcon/iconfont.css"/>
+	<link rel="stylesheet" type="text/css" href="style/publicStyle3.css"/>
+<style>
+body{ overflow:auto;}
+.showImg{ width:100%; display:-webkit-flex; display:-moz-flex; display:flex; flex-wrap:wrap; justify-content:space-between; box-shadow:0 0 10px #000; background-color:#000; padding:5px;}
+.showImg > div{ flex-grow:1; overflow:hidden; width:200px; max-height:160px; margin:5px;}
+.showImg img{ width:100%;}
+
+.mask{ display:block; opacity:0.6;}
+.myButton{ width:80%; margin:0 auto;}
+.outside{ position:absolute; width:80%; height:100%; top:0; right:0; z-index:1100; background-color:#f2f2f2; display:-webkit-flex; display:-moz-flex; display:flex; flex-flow:column; justify-content:space-between; }
+.outside .dTitle{ height:40px; line-height:38px; background-color:#f90; color:#fff; text-align:center;}
+.outside .dExt{ background-color:#ffecec; padding:10px; word-break:break-all;}
+.outside .dContent{ background-color:#fff; overflow:hidden; height:100%;}
+.outside .dBottom{ padding:10px; background-color:#ccc;}
+
+.dContent ul{ width:100%; height:100%; overflow:auto;}
+.dContent li{ background-color:#cab4b4; color:#fff; border-bottom:1px solid #ffd6d6; padding:5px 10px;}
+</style>
+</head>
+<body>
+	<div class="outside">
+		<div class="dTitle">这里是标题</div>
+		<div id="showlist" class="dExt"></div>
+		<div class="dContent">
+			<ul>
+				<li>这里是临时信息列表</li>
+				<li>这里是临时信息列表</li>
+				<li>这里是临时信息列表</li>
+				<li>这里是临时信息列表</li>
+				<li>这里是临时信息列表</li>
+				<li>这里是临时信息列表</li>
+				<li>这里是临时信息列表</li>
+				<li>这里是临时信息列表</li>
+				<li>这里是临时信息列表</li>
+				<li>这里是临时信息列表</li>
+				<li>这里是临时信息列表</li>
+				<li>这里是临时信息列表</li>
+				<li>这里是临时信息列表</li>
+				<li>这里是临时信息列表</li>
+				<li>这里是临时信息列表</li>
+				<li>这里是临时信息列表</li>
+				<li>这里是临时信息列表</li>
+				<li>这里是临时信息列表</li>
+				<li>这里是临时信息列表</li>
+				<li>这里是临时信息列表</li>
+			</ul>
+		</div>
+		<div class="dBottom">
+			<span id="addLi" class="myButton rexButton SBLK SH">按钮一枚</span>
+		</div>
+	</div>
+	
+	<div class="mask"></div>
+	
+<script src="/_PUB/js/jquery/jquery-1.9.1.min.js"></script>
+<script src="/_PUB/js/relax_function.js"></script>
+<script>
+$(function(){
+	$("#addLi").click(function(){
+		var str=Math.random()*100;
+		$("#showlist").append('<span>'+str+'</span>&nbsp;');
+	});
+	
+	alert($(".dContent").eq(0).height());
+	alert($(".dContent ul").eq(0).height());
+});
+</script>
+</body>
+</html>

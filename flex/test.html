@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8"/>
+	<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+	<title>测试flex布局</title>
+	<link rel="stylesheet" type="text/css" href="style/fontIcon/iconfont.css"/>
+	<link rel="stylesheet" type="text/css" href="style/publicStyle3.css"/>
+<style>
+body{ overflow:auto;}
+#settingBar{ width:100%; position:fixed; bottom:0; left:0; height:20px; background-color:#ddd; background-image:linear-gradient(0deg, rgba(0,0,0,0.05) 0, transparent 100%); text-align:center; border-top:1px solid #999; opacity:0.6;}
+#settingBar:hover{ opacity:1;}
+#settingBar .iconfont{ cursor:pointer; width:30px; background-color:#f9f9f9; margin:0 auto;}
+#settingBar.show{ height:auto;}
+.buttonBar{ border-bottom:1px solid #999;}
+
+.outframe{ width:450px; height:300px; border:1px solid #ccc; background-color:#999; margin:20px auto; display:flex;}
+.outframe li{margin:5px; border:1px solid #ccc;}
+.outframe li:hover{ opacity:0.6; cursor:pointer;}
+.outframe li.sel{ border:1px solid #f90; box-shadow:0 0 10px rgba(255,255,255,0.9);}
+.contentPadding{ display:flex; flex-wrap:wrap; }
+.contentPadding div{ margin:5px; white-space:nowrap;}
+.contentPadding .splitBar{ margin:0; background-color:#999; overflow:hidden; font-size:0; line-height:0; border-bottom:1px solid #fff; width:100%; height:3px; margin-bottom:10px;}
+
+/* 
+flex-direction: row/column/row-reverse/column-reverse
+flex-wrap:  nowrap/wrap/wrap-reverse;  
+flex-flow=flex-direction+flex-warp  default:row nowrap;
+
+justify-content: flex-start/flex-end/center/space-between/space-around;  
+flex-start
+[0 0 0    ]
+flex-end
+[    0 0 0]
+center
+[  0 0 0  ]
+space-between
+[0   0   0]
+space-around
+[ 0  0  0 ]
+
+align-items:flex-start/flex-end/center/baseline/stretch;  
+flex-start
+[000]
+[0 0]
+[  0]
+flex-end
+[  0]
+[0 0]
+[000]
+center
+[1 0]
+[000]
+[1 0]
+baseline
+[000]
+[0 0]
+[  0]
+stretch
+[000]
+[000]
+[000]
+注意 子元素需未设置高度
+
+align-content:flex-start/flex-end/center/space-between/space-around/stretch;  
+不太清楚实际效果跟以上两个对齐方式产生效果的实际区别
+
+以下为设置在子元素中的样式属性
+order 表示子元素的排序，整数数值，数值越小越靠前
+flex-grow 表示子元素为了自适应，可进行放大的倍率，0为不放大，其他数值表示放大的倍数，实际的放大情况还没摸透
+flex-shrink 同上类似，只不过用于缩小
+
+*/
+
+.showImg{ width:100%; display:flex; flex-wrap:wrap; justify-content:space-between; box-shadow:0 0 10px #000; background-color:#000; padding:5px;}
+.showImg > div{ flex-grow:1; overflow:hidden; width:200px; max-height:160px; margin:5px;}
+.showImg img{ width:100%;}
+
+
+.outshow{ display:flex; width:400px; height:400px; border:1px solid #ccc; flex-wrap:wrap; justify-content:space-between;} 
+.outshow li{ padding:1em; background-color:#f90; color:#fff; margin:10px;}
+.tt{ overflow:hidden;}
+.tt:before{ content:attr(tips); color:#999;}
+</style>
+</head>
+<body>
+	<ul class="outshow">
+		<li>a</li>
+		<li>a</li>
+		<li>a</li>
+		<li>a</li>
+		<li class="tt" tips="物品">a<br/>bb<br/>cccc</li>
+		<li>a</li>
+		<li>a</li>
+		<li>a</li>
+		<li>a</li>
+	</ul>
+<script src="/_PUB/js/jquery/jquery-1.9.1.min.js"></script>
+<script>
+</script>
+</body>
+</html>
