@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="GBK"?>
+<WebFlow>
+	<FlowConfig>
+		<BaseProperties flowId="1C66E34E-BCC5-950E-C14E-6CA4A942C021" flowText="法律职务任免流程（检察长）" />
+		<VMLProperties stepTextColor="blue" stepStrokeColor="green" stepShadowColor="#b3b3b3" stepFocusedStrokeColor="yellow" isStepShadow="T" actionStrokeColor="green" actionTextColor="" actionFocusedStrokeColor="yellow" sStepTextColor="green" sStepStrokeColor="green" stepColor1="green" stepColor2="white" isStep3D="false" step3DDepth="20"/>
+		<FlowProperties flowMode="" startTime="" endTime="" ifMonitor="" runMode="" noteMode="" activeForm="" autoExe="" />
+	</FlowConfig>
+	<Steps>
+		<Step>
+			<BaseProperties id="begin" text="开 始" stepType="BeginStep"/>
+			<VMLProperties width="170" height="180" x="50px" y="20px" textWeight="" strokeWeight="" isFocused="" zIndex="40"/>
+			<NodeProperties operateUsers="" operateRoles=""/>
+			<FlowProperties/>
+		</Step>
+		<Step>
+			<BaseProperties id="end" text="结 束" stepType="EndStep"/>
+			<VMLProperties width="170" height="180" x="68px" y="1096px" textWeight="" strokeWeight="" isFocused="" zIndex="40"/>
+			<NodeProperties operateUsers="" operateRoles=""/>
+			<FlowProperties/>
+		</Step>
+		<Step>
+			<BaseProperties id="Step1204190022703" text="分管副处长" stepType="NormalStep"/>
+			<VMLProperties width="200" height="200" x="495px" y="14px" textWeight="" strokeWeight="" zIndex="40"/>
+			<NodeProperties operateUsers="3004" operateUserNames="雷南昌" operateRoles="" operateRoleNames="" uniteSubscriber="false" defaultStep="false"/>
+			<FlowProperties/>
+		</Step>
+		<Step>
+			<BaseProperties id="Step1214808362109" text="处长" stepType="NormalStep"/>
+			<VMLProperties width="200" height="200" x="1002px" y="22px" textWeight="" strokeWeight="" zIndex="40"/>
+			<NodeProperties operateUsers="3322" operateUserNames="陈秋涌" operateRoles="" operateRoleNames="" uniteSubscriber="false" defaultStep="false"/>
+			<FlowProperties/>
+		</Step>
+		<Step>
+			<BaseProperties id="Step1214808426390" text="主任" stepType="NormalStep"/>
+			<VMLProperties width="200" height="200" x="1487px" y="30px" textWeight="" strokeWeight="" zIndex="40"/>
+			<NodeProperties operateUsers="4101" operateUserNames="周越强" operateRoles="" operateRoleNames="" uniteSubscriber="false" defaultStep="false"/>
+			<FlowProperties/>
+		</Step>
+		<Step>
+			<BaseProperties id="Step1214808437718" text="分管副检察长" stepType="NormalStep"/>
+			<VMLProperties width="200" height="200" x="1494px" y="558px" textWeight="" strokeWeight="" zIndex="40"/>
+			<NodeProperties operateUsers="3786" operateUserNames="李培龙" operateRoles="" operateRoleNames="" uniteSubscriber="false" defaultStep="false"/>
+			<FlowProperties/>
+		</Step>
+		<Step>
+			<BaseProperties id="Step1214808470500" text="检察长" stepType="NormalStep"/>
+			<VMLProperties width="200" height="200" x="1501px" y="1106px" textWeight="" strokeWeight="" zIndex=""/>
+			<NodeProperties operateUsers="5307" operateUserNames="陈旭" operateRoles="" operateRoleNames="" uniteSubscriber="false" defaultStep="false"/>
+			<FlowProperties/>
+		</Step>
+	</Steps>
+	<Actions>
+		<Action>
+			<BaseProperties id="Action1214808953328" text="新动作" actionType="PolyLine" from="begin" to="Step1204190022703"/>
+			<VMLProperties startArrow="" endArrow="Classic" strokeWeight="" zIndex="39"/>
+			<NodeProperties operateUsers="" operateUserNames="" operateRoles="" operateRoleNames=""/>
+			<FlowProperties/>
+		</Action>
+		<Action>
+			<BaseProperties id="Action1214809102718" text="新动作" actionType="PolyLine" from="Step1204190022703" to="Step1214808362109"/>
+			<VMLProperties startArrow="" endArrow="Classic" strokeWeight="" zIndex="39"/>
+			<NodeProperties operateUsers="" operateUserNames="" operateRoles="" operateRoleNames=""/>
+			<FlowProperties/>
+		</Action>
+		<Action>
+			<BaseProperties id="Action1214809115109" text="新动作" actionType="PolyLine" from="Step1214808362109" to="Step1214808426390"/>
+			<VMLProperties startArrow="" endArrow="Classic" strokeWeight="" zIndex="39"/>
+			<NodeProperties operateUsers="" operateUserNames="" operateRoles="" operateRoleNames=""/>
+			<FlowProperties/>
+		</Action>
+		<Action>
+			<BaseProperties id="Action1214809125609" text="新动作" actionType="PolyLine" from="Step1214808426390" to="Step1214808437718"/>
+			<VMLProperties startArrow="" endArrow="Classic" strokeWeight="" zIndex="39"/>
+			<NodeProperties operateUsers="" operateUserNames="" operateRoles="" operateRoleNames=""/>
+			<FlowProperties/>
+		</Action>
+		<Action>
+			<BaseProperties id="Action1214809134062" text="新动作" actionType="PolyLine" from="Step1214808437718" to="Step1214808470500"/>
+			<VMLProperties startArrow="" endArrow="Classic" strokeWeight="" zIndex="40"/>
+			<NodeProperties operateUsers="" operateUserNames="" operateRoles="" operateRoleNames=""/>
+			<FlowProperties/>
+		</Action>
+		<Action>
+			<BaseProperties id="Action1214809143250" text="新动作" actionType="PolyLine" from="Step1214808470500" to="end"/>
+			<VMLProperties startArrow="" endArrow="Classic" strokeWeight="" zIndex="40"/>
+			<NodeProperties operateUsers="" operateUserNames="" operateRoles="" operateRoleNames=""/>
+			<FlowProperties/>
+		</Action>
+	</Actions>
+</WebFlow>
