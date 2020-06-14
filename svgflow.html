@@ -1,118 +1,117 @@
 <!DOCTYPE html>
-<html lang="zh" xmlns:v-on="http://www.w3.org/1999/xhtml">
+<html lang="zh">
 <head>
     <meta charset="UTF-8">
-    <title>流程图绘制测试</title>
+    <title>流程图交互</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
 <style type="text/css">
 *{ box-sizing:border-box;}
 html,body{ padding:0; margin:0; width:100%; height:100%;}
-svg{ border:1px solid #999; margin:10px;}
-svg foreignObject .showtext{ border:1px solid #ccc; background:#eee; text-align:center; width:100%; height:100%; cursor:pointer;}
-svg foreignObject .showtext:before{ content:''; display:inline-block; vertical-align:middle; width:0; height:100%;}
-svg foreignObject .showtext span{ display:inline-block; vertical-align:middle;}
-svg foreignObject .showtext:hover{ background-color:#ccc;}
-svg foreignObject .showtext:active{ background-color:#666;}
-svg rect:hover{ fill: #f90;}
-svg rect:active{ fill:green;}
+.outFrame{ width:100%; height:100%; padding:10px; background-color:#eee;}
+.leftMenu{ width:200px; height:100%; float:left; background-color:#fff;}
+.rightContent{ margin-left:210px; background-color:#eee; height:100%;}
+.rightContent svg{ display:block; border:1px solid #ccc; background-color:#fff; width:800px; height:600px;}
 </style>
 </head>
 <body>
-    <div class="show">
-		<svg id="gasket" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1">
-			<defs>
-				<marker id="arrow" markerUnits="strokeWidth" markerWidth="12" markerHeight="12" viewBox="0 0 12 12" refX="9" refY="6" orient="auto">
-					<path d="M2,2 L10,6 L2,10 L6,6 L2,2" style="fill: #000000;" />
-				</marker>
-			</defs>
-			<!--
-			<defs>
-				<filter id="f1" x="0" y="0" width="200%" height="200%">
-					<feOffset result="offOut" in="SourceAlpha" dx="20" dy="20" />
-					<feGaussianBlur result="blurOut" in="offOut" stdDeviation="10" />
-					<feBlend in="SourceGraphic" in2="blurOut" mode="normal" />
-				</filter>
-			</defs>
-			<rect x="10" y="20" width="90" height="90" stroke="green" stroke-width="3" rx="10" ry="10" fill="yellow" filter="url(#f1)" />
-			<rect x="20" y="120" width="90" height="90" stroke="green" stroke-width="3" fill="yellow" filter="url(#f1)" />
-			-->
-		</svg>
+	<div class="outFrame">
+		<div class="leftMenu">这里仅是个左侧菜单</div>
+		<div class="rightContent">
+			<svg id="gasket" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="800" height="500">
+				<style type="text/css">
+				foreignObject .showtext{ border:1px solid #ccc; background:#eee; text-align:center; width:100%; height:100%; cursor:pointer; border-radius:6px;}
+				foreignObject .showtext:before{ content:''; display:inline-block; vertical-align:middle; width:0; height:100%;}
+				foreignObject .showtext span{ display:inline-block; vertical-align:middle; font-size:16px;}
+				foreignObject .showtext:hover{ background-color:#ccc;}
+				foreignObject .showtext:active{ background-color:#666; border-color:#666; color:#fff;}
+				line:hover{ stroke: blue;}
+				</style>
+				<defs>
+					<marker id="arrow" markerUnits="strokeWidth" markerWidth="12" markerHeight="12" viewBox="0 0 12 12" refX="9" refY="6" orient="auto">
+						<path d="M2,2 L10,6 L2,10 L6,6 L2,2" style="fill: #000000;"></path>
+					</marker>
+				</defs>
+				<g id="flowShow">
+					<foreignObject x="10" y="8" width="120" height="46" id="begin" stepType="BeginStep">
+						<div class="showtext"><span>开 始</span></div>
+					</foreignObject>
+					<foreignObject x="72" y="407" width="120" height="46" id="end" stepType="EndStep">
+						<div class="showtext"><span>结 束</span></div>
+					</foreignObject>
+					<foreignObject x="168" y="2" width="120" height="46" id="Step1199929244500" stepType="NormalStep">
+						<div class="showtext"><span>分管副处长</span></div>
+					</foreignObject>
+					<foreignObject x="342" y="5" width="120" height="46" id="Step1199929261062" stepType="NormalStep">
+						<div class="showtext"><span>处长</span></div>
+					</foreignObject>
+					<foreignObject x="515" y="8" width="120" height="46" id="Step1214809315734" stepType="NormalStep">
+						<div class="showtext"><span>主任</span></div>
+					</foreignObject>
+					<foreignObject x="518" y="218" width="120" height="46" id="Step1199929295812" stepType="NormalStep">
+						<div class="showtext"><span>分管副检察长</span></div>
+					</foreignObject>
+					<foreignObject x="523" y="407" width="120" height="46" id="Step1199929307593" stepType="NormalStep">
+						<div class="showtext"><span>党组书记</span></div>
+					</foreignObject>
+					<line x1="130" y1="31" x2="168" y2="25" stroke-width="2" stroke="#000" marker-end="url(#arrow)" id="Action1214809539140" actionType="PolyLine" from="begin" to="Step1199929244500"></line>
+					<line x1="288" y1="25" x2="342" y2="28" stroke-width="2" stroke="#000" marker-end="url(#arrow)" id="Action1214809560171" actionType="PolyLine" from="Step1199929244500" to="Step1199929261062"></line>
+					<line x1="462" y1="28" x2="515" y2="31" stroke-width="2" stroke="#000" marker-end="url(#arrow)" id="Action1214809567468" actionType="PolyLine" from="Step1199929261062" to="Step1214809315734"></line>
+					<line x1="575" y1="54" x2="578" y2="218" stroke-width="2" stroke="#000" marker-end="url(#arrow)" id="Action1214809580281" actionType="PolyLine" from="Step1214809315734" to="Step1199929295812"></line>
+					<line x1="578" y1="264" x2="583" y2="407" stroke-width="2" stroke="#000" marker-end="url(#arrow)" id="Action1199929444828" actionType="PolyLine" from="Step1199929295812" to="Step1199929307593"></line>
+					<line x1="523" y1="430" x2="192" y2="430" stroke-width="2" stroke="#000" marker-end="url(#arrow)" id="Action1214809599593" actionType="PolyLine" from="Step1199929307593" to="end"></line>
+					<!--<polyline points="0,0 100,100 200,300" style="fill:white;stroke:red;stroke-width:2"/>-->
+				</g>
+			</svg>
+		</div>
 	</div>
-<script src="jquery-1.12.4.min.js"></script>
 <script>
-var xmlData = '<WebFlow><FlowConfig><BaseProperties flowId="1C66E34E-BCC5-950E-C14E-6CA4A942C021" flowText="法律职务任免流程（检察长）" /><VMLProperties stepTextColor="blue" stepStrokeColor="green" stepShadowColor="#b3b3b3" stepFocusedStrokeColor="yellow" isStepShadow="T" actionStrokeColor="green" actionTextColor="" actionFocusedStrokeColor="yellow" sStepTextColor="green" sStepStrokeColor="green" stepColor1="green" stepColor2="white" isStep3D="false" step3DDepth="20"/><FlowProperties flowMode="" startTime="" endTime="" ifMonitor="" runMode="" noteMode="" activeForm="" autoExe="" /></FlowConfig><Steps><Step><BaseProperties id="begin" text="开 始" stepType="BeginStep"/><VMLProperties width="170" height="180" x="50px" y="20px" textWeight="" strokeWeight="" isFocused="" zIndex="40"/><NodeProperties operateUsers="" operateRoles=""/><FlowProperties/></Step><Step><BaseProperties id="end" text="结 束" stepType="EndStep"/><VMLProperties width="170" height="180" x="68px" y="1096px" textWeight="" strokeWeight="" isFocused="" zIndex="40"/><NodeProperties operateUsers="" operateRoles=""/><FlowProperties/></Step><Step><BaseProperties id="Step1204190022703" text="分管副处长" stepType="NormalStep"/><VMLProperties width="200" height="200" x="495px" y="14px" textWeight="" strokeWeight="" zIndex="40"/><NodeProperties operateUsers="3004" operateUserNames="雷南昌" operateRoles="" operateRoleNames="" uniteSubscriber="false" defaultStep="false"/><FlowProperties/></Step><Step><BaseProperties id="Step1214808362109" text="处长" stepType="NormalStep"/><VMLProperties width="200" height="200" x="1002px" y="22px" textWeight="" strokeWeight="" zIndex="40"/><NodeProperties operateUsers="3322" operateUserNames="陈秋涌" operateRoles="" operateRoleNames="" uniteSubscriber="false" defaultStep="false"/><FlowProperties/></Step><Step><BaseProperties id="Step1214808426390" text="主任" stepType="NormalStep"/><VMLProperties width="200" height="200" x="1487px" y="30px" textWeight="" strokeWeight="" zIndex="40"/><NodeProperties operateUsers="4101" operateUserNames="周越强" operateRoles="" operateRoleNames="" uniteSubscriber="false" defaultStep="false"/><FlowProperties/></Step><Step><BaseProperties id="Step1214808437718" text="分管副检察长" stepType="NormalStep"/><VMLProperties width="200" height="200" x="1494px" y="558px" textWeight="" strokeWeight="" zIndex="40"/><NodeProperties operateUsers="3786" operateUserNames="李培龙" operateRoles="" operateRoleNames="" uniteSubscriber="false" defaultStep="false"/><FlowProperties/></Step><Step><BaseProperties id="Step1214808470500" text="检察长" stepType="NormalStep"/><VMLProperties width="200" height="200" x="1501px" y="1106px" textWeight="" strokeWeight="" zIndex=""/><NodeProperties operateUsers="5307" operateUserNames="陈旭" operateRoles="" operateRoleNames="" uniteSubscriber="false" defaultStep="false"/><FlowProperties/></Step></Steps><Actions><Action><BaseProperties id="Action1214808953328" text="新动作" actionType="PolyLine" from="begin" to="Step1204190022703"/><VMLProperties startArrow="" endArrow="Classic" strokeWeight="" zIndex="39"/><NodeProperties operateUsers="" operateUserNames="" operateRoles="" operateRoleNames=""/><FlowProperties/></Action><Action><BaseProperties id="Action1214809102718" text="新动作" actionType="PolyLine" from="Step1204190022703" to="Step1214808362109"/><VMLProperties startArrow="" endArrow="Classic" strokeWeight="" zIndex="39"/><NodeProperties operateUsers="" operateUserNames="" operateRoles="" operateRoleNames=""/><FlowProperties/></Action><Action><BaseProperties id="Action1214809115109" text="新动作" actionType="PolyLine" from="Step1214808362109" to="Step1214808426390"/><VMLProperties startArrow="" endArrow="Classic" strokeWeight="" zIndex="39"/><NodeProperties operateUsers="" operateUserNames="" operateRoles="" operateRoleNames=""/><FlowProperties/></Action><Action><BaseProperties id="Action1214809125609" text="新动作" actionType="PolyLine" from="Step1214808426390" to="Step1214808437718"/><VMLProperties startArrow="" endArrow="Classic" strokeWeight="" zIndex="39"/><NodeProperties operateUsers="" operateUserNames="" operateRoles="" operateRoleNames=""/><FlowProperties/></Action><Action><BaseProperties id="Action1214809134062" text="新动作" actionType="PolyLine" from="Step1214808437718" to="Step1214808470500"/><VMLProperties startArrow="" endArrow="Classic" strokeWeight="" zIndex="40"/><NodeProperties operateUsers="" operateUserNames="" operateRoles="" operateRoleNames=""/><FlowProperties/></Action><Action><BaseProperties id="Action1214809143250" text="新动作" actionType="PolyLine" from="Step1214808470500" to="end"/><VMLProperties startArrow="" endArrow="Classic" strokeWeight="" zIndex="40"/><NodeProperties operateUsers="" operateUserNames="" operateRoles="" operateRoleNames=""/><FlowProperties/></Action></Actions></WebFlow>';
-var allW=900;
-var allH=700;
-var svg=$('#gasket')[0];
-svg.setAttribute('width',allW);
-svg.setAttribute('height',allH);
-//svg.setAttribute('viewBox','0 0 1800 1400');
-
-//解析xml为对象
-let parser = new DOMParser();
-let xmlObject = parser.parseFromString(xmlData, "text/xml");
-let xmlConfig = xmlObject.getElementsByTagName('FlowConfig')[0];
-let mainTitle = createPath('text',{x:200,y:30,text:xmlConfig.getElementsByTagName('BaseProperties')[0].getAttribute('flowText'),fill:'#000'});
-svg.appendChild(mainTitle);
-let stepArray = xmlObject.getElementsByTagName('Step');
-let pointArray = {};
-for (let i=0; i<stepArray.length; i++){
-	let tempBase = stepArray[i].getElementsByTagName('BaseProperties')[0];
-	let tempVML = stepArray[i].getElementsByTagName('VMLProperties')[0];
-	let tempElse = stepArray[i].getElementsByTagName('NodeProperties')[0];
-	let txt = tempBase.getAttribute('text');
-	let id= tempBase.getAttribute('id');
-	let x = parseInt(tempVML.getAttribute('x'))/2;
-	let y = parseInt(tempVML.getAttribute('y'))/2;
-	let W = tempVML.getAttribute('width')/2;
-	let H = tempVML.getAttribute('height')/2;
-	createWordBlock({x:x,y:y,W:W,H:H},txt);
-	let temp = {
-		x: x+W/2,
-		y: y+H/2
-	};
-	pointArray[id]=temp;
-}
-let actArray = xmlObject.getElementsByTagName('Action');
-for (let i=0; i<actArray.length; i++){
-	let tempBase = actArray[i].getElementsByTagName('BaseProperties')[0];
-	let fromObj = pointArray[tempBase.getAttribute('from')];
-	let toObj = pointArray[tempBase.getAttribute('to')];
-	console.log(fromObj.x,fromObj.y,toObj.x,toObj.y);
-	createAction({x1:fromObj.x, y1:fromObj.y, x2:toObj.x, y2:toObj.y},2);
-}
-
-
-//建立文本块
-function createWordBlock({x,y,W,H},text){
-	var txtOut = createPath('foreignObject',{x:x, y:y, width:W, height:H});
-	var txtIn = document.createElement('div');
-	txtIn.className = 'showtext';
-	txtIn.xmlns="http://www.w3.org/1999/xhtml";
-	var txt = document.createElement('span');
-	txt.innerText = text;
-	txtIn.appendChild(txt);
-	txtOut.appendChild(txtIn);
-	svg.appendChild(txtOut);
-}
-
-//建立动作线段
-function createAction({x1,y1,x2,y2},width){
-	var line = createPath('line',{x1:x1,y1:y1,x2:x2,y2:y2,'stroke-width':width,stroke:'#000','marker-end':"url(#arrow)"});
-	svg.appendChild(line);
-}
-
-//建立svg标签对象
-function createPath(name,attr){
-	var temp=document.createElementNS('http://www.w3.org/2000/svg',name);
-	for (let x in attr){
-		if (x==='text') continue;
-		temp.setAttribute(x,attr[x]);
+let svg = document.querySelector('svg')
+let flag = 0
+let startPos = {x:0, y:0}
+let endPos = {x:0, y:0}
+svg.addEventListener('click',function(e){
+	switch(flag){
+		case 0:
+			flag = 1
+			// 记录鼠标坐标
+			startPos.x = e.offsetX
+			startPos.y = e.offsetY
+			break
+		case 1:
+			flag = 0
+			endPos.x = e.offsetX
+			endPos.y = e.offsetY
+			drawLine()
+			break
 	}
-	if (name==='text'){
-		temp.appendChild(document.createTextNode(attr.text));
+});
+
+function drawLine(){
+	let line = document.createElementNS('http://www.w3.org/2000/svg','polyline')
+	let points = [];
+	points.push(startPos.x + ',' + startPos.y)
+	// 求两个点的垂直中点和横向中点
+	let mx = startPos.x + (endPos.x - startPos.x)/2
+	let my = startPos.y + (endPos.y - startPos.y)/2
+	points.push(mx + ',' + startPos.y)
+	points.push(mx + ',' + endPos.y)
+	points.push(endPos.x + ',' + endPos.y)
+	let setting = {
+		points: points,
+		id: 'relax',
+		stroke: '#f90',
+		'stroke-width': 3,
+		fill: 'transparent'
 	}
-	return temp;
+	setAttr(line, setting)
+	alert(line.outerHTML)
+	svg.appendChild(line)
+}
+
+function setAttr(obj, setting){
+	for (let x in setting){
+		obj.setAttribute(x, setting[x]);
+	}
 }
 </script>
 </body>
