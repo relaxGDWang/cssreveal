@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+<style type="text/css">
+.userInfo{ margin:10px; border:1px solid #ccc; padding:10px;}
+.userInfo ul{ list-style:none; background-color:#eee; margin-bottom:10px;}
+
+</style>
+</head>
+<body>
+	<div class="outframe" id="app">
+		<div>
+			<span v-for="item in template" @click="nowShow=item">{{item}}</span>
+		</div>
+		<component v-bind:is="nowShow" :ca="character" class="userInfo">hello show</component>
+		<c3></c3>
+	</div>
+<script src="vue.min.js"></script>
+<script src="component1.js"></script>
+<script>
+var vu=new Vue({
+	el: '#app',
+	components:{
+		'c1':c1,
+		'c2':c2,
+		'c3':c3
+	},
+	data:{
+		character:[
+			{name:'rex',hp:30,mp:12,act:12,def:8,sp:7,mdf:9},
+			{name:'alen',hp:25,mp:23,act:5,def:4,sp:9,mdf:14},
+			{name:'kind',hp:44,mp:0,act:20,def:14,sp:8,mdf:4}
+		],
+		template:['c1','c2'],
+		nowShow:''
+	},
+	methods:{
+	}
+});
+</script>
+</body>
+</html>

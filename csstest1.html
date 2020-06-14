@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:v-on="http://www.w3.org/1999/xhtml">
+<head>
+	<meta charset="UTF-8">
+    <title>测试字体大小的设置</title>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+<style type="text/css">
+body{ font-size:20px;}
+.c1{}
+.c1{ font-size:120%;}
+.c2{ font-size:1.2em;}
+.c3{ font-size:1.2;}
+</style>
+</head>
+<body>
+	<p>原始文本</p>
+	<div class="c1">
+		这是一层
+		<span>这是二层
+			<span>这是三层
+				<span>这是四层</span>
+			</span>
+		</span>
+	</div>
+	<div class="c2">
+		这是一层
+		<span>这是二层
+			<span>这是三层
+				<span>这是四层</span>
+			</span>
+		</span>
+	</div>
+	<div class="c3">
+		这是一层
+		<span>这是二层
+			<span>这是三层
+				<span>这是四层</span>
+			</span>
+		</span>
+	</div>
+</body>
+</html>
