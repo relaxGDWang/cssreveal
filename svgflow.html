@@ -7,7 +7,6 @@
 <style type="text/css">
 *{ box-sizing:border-box;}
 html,body{ padding:0; margin:0; width:100%; height:100%;}
-<<<<<<< HEAD
 .outFrame{ width:100%; height:100%; padding:10px; background-color:#eee;}
 .leftMenu{ width:200px; height:100%; float:left; background-color:#fff;}
 .rightContent{ margin-left:210px; background-color:#eee; height:100%;}
@@ -64,44 +63,8 @@ html,body{ padding:0; margin:0; width:100%; height:100%;}
 				</g>
 			</svg>
 		</div>
-=======
-.show{ border:1px solid #ccc;}
-svg{ margin:0; display:block;}
-</style>
-</head>
-<body>
-    <div class="show">
-		<svg id="gasket" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1">
-			<style type="text/css">
-			foreignObject .showtext{ border:1px solid #ccc; background:#eee; text-align:center; width:100%; height:100%; cursor:pointer; border-radius:6px;}
-			foreignObject .showtext:before{ content:''; display:inline-block; vertical-align:middle; width:0; height:100%;}
-			foreignObject .showtext span{ display:inline-block; vertical-align:middle; font-size:16px;}
-			foreignObject .showtext:hover{ background-color:#ccc;}
-			foreignObject .showtext:active{ background-color:#666; border-color:#666; color:#fff;}
-			rect:hover{ fill: #f90;}
-			rect:active{ fill:green;}
-			</style>
-			<defs>
-				<marker id="arrow" markerUnits="strokeWidth" markerWidth="12" markerHeight="12" viewBox="0 0 12 12" refX="9" refY="6" orient="auto">
-					<path d="M2,2 L10,6 L2,10 L6,6 L2,2" style="fill: #000000;" />
-				</marker>
-			</defs>
-			<!--
-			<defs>
-				<filter id="f1" x="0" y="0" width="200%" height="200%">
-					<feOffset result="offOut" in="SourceAlpha" dx="20" dy="20" />
-					<feGaussianBlur result="blurOut" in="offOut" stdDeviation="10" />
-					<feBlend in="SourceGraphic" in2="blurOut" mode="normal" />
-				</filter>
-			</defs>
-			<rect x="10" y="20" width="90" height="90" stroke="green" stroke-width="3" rx="10" ry="10" fill="yellow" filter="url(#f1)" />
-			<rect x="20" y="120" width="90" height="90" stroke="green" stroke-width="3" fill="yellow" filter="url(#f1)" />
-			-->
-		</svg>
->>>>>>> 86b7afd2f27e8713c5672c7ada6205c7711a66d8
 	</div>
 <script>
-<<<<<<< HEAD
 let svg = document.querySelector('svg')
 let flag = 0
 let startPos = {x:0, y:0}
@@ -122,118 +85,6 @@ svg.addEventListener('click',function(e){
 			break
 	}
 });
-=======
-var xmlData = '<WebFlow><FlowConfig><BaseProperties flowId="1C66E34E-BCC5-950E-C14E-6CA4A942C021" flowText="法律职务任免流程（检察长）" /><VMLProperties stepTextColor="blue" stepStrokeColor="green" stepShadowColor="#b3b3b3" stepFocusedStrokeColor="yellow" isStepShadow="T" actionStrokeColor="green" actionTextColor="" actionFocusedStrokeColor="yellow" sStepTextColor="green" sStepStrokeColor="green" stepColor1="green" stepColor2="white" isStep3D="false" step3DDepth="20"/><FlowProperties flowMode="" startTime="" endTime="" ifMonitor="" runMode="" noteMode="" activeForm="" autoExe="" /></FlowConfig><Steps><Step><BaseProperties id="begin" text="开 始" stepType="BeginStep"/><VMLProperties width="170" height="180" x="50px" y="20px" textWeight="" strokeWeight="" isFocused="" zIndex="40"/><NodeProperties operateUsers="" operateRoles=""/><FlowProperties/></Step><Step><BaseProperties id="end" text="结 束" stepType="EndStep"/><VMLProperties width="170" height="180" x="68px" y="1096px" textWeight="" strokeWeight="" isFocused="" zIndex="40"/><NodeProperties operateUsers="" operateRoles=""/><FlowProperties/></Step><Step><BaseProperties id="Step1204190022703" text="分管副处长" stepType="NormalStep"/><VMLProperties width="200" height="200" x="495px" y="14px" textWeight="" strokeWeight="" zIndex="40"/><NodeProperties operateUsers="3004" operateUserNames="雷南昌" operateRoles="" operateRoleNames="" uniteSubscriber="false" defaultStep="false"/><FlowProperties/></Step><Step><BaseProperties id="Step1214808362109" text="处长" stepType="NormalStep"/><VMLProperties width="200" height="200" x="1002px" y="22px" textWeight="" strokeWeight="" zIndex="40"/><NodeProperties operateUsers="3322" operateUserNames="陈秋涌" operateRoles="" operateRoleNames="" uniteSubscriber="false" defaultStep="false"/><FlowProperties/></Step><Step><BaseProperties id="Step1214808426390" text="主任" stepType="NormalStep"/><VMLProperties width="200" height="200" x="1487px" y="30px" textWeight="" strokeWeight="" zIndex="40"/><NodeProperties operateUsers="4101" operateUserNames="周越强" operateRoles="" operateRoleNames="" uniteSubscriber="false" defaultStep="false"/><FlowProperties/></Step><Step><BaseProperties id="Step1214808437718" text="分管副检察长" stepType="NormalStep"/><VMLProperties width="200" height="200" x="1494px" y="558px" textWeight="" strokeWeight="" zIndex="40"/><NodeProperties operateUsers="3786" operateUserNames="李培龙" operateRoles="" operateRoleNames="" uniteSubscriber="false" defaultStep="false"/><FlowProperties/></Step><Step><BaseProperties id="Step1214808470500" text="检察长" stepType="NormalStep"/><VMLProperties width="200" height="200" x="1501px" y="1106px" textWeight="" strokeWeight="" zIndex=""/><NodeProperties operateUsers="5307" operateUserNames="陈旭" operateRoles="" operateRoleNames="" uniteSubscriber="false" defaultStep="false"/><FlowProperties/></Step></Steps><Actions><Action><BaseProperties id="Action1214808953328" text="新动作" actionType="PolyLine" from="begin" to="Step1204190022703"/><VMLProperties startArrow="" endArrow="Classic" strokeWeight="" zIndex="39"/><NodeProperties operateUsers="" operateUserNames="" operateRoles="" operateRoleNames=""/><FlowProperties/></Action><Action><BaseProperties id="Action1214809102718" text="新动作" actionType="PolyLine" from="Step1204190022703" to="Step1214808362109"/><VMLProperties startArrow="" endArrow="Classic" strokeWeight="" zIndex="39"/><NodeProperties operateUsers="" operateUserNames="" operateRoles="" operateRoleNames=""/><FlowProperties/></Action><Action><BaseProperties id="Action1214809115109" text="新动作" actionType="PolyLine" from="Step1214808362109" to="Step1214808426390"/><VMLProperties startArrow="" endArrow="Classic" strokeWeight="" zIndex="39"/><NodeProperties operateUsers="" operateUserNames="" operateRoles="" operateRoleNames=""/><FlowProperties/></Action><Action><BaseProperties id="Action1214809125609" text="新动作" actionType="PolyLine" from="Step1214808426390" to="Step1214808437718"/><VMLProperties startArrow="" endArrow="Classic" strokeWeight="" zIndex="39"/><NodeProperties operateUsers="" operateUserNames="" operateRoles="" operateRoleNames=""/><FlowProperties/></Action><Action><BaseProperties id="Action1214809134062" text="新动作" actionType="PolyLine" from="Step1214808437718" to="Step1214808470500"/><VMLProperties startArrow="" endArrow="Classic" strokeWeight="" zIndex="40"/><NodeProperties operateUsers="" operateUserNames="" operateRoles="" operateRoleNames=""/><FlowProperties/></Action><Action><BaseProperties id="Action1214809143250" text="新动作" actionType="PolyLine" from="Step1214808470500" to="end"/><VMLProperties startArrow="" endArrow="Classic" strokeWeight="" zIndex="40"/><NodeProperties operateUsers="" operateUserNames="" operateRoles="" operateRoleNames=""/><FlowProperties/></Action></Actions></WebFlow>';
-
-var svgCfg = {
-	w: 120,  //流程节点宽度
-	h: 46,   //流程节点高度
-	mw: 0,   //实际宽度最大像素
-	mh: 0,   //实际高度最大像素
-	sw: 900, //显示宽度
-	sh: 700, //显示高度
-	scaw: 1, //宽度比例显示
-	scah: 1  //高度比例显示
-}
-
-var svg=$('#gasket')[0];
-svg.setAttribute('width',svgCfg.sw);
-svg.setAttribute('height',svgCfg.sh);
-
-//解析xml为对象
-let parser = new DOMParser();
-let xmlObject = parser.parseFromString(xmlData, "text/xml");
-let xmlConfig = xmlObject.getElementsByTagName('FlowConfig')[0];
-//let mainTitle = createPath('text',{x:200,y:30,text:xmlConfig.getElementsByTagName('BaseProperties')[0].getAttribute('flowText'),fill:'#000'});
-//svg.appendChild(mainTitle);
-let stepArray = xmlObject.getElementsByTagName('Step');
-let pointArray = {};
-let maxW = 0;
-let maxH = 0;
-for (let i=0; i<stepArray.length; i++){
-	let tempBase = stepArray[i].getElementsByTagName('BaseProperties')[0];
-	let tempVML = stepArray[i].getElementsByTagName('VMLProperties')[0];
-	let tempElse = stepArray[i].getElementsByTagName('NodeProperties')[0];
-	let temp = {};
-	temp.txt = tempBase.getAttribute('text');
-	let id = tempBase.getAttribute('id');
-	temp.x = parseInt(tempVML.getAttribute('x'));
-	temp.y = parseInt(tempVML.getAttribute('y'));
-	svgCfg.mw = svgCfg.mw > temp.x + svgCfg.w ? svgCfg.mw : temp.x + svgCfg.w;
-	svgCfg.mh = svgCfg.mh > temp.y + svgCfg.h ? svgCfg.mh : temp.y + svgCfg.h;
-	pointArray[id]=temp;
-}
-//计算比例
-svgCfg.scaw = svgCfg.sw / svgCfg.mw;
-if (svgCfg.scaw>1){
-	svgCfg.scaw = 1;
-}else{
-	svgCfg.scaw = parseInt(svgCfg.scaw*10)/10-0.05;
-}
-svgCfg.scah = svgCfg.sh / svgCfg.mh;
-if (svgCfg.scah>1){
-	svgCfg.scah = 1;
-}else{
-	svgCfg.scah = parseInt(svgCfg.scah*10)/10-0.05;
-}
-//重写坐标
-for (let x in pointArray){
-	let temp = pointArray[x];
-	temp.x = Math.round(temp.x * svgCfg.scaw);
-	temp.y = Math.round(temp.y * svgCfg.scah);
-	createWordBlock({x:temp.x, y:temp.y}, temp.txt); 
-}
-
-let actArray = xmlObject.getElementsByTagName('Action');
-for (let i=0; i<actArray.length; i++){
-	let tempBase = actArray[i].getElementsByTagName('BaseProperties')[0];
-	let fromObj = pointArray[tempBase.getAttribute('from')];
-	let toObj = pointArray[tempBase.getAttribute('to')];
-	let op = getPosition(fromObj, toObj);
-	let pos = {x1:0,y1:0,x2:0,y2:0};
-	switch(op){
-		case 'left':
-			pos.x1 = fromObj.x;
-			pos.y1 = fromObj.y + svgCfg.h/2;
-			pos.x2 = toObj.x + svgCfg.w;
-			pos.y2 = toObj.y + svgCfg.h/2;
-			break;
-		case 'right':
-			pos.x1 = fromObj.x + svgCfg.w;
-			pos.y1 = fromObj.y + svgCfg.h/2;
-			pos.x2 = toObj.x;
-			pos.y2 = toObj.y + svgCfg.h/2;
-			break;
-		case 'up':
-			pos.x1 = fromObj.x + svgCfg.w/2;
-			pos.y1 = fromObj.y;
-			pos.x2 = toObj.x + svgCfg.w/2;
-			pos.y2 = toObj.y + svgCfg.h;
-			break;
-		case 'down':
-			pos.x1 = fromObj.x + svgCfg.w/2;
-			pos.y1 = fromObj.y + svgCfg.h;
-			pos.x2 = toObj.x + svgCfg.w/2;
-			pos.y2 = toObj.y;
-			break;	
-	}
-	createAction(pos,2);
-}
-
-
-//建立文本块
-function createWordBlock({x,y},text){
-	var txtOut = createPath('foreignObject',{x:x, y:y, width:svgCfg.w, height:svgCfg.h});
-	var txtIn = document.createElement('div');
-	txtIn.className = 'showtext';
-	txtIn.xmlns="http://www.w3.org/1999/xhtml";
-	var txt = document.createElement('span');
-	txt.innerText = text;
-	txtIn.appendChild(txt);
-	txtOut.appendChild(txtIn);
-	svg.appendChild(txtOut);
-}
->>>>>>> 86b7afd2f27e8713c5672c7ada6205c7711a66d8
 
 function drawLine(){
 	let line = document.createElementNS('http://www.w3.org/2000/svg','polyline')
