@@ -6,10 +6,54 @@
 	<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
 	<link rel="stylesheet" type="text/css" href="library/style/cssreset3.css"/>
 <style type="text/css">
-canvas{ border:1px solid #333;}
+canvas{ border:1px solid #333; display:block;}
+.setting{ position:fixed; top:10px; right:10%; border:1px solid rgba(255,255,255,.9); box-shadow:0 0 10px rgba(0,0,0,.5); background-color:rgba(255,255,255,.7); padding:5px;}
+.setting h1{ font-size:16px; text-align:center; padding-bottom:5px; border-bottom:1px solid #ccc; margin-bottom:10px;}
+.setting li{ padding:3px 10px 3px 0;}
+.setting label{ display:inline-block; width:80px; text-align:right; padding-right:10px;}
+.setting input[type="text"]{ width:150px;}
+.setting .buttonBar{ text-align:center;}
+.setting .rexButton{ width:100px;}
 </style>
 <body>
-	<div><canvas id="myCanvas"></canvas></div>
+	<div class="backShow"><canvas id="myCanvas"></canvas></div>
+	<div class="setting">
+		<h1>绘制参数设置</h1>
+		<ul class="nohead">
+			<li>
+				<label>画布宽</label>
+				<input id="w" type="text" class="rexInput"/>
+			</li>
+			<li>
+				<label>画布高</label>
+				<input id="h" type="text" class="rexInput"/>
+			</li>
+			<li>
+				<label>比例</label>
+				<input id="scale" type="text" class="rexInput"/>
+			</li>
+			<li>
+				<label>d1(mm)</label>
+				<input id="d1" type="text" class="rexInput"/>
+			</li>
+			<li>
+				<label>d2(mm)</label>
+				<input id="d2" type="text" class="rexInput"/>
+			</li>
+			<li>
+				<label>d3(mm)</label>
+				<input id="d3" type="text" class="rexInput"/>
+			</li>
+			<li>
+				<label>d4(mm)</label>
+				<input id="d4" type="text" class="rexInput"/>
+			</li>
+			<li class="buttonBar">
+				<button id="reset" class="rexButton">重置</button>
+				<button id="submit" class="rexButton" color="ok">绘制</button>
+			</li>
+		</ul>
+	</div>
 <script src="library/js/jquery.min.js"></script>
 <script src="library/js/rexfunction.js"></script>
 <script>
@@ -22,6 +66,38 @@ function resetCanvas(ctx,backColor,W,H){
     ctx.rect(0,0,W,H);
     ctx.fill();
 }
+//绘制圆
+//x,y 圆心坐标  r圆半径 fill圆的填充色 width圆边框粗细 stroke圆边框颜色
+function drawCircle(ctx, x, y, r, fill, cp, width, stroke){
+	ctx.beginPath();
+	ctx.fillStyle = fill;
+	if (cp){
+		ctx.globalCompositeOperation=cp;
+	}
+	ctx.arc(x, y, r, 0, 360*Math.PI/180);
+	ctx.fill();
+	if (width) {
+		ctx.lineWidth=width;
+		if (stroke) ctx.strokeStyle=stroke;
+		ctx.stroke();
+	}
+}
+//绘制矩形
+function drawRect(ctx, x, y, w, h, fill, cp, width, stroke){
+	ctx.beginPath();
+	ctx.fillStyle = fill;
+	if (cp){
+		ctx.globalCompositeOperation=cp;
+	}
+	ctx.rect(x, y, w, h);
+	ctx.fill();
+	if (width) {
+		ctx.lineWidth=width;
+		if (stroke) ctx.strokeStyle=stroke;
+		ctx.stroke();
+	}
+}
+
 //得到线性渐变的填充对象
 function getLinearGradient(ctx,colorList,deg,r){
 	if (!deg || isNaN(deg-0)) deg=0;
@@ -69,31 +145,104 @@ function getLinearGradient(ctx,colorList,deg,r){
 	}
 	return grad;
 }
+//加载图片资源
+function loadImages(){
+	for (var i=0; i<imgList.length; i++){
+		imgList[i].obj=new Image();
+		imgList[i].obj.onload=(function(index){
+			return function(){
+				imgList[index].load = true;
+			};
+		})(i);
+		imgList[i].obj.src=imgList[i].path;
+	}
+}
+// 检查图片是否都加载成功
+function checkLoadFlag(){
+	for (var i=0; i<imgList.length; i++){
+		if (imgList[i].load) continue;
+		return false;
+	}
+	return true;
+}
+//绘制
+function init(){
+	var shadow=3;
+	if (checkLoadFlag()){
+		clearInterval(timeID);
+		timeID='';
+	}else{
+		return;
+	}
+	//重设画布
+	resetCanvas(content, 'transparent', CFG.w, CFG.h);
+	
+	var grad1=getLinearGradient(content,[[0,'#fffefc'],[1,'#d3ccba']],90);
+	var grad2=getLinearGradient(content,[[0,'#888888'],[1,'#444444']],90);
+	//获取圆心位置
+	var c={
+		x: CFG.w/2,
+		y: CFG.h/2
+	};
+	drawCircle(content, c.x, c.y, CFG.d4/CFG.scale/2, grad1);
+	drawCircle(content, c.x, c.y, CFG.d3/CFG.scale/2, grad2);
+	drawCircle(content, c.x, c.y, CFG.d2/CFG.scale/2, grad1);
+	drawCircle(content, c.x, c.y, CFG.d1/CFG.scale/2, '#000000', 'destination-out');
+	
+	//绘制阴影
+	drawCircle(content, c.x, c.y+shadow, CFG.d4/CFG.scale/2+shadow, 'rgba(0,0,0,0.3)', 'destination-over');
+	drawCircle(content, c.x, c.y+shadow, CFG.d1/CFG.scale/2-shadow, '#000000', 'destination-out');
+	
+	if (imgList[0]){
+		var pat=content.createPattern(imgList[0].obj, 'repeat');
+		//绘制背景
+		drawRect(content, 0, 0, CFG.w, CFG.h, pat, 'destination-over');
+	}
+}
 
+//同步view和data
+//type undefined，data回填view, 否则view回填data
+function fitValue(type){
+	if (type){
+		for (var x in CFG){
+			CFG[x]=$('#'+x).val()-0;
+		}
+	}else{
+		for (var x in CFG){
+			$('#'+x).val(CFG[x]);
+		}
+	}
+}
+
+
+var CFG={
+	w:600,
+	h:600,
+	scale:0.5,
+	d1:50,
+	d2:80,
+	d3:140,
+	d4:200
+};
+
+
+fitValue();
+$('#reset').click(function(){
+	fitValue();
+});
+$('#submit').click(function(){
+	if (timeID) return;
+	fitValue(1);
+	init();
+});
+
+var imgList = [
+	{path:'images/clothBack.jpg', load:false, obj:''}
+];
 var canvas=$("#myCanvas")[0];
 var content=canvas.getContext("2d");
-resetCanvas(content,"#eeeeee",600,600);
-
-//绘制背景
-var imgBack=new Image()
-imgBack.onload=function(){
-	var pat = content.createPattern(imgBack,"repeat");
-    content.rect(0,0,600,600);
-    content.fillStyle = pat;
-    content.fill();
-}
-imgBack.src='images/clothBack.jpg';
-
-//绘制圆
-
-
-
-function changeGrad(){
-	var grad=getLinearGradient(content,[[0,'red'],[1,'blue']],degS);
-	resetCanvas(content,grad);
-	degS+=3;
-	if (degS>=360) degS=0;
-}
+loadImages();
+var timeID=setInterval(init,1000);
 </script>
 </body> 
 </html>
