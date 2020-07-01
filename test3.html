@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>canvas绘图</title>
+    <meta charset="utf-8"/>
+	<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+	<link rel="stylesheet" type="text/css" href="library/style/cssreset3.css"/>
+<style type="text/css">
+canvas{ border:1px solid #333;}
+</style>
+<body>
+	<div><canvas id="myCanvas"></canvas></div>
+	<div>
+		角度 <span class="rexInput"><input type="text" id="deg" value="0" style="width:60px;"/></span> <span id="bnt1" class="rexButton">重置大小</span> <span id="bnt2" class="rexButton">动画</span>
+	</div>
+<script src="library/js/jquery.min.js"></script>
+<script src="library/js/rexfunction.js"></script>
+<script>
+//重置canvas画布大小
+function resetCanvas(ctx,backColor,W,H){
+	var cav=ctx.canvas;
+	if (W && !isNaN(W-0)) cav.width=W;
+	if (H && !isNaN(H-0)) cav.height=H;
+	ctx.fillStyle=backColor;
+    ctx.rect(0,0,W,H);
+    ctx.fill();
+}
+//得到线性渐变的填充对象
+function getLinearGradient(ctx,colorList,deg,r){
+	if (!deg || isNaN(deg-0)) deg=0;
+	if (!r || isNaN(r-0)){
+		if (ctx.canvas.width>ctx.canvas.height){
+			r=ctx.canvas.width;
+		}else{
+			r=ctx.canvas.height;
+		}
+	}
+	var x1,y1,x2,y2;
+	while(deg<-180 || deg>180){
+		if (deg>180){
+			deg-=360;
+		}else if(deg<-180){
+			deg+=360;
+		}
+	}
+	var deg2=deg*Math.PI/180;  //弧度值
+	
+	if (deg>=0 && deg<=90){
+		x1=0;
+		y1=0;
+		x2=Math.cos(deg2)*r;
+		y2=Math.sin(deg2)*r;
+	}else if(deg>90 && deg<=180){
+		x1=r;
+		y1=0;
+		x2=r+Math.cos(deg2)*r;
+		y2=Math.sin(deg2)*r;
+	}else if(deg>=-180 && deg<=-90){
+		x1=r;
+		y1=r;
+		x2=r+Math.cos(deg2)*r;
+		y2=r+Math.sin(deg2)*r;
+	}else{
+		x1=0;
+		y1=r;
+		x2=Math.cos(deg2)*r;
+		y2=r+Math.sin(deg2)*r;
+	}
+	var grad=ctx.createLinearGradient(x1,y1,x2,y2);
+	for (var i=0; i<colorList.length; i++){
+		grad.addColorStop(colorList[i][0],colorList[i][1]);
+	}
+	return grad;
+}
+
+var canvas=$("#myCanvas")[0];
+var content=canvas.getContext("2d");
+resetCanvas(content,"#eeeeee",300,300);
+
+var degS=0;
+var timeID="";
+$("#bnt1").click(function(){
+	degS=$("#deg").val()-0;
+	var grad=getLinearGradient(content,[[0,'red'],[1,'blue']],degS);
+	resetCanvas(content,grad);
+});
+$("#bnt2").click(function(){
+	if (timeID!=""){
+		clearInterval(timeID);
+		timeID="";
+		$("#deg").val(degS);
+	}else{
+		degS=$("#deg").val()-0;
+		timeID=setInterval(changeGrad,40);
+	}
+});
+
+function changeGrad(){
+	var grad=getLinearGradient(content,[[0,'red'],[1,'blue']],degS);
+	resetCanvas(content,grad);
+	degS+=3;
+	if (degS>=360) degS=0;
+}
+</script>
+</body> 
+</html>
