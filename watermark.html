@@ -2,11 +2,11 @@
 <html>
 <head>
     <meta charset="utf-8"/>
-	<title>canvas绘制垫片</title>
+	<title>canvas水印</title>
 	<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
 	<link rel="stylesheet" type="text/css" href="library/style/cssreset3.css"/>
 <style type="text/css">
-canvas{ border:1px solid #333; display:block;}
+canvas{ border:1px solid #333;}
 .setting{ position:fixed; top:0px; right:0;bottom:0; border:1px solid rgba(255,255,255,.9); box-shadow:0 0 10px rgba(0,0,0,.5); background-color:rgba(255,255,255,.7); padding:5px;}
 .setting ul{height: calc(100% - 50px);overflow: auto;}
 .setting h1{ font-size:16px; text-align:center; padding-bottom:5px; border-bottom:1px solid #ccc; margin-bottom:10px;}
@@ -16,90 +16,37 @@ canvas{ border:1px solid #333; display:block;}
 .setting .buttonBar{ text-align:center;}
 .setting .rexButton{ width:100px;}
 </style>
+</head>
 <body>
 	<div class="backShow"><canvas id="myCanvas"></canvas></div>
 	<div class="setting">
 		<h1>绘制参数设置</h1>
 		<ul class="nohead">
 			<li>
-				<label>画布宽</label>
-				<input id="w" type="text" class="rexInput"/>
+				<label>选择图片</label>
+				<input type="file" id="selFile" class="rexInput" accept="image/jpg, image/png, image/jpeg, image/gif"/>
 			</li>
 			<li>
-				<label>画布高</label>
-				<input id="h" type="text" class="rexInput"/>
+				<label>透明度</label>
+				<input id="alpha" type="text" class="rexInput"/>
 			</li>
 			<li>
-				<label>比例</label>
-				<input id="scale" type="text" class="rexInput"/>
+				<label>旋转角度</label>
+				<input id="dreeg" type="text" class="rexInput"/>
 			</li>
 			<li>
-				<label>右下文字</label>
-				<input id="text" type="text" class="rexInput"/>
+				<label>放大比例</label>
+				<input id="size" type="text" class="rexInput"/>
 			</li>
 			<li>
-				<label>质地</label>
-				<select id="style" class="rexInput">
-					<option value="normal">普通</option>
-					<option value="metal" selected>金属</option>
-				</select>
-			</li>
-			<li>
-				<label>是否缠绕</label>
-				<select id="twine" class="rexInput">
-					<option value="1">是</option>
-					<option value="0" selected>否</option>
-				</select>
-			</li>
-			<li>
-				<label>标准名称</label>
-				<select id="standardName" class="rexInput">
-
-				</select>
-			</li>
-			<li>
-				<label>类型</label>
-				<select id="standardType" class="rexInput">
-
-				</select>
-			</li>
-			<li>
-				<label>NPS</label>
-				<input id="nps" type="text" class="rexInput"/>
-			</li>
-			<li>
-				<label>CLASS</label>
-				<input id="classs" type="text" class="rexInput"/>
-			</li>
-			<li>
-				<label>DN</label>
-				<input id="dn" type="text" class="rexInput"/>
-			</li>
-			<li>
-				<label>PN</label>
-				<input id="pn" type="text" class="rexInput"/>
-			</li>
-			<li>
-				<label>d1(mm)</label>
-				<input id="d1" type="text" class="rexInput"/>
-			</li>
-			<li>
-				<label>d2(mm)</label>
-				<input id="d2" type="text" class="rexInput"/>
-			</li>
-			<li>
-				<label>d3(mm)</label>
-				<input id="d3" type="text" class="rexInput"/>
-			</li>
-			<li>
-				<label>d4(mm)</label>
-				<input id="d4" type="text" class="rexInput"/>
-			</li>
-			<li class="buttonBar">
-				<button id="reset" class="rexButton">重置</button>
-				<button id="submit" class="rexButton" color="ok">绘制</button>
+				<label>平铺单独</label>
+				
 			</li>
 		</ul>
+	</div>
+	<div class="tempShow">
+		<img src="" id="test1"/>
+		<canvas id="test2"></canvas>
 	</div>
 <script src="library/js/jquery.min.js"></script>
 <script src="library/js/rexfunction.js"></script>
@@ -398,11 +345,13 @@ function init(){
 	}else{
 		drawCircle(content, c.x, c.y+shadow, r2-shadow, '#000000', 'destination-out');
 	}
+
 	if (imgList[0]){
 		var pat=content.createPattern(imgList[0].obj, 'repeat');
 		//绘制背景
 		drawRect(content, 0, 0, CFG.w, CFG.h, pat, 'destination-over');
 	}
+	
 	//绘制文字标签与文字
 	var labelW=180;
 	var labelH=40;
@@ -542,7 +491,13 @@ var CFG={
 	style:'metal', // normal/metal
 	text:'内环和定位环型'
 };
-
+var CFG2={
+	file: '',
+	opacity: 1,
+	rotate: 0,
+	scale: 1,
+	type: 'pave' //pave/single
+}
 
 fitValue();
 getStandardNames();
@@ -556,13 +511,47 @@ $('#submit').click(function(){
 });
 
 var imgList = [
-	{path:'images/clothBack.jpg', load:false, obj:''},
-	{path:'images/pineapple.png', load:false, obj:''}
+	{path:'images/clothBack.jpg', load:false, obj:''}
 ];
 var canvas=$("#myCanvas")[0];
 var content=canvas.getContext("2d");
 loadImages();
 var timeID=setInterval(init,1000);
+
+var file=$('#selFile')[0];
+var test1=$('#test1')[0];
+var test2=$('#test2')[0];
+var ctx2=test2.getContext('2d');
+
+$(file).change(function(){
+	if (file.files.length>0){
+		var fileNow=file.files[0];
+		var reader=new FileReader();
+		reader.readAsDataURL(fileNow);
+		reader.onload=function(e){
+			//建立临时图片对象
+			test1.onload=function(){
+				//重置画布大小
+				var newW=test1.width*Math.sqrt(2);
+				resetCanvas(ctx2,'transparent',newW, newW);
+				ctx2.translate(newW/2,newW/2);
+				ctx2.rotate(Math.PI/180*45);
+				ctx2.drawImage(test1,-test1.width/2,-test1.width/2,test1.width, test1.height)
+				//获取绘画数据
+				CFG2.file = ctx2.getImageData(-test1.width/2,-test1.width/2,test1.width,test1.height);
+				var tempData=CFG2.file.data;
+				for (var i=0; i<tempData.length; i+=4){
+					tempData[i+3]-=150;
+				}
+				ctx2.putImageData(CFG2.file,0,0);
+				var pat=content.createPattern(test2, 'repeat');
+				drawRect(content, 0, 0, CFG.w, CFG.h, pat);
+				
+			};
+			test1.src=e.currentTarget.result;
+		};
+	}
+});
 </script>
 </body>
 </html>
