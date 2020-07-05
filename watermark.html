@@ -44,10 +44,6 @@ canvas{ border:1px solid #333;}
 			</li>
 		</ul>
 	</div>
-	<div class="tempShow">
-		<img src="" id="test1"/>
-		<canvas id="test2"></canvas>
-	</div>
 <script src="library/js/jquery.min.js"></script>
 <script src="library/js/rexfunction.js"></script>
 <script>
@@ -519,9 +515,8 @@ loadImages();
 var timeID=setInterval(init,1000);
 
 var file=$('#selFile')[0];
-var test1=$('#test1')[0];
-var test2=$('#test2')[0];
-var ctx2=test2.getContext('2d');
+var tempImage=new Image();
+var tempCanvas=document.createElement('canvas').getContext('2d');
 
 $(file).change(function(){
 	if (file.files.length>0){
@@ -530,25 +525,32 @@ $(file).change(function(){
 		reader.readAsDataURL(fileNow);
 		reader.onload=function(e){
 			//建立临时图片对象
-			test1.onload=function(){
-				//重置画布大小
-				var newW=test1.width*Math.sqrt(2);
-				resetCanvas(ctx2,'transparent',newW, newW);
-				ctx2.translate(newW/2,newW/2);
-				ctx2.rotate(Math.PI/180*45);
-				ctx2.drawImage(test1,-test1.width/2,-test1.width/2,test1.width, test1.height)
+			tempImage.onload=function(){
+				var w=tempImage.width;
+				var h=tempImage.height;
+				var deg=30;
+				//获取对角线长度
+				let diagonal=Math.sqrt(Math.pow(w,2)+Math.pow(h,2));
+				//求当前范围的容器宽和高
+				let radian=Math.PI/180*deg;
+				let w2=Math.abs(Math.cos(radian)*w)+Math.abs(Math.sin(radian)*h);
+				let h2=Math.abs(Math.cos(radian)*h)+Math.abs(Math.sin(radian)*w);
+				resetCanvas(tempCanvas,'transparent',w2, h2);
+				tempCanvas.translate(w2/2,h2/2);
+				tempCanvas.rotate(Math.PI/180*deg);
+				tempCanvas.drawImage(tempImage,-w/2,-h/2,w,h)
 				//获取绘画数据
-				CFG2.file = ctx2.getImageData(-test1.width/2,-test1.width/2,test1.width,test1.height);
+				CFG2.file = tempCanvas.getImageData(0,0,w2,h2);
 				var tempData=CFG2.file.data;
 				for (var i=0; i<tempData.length; i+=4){
 					tempData[i+3]-=150;
 				}
-				ctx2.putImageData(CFG2.file,0,0);
-				var pat=content.createPattern(test2, 'repeat');
+				tempCanvas.putImageData(CFG2.file,0,0);
+				var pat=content.createPattern(tempCanvas.canvas, 'repeat');
 				drawRect(content, 0, 0, CFG.w, CFG.h, pat);
 				
 			};
-			test1.src=e.currentTarget.result;
+			tempImage.src=e.currentTarget.result;
 		};
 	}
 });

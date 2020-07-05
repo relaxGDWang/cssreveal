@@ -5,564 +5,612 @@
 	<title>canvas绘制垫片</title>
 	<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
 	<link rel="stylesheet" type="text/css" href="library/style/cssreset3.css"/>
-<style type="text/css">
-canvas{ border:1px solid #333; display:block;}
-.setting{ position:fixed; top:0px; right:0;bottom:0; border:1px solid rgba(255,255,255,.9); box-shadow:0 0 10px rgba(0,0,0,.5); background-color:rgba(255,255,255,.7); padding:5px;}
-.setting ul{height: calc(100% - 50px);overflow: auto;}
-.setting h1{ font-size:16px; text-align:center; padding-bottom:5px; border-bottom:1px solid #ccc; margin-bottom:10px;}
-.setting li{ padding:3px 10px 3px 0;}
-.setting label{ display:inline-block; width:80px; text-align:right; padding-right:10px;}
-.setting .rexInput{ width:180px;}
-.setting .buttonBar{ text-align:center;}
-.setting .rexButton{ width:100px;}
-</style>
+	<link rel="stylesheet" type="text/css" href="library/style/animate.css"/>
+	<link rel="stylesheet" type="text/css" href="gasket.css"/>
 <body>
-	<div class="backShow"><canvas id="myCanvas"></canvas></div>
-	<div class="setting">
-		<h1>绘制参数设置</h1>
-		<ul class="nohead">
-			<li>
-				<label>画布宽</label>
-				<input id="w" type="text" class="rexInput"/>
-			</li>
-			<li>
-				<label>画布高</label>
-				<input id="h" type="text" class="rexInput"/>
-			</li>
-			<li>
-				<label>比例</label>
-				<input id="scale" type="text" class="rexInput"/>
-			</li>
-			<li>
-				<label>右下文字</label>
-				<input id="text" type="text" class="rexInput"/>
-			</li>
-			<li>
-				<label>质地</label>
-				<select id="style" class="rexInput">
-					<option value="normal">普通</option>
-					<option value="metal" selected>金属</option>
-				</select>
-			</li>
-			<li>
-				<label>是否缠绕</label>
-				<select id="twine" class="rexInput">
-					<option value="1">是</option>
-					<option value="0" selected>否</option>
-				</select>
-			</li>
-			<li>
-				<label>标准名称</label>
-				<select id="standardName" class="rexInput">
-
-				</select>
-			</li>
-			<li>
-				<label>类型</label>
-				<select id="standardType" class="rexInput">
-
-				</select>
-			</li>
-			<li>
-				<label>NPS</label>
-				<input id="nps" type="text" class="rexInput"/>
-			</li>
-			<li>
-				<label>CLASS</label>
-				<input id="classs" type="text" class="rexInput"/>
-			</li>
-			<li>
-				<label>DN</label>
-				<input id="dn" type="text" class="rexInput"/>
-			</li>
-			<li>
-				<label>PN</label>
-				<input id="pn" type="text" class="rexInput"/>
-			</li>
-			<li>
-				<label>d1(mm)</label>
-				<input id="d1" type="text" class="rexInput"/>
-			</li>
-			<li>
-				<label>d2(mm)</label>
-				<input id="d2" type="text" class="rexInput"/>
-			</li>
-			<li>
-				<label>d3(mm)</label>
-				<input id="d3" type="text" class="rexInput"/>
-			</li>
-			<li>
-				<label>d4(mm)</label>
-				<input id="d4" type="text" class="rexInput"/>
-			</li>
-			<li class="buttonBar">
-				<button id="reset" class="rexButton">重置</button>
-				<button id="submit" class="rexButton" color="ok">绘制</button>
-			</li>
-		</ul>
+	<div class="outFrame" id="app">
+		<div class="frameOutside">
+			<canvas id="drawCloth"></canvas>
+		</div>
+		<div class="tempShow">
+			<span id="text"></span>
+		</div>
+		<div class="menu">
+			<h1><span>垫片绘制<b>v1.0</b></span></h1>
+			<div class="settingList">
+				<div class="paramPart">
+					<div class="title" :class="{'close':UI.t1}" @click="UI.t1=!UI.t1">画布设置</div>
+					<ul class="nohead">
+						<li>
+							<label>画布宽</label>
+							<input type="text" class="rexInput" size="M" v-model="cfg.w"/>
+						</li>
+						<li>
+							<label>画布高</label>
+							<input id="h" type="text" class="rexInput" size="M" v-model="cfg.h"/>
+						</li>
+						<li>
+							<label>比例</label>
+							<input id="scale" type="text" class="rexInput" size="M" title="设置1像素表示的毫米数" v-model="cfg.scale"/>
+						</li>
+					</ul>
+				</div>
+				<div class="paramPart">
+					<div class="title" :class="{'close':UI.t2}" @click="UI.t2=!UI.t2">绘制项</div>
+					<ul class="nohead">
+						<li>
+							<label>金属材质</label>
+							<span class="rexBlockCheck" size="M">
+								<input type="radio" name="material" value="normal" v-model="cfg.material"/>
+								<label>普通</label>
+							</span>
+							<span class="rexBlockCheck" size="M">
+								<input type="radio" name="material" value="metal" v-model="cfg.material"/>
+								<label>机加工</label>
+							</span>
+						</li>
+						<li>
+							<label>石墨样式</label>
+							<span class="rexBlockCheck" size="M">
+								<input type="radio" name="graphite" value="1" v-model="cfg.wind"/>
+								<label>缠绕</label>
+							</span>
+							<span class="rexBlockCheck" size="M">
+								<input type="radio" name="graphite" value="0" v-model="cfg.wind"/>
+								<label>平铺</label>
+							</span>
+						</li>
+						<li>
+							<label>右下文本</label>
+							<input id="text" type="text" class="rexInput" size="M" v-model="cfg.text"/>
+						</li>
+					</ul>
+				</div>
+				<div class="paramPart">
+					<div class="title" :class="{'close':UI.t3}" @click="UI.t3=!UI.t3">绘制尺寸</div>
+					<div>
+						<div class="subNav">
+							<span class="rexCheck" size="M">
+								<input type="radio" name="sizetype" value="1" v-model="UI.sizeType"/>
+								<label>按标准</label>
+							</span>
+							<span class="rexCheck" size="M">
+								<input type="radio" name="sizetype" value="0" v-model="UI.sizeType"/>
+								<label>手工输入</label>
+							</span>
+						</div>
+						<ul class="nohead" v-if="UI.sizeType==='1'">
+							<li>
+								<label>标准名称</label>
+								<select class="rexInput" size="M" v-model="cfg.standName">
+									<option value="">-请选择-</option>
+									<option v-for="(item,key) in standard" :value="key">{{key}}</option>
+								</select>
+							</li>
+							<li>
+								<label>垫片类型</label>
+								<select id="gasketType" class="rexInput" size="M">
+									<option value="">-请选择-</option>
+									<option v-for="item in getGasketType" :value="item">{{item}}</option>
+								</select>
+							</li>
+							<li>
+								<span class="itemshow">
+									<label>DN</label>
+									<input id="dn" type="text" class="rexInput" size="M" v-model="cfg.dn"/>
+								</span>
+								<span class="itemshow">
+									<label>PN</label>
+									<input id="pn" type="text" class="rexInput" size="M" v-model="cfg.pn"/>
+								</span>
+							</li>
+							<li>
+								<span class="itemshow">
+									<label>NPS</label>
+									<input id="nps" type="text" class="rexInput" size="M" v-model="cfg.nps"/>
+								</span>
+								<span class="itemshow">
+									<label>CLASS</label>
+									<input id="classs" type="text" class="rexInput" size="M" v-model="cfg.classs"/>
+								</span>
+							</li>
+							<li style="text-align:center;">
+								<button class="rexButton" size="M" color="warning" style="width:100px;" @click="getStandSize">查询</button>
+							</li>
+							<li class="result">
+								<strong>查询结果</strong>
+								<span>d1:<b>{{sizeSearch.d1 || '--'}}</b></span>
+								<span>d2:<b>{{sizeSearch.d2 || '--'}}</b></span>
+								<span>d3:<b>{{sizeSearch.d3 || '--'}}</b></span>
+								<span>d4:<b>{{sizeSearch.d4 || '--'}}</b></span>
+							</li>
+						</ul>
+						<ul class="nohead" v-if="UI.sizeType==='0'">
+							<li>
+								<label>d1(mm)</label>
+								<input id="d1" type="text" class="rexInput" size="M" v-model="sizefree.d1"/>
+							</li>
+							<li>
+								<label>d2(mm)</label>
+								<input id="d2" type="text" class="rexInput" size="M" v-model="sizefree.d2"/>
+							</li>
+							<li>
+								<label>d3(mm)</label>
+								<input id="d3" type="text" class="rexInput" size="M" v-model="sizefree.d3"/>
+							</li>
+							<li>
+								<label>d4(mm)</label>
+								<input id="d4" type="text" class="rexInput" size="M" v-model="sizefree.d4"/>
+							</li>
+						</ul>
+					</div>				
+				</div>
+			</div>
+			<div class="buttonBar">
+				<button class="rexButton" size="M" @click="openWatermark">设置水印</button>
+				<button class="rexButton" color="ok" size="M" @click="drawGasket">绘制图片</button>
+			</div>
+		</div>
+		
+		<!-- ajax加载提示框 -->
+        <div class="extDialog" id="loading" noclick="noclick">
+            <div class="dialogFrame">
+                <div class="dialog-content">
+                    <div class="loadingBlock"><div></div><div></div><div></div><div></div><div></div></div> <span class="diy">正在加载数据，请稍等...</span>
+                </div>
+            </div>
+        </div>
+		
+		<!-- ajax出错信息提示 -->
+        <div class="extDialog" id="information">
+            <div class="dialogFrame">
+                <div class="dialog-title">
+                    <h4><span class="fa fa-info-circle"></span> 系统信息提示</h4>
+                </div>
+                <div class="dialog-buttonBar">
+                    <button class="rexButton opBtn btn-sure">确定</button>
+                </div>
+                <div class="dialog-content">
+                    <div class="diy"></div>
+                </div>
+            </div>
+        </div>
+		
+		<!-- 轻量信息提示 -->
+        <div class="miniDialog bottom" id="resultShow">
+            <div class="dialog-content">
+                <span class="diy"></span>
+            </div>
+        </div>
+		
+		<!-- 水印设置 -->
+		<div class="extDialog" id="watermark" noclick="noclick">
+            <div class="dialogFrame">
+                <div class="dialog-title">
+                    <h4><span class="fa fa-trello fa-rotate-90"></span> 设置水印</h4>
+                </div>
+                <div class="dialog-buttonBar">
+					<button class="rexButton opBtn btn-close" size="M">关闭</button>
+                    <button class="rexButton" size="M" @click="clearWatermark(); drawGasket();">清除</button>
+                    <button class="rexButton opBtn btn-sure" color="info" size="M" @click="drawGasket">设置</button>
+                </div>
+                <div class="dialog-content">
+					<div class="watermarkSetting">
+						<div class="imgShow"><canvas id="wcav"></canvas></div>
+						<ul class="nohead">
+							<li>
+								<label>选择文件</label>
+								<input id="waterFile" type="file" class="rexInput" size="M" accept="image/png" @change="fileChange"/>
+							</li>
+							<li>
+								<label>透明度</label>
+								<input type="text" class="rexInput" size="M" v-model="watermark.opacity" @blur="viewWatermark"/>
+							</li>
+							<li>
+								<label>旋转角度</label>
+								<input type="text" class="rexInput" size="M" v-model="watermark.angle" @blur="viewWatermark"/>
+							</li>
+						</ul>
+					</div>
+                </div>
+            </div>
+        </div>
 	</div>
 <script src="library/js/jquery.min.js"></script>
+<script src="library/js/vue.min.js"></script>
 <script src="library/js/rexfunction.js"></script>
+<script src="library/js/rexajax2.js"></script>
+<script src="library/js/rexdialog.js"></script>
+<script src="library/js/rexcanvas.js"></script>
 <script>
-//重置canvas画布大小
-function resetCanvas(ctx,backColor,W,H){
-	var cav=ctx.canvas;
-	if (W && !isNaN(W-0)) cav.width=W;
-	if (H && !isNaN(H-0)) cav.height=H;
-	ctx.fillStyle=backColor;
-	ctx.rect(0,0,W,H);
-	ctx.fill();
-}
-//绘制圆
-//x,y 圆心坐标  r圆半径 fill圆的填充色 width圆边框粗细 stroke圆边框颜色
-function drawCircle(ctx, x, y, r, fill, cp, width, stroke){
-	ctx.beginPath();
-	if (fill){
-		ctx.fillStyle = fill;
-	}
-	if (cp){
-		ctx.globalCompositeOperation=cp;
-	}else{
-		ctx.globalCompositeOperation='source-over';
-	}
-	ctx.arc(x, y, r, 0, 360*Math.PI/180);
-	ctx.fill();
-	if (width) {
-		ctx.lineWidth=width;
-		if (stroke) ctx.strokeStyle=stroke;
-		ctx.stroke();
-	}
-}
-//绘制扇形
-function drawArc(ctx, x, y, r, degStart, degEnd, fill, cp, width, stroke){
-	ctx.beginPath();
-	if (fill){
-		ctx.fillStyle=fill;
-	}
-	if (cp){
-		ctx.globalCompositeOperation=cp;
-	}else{
-		ctx.globalCompositeOperation='source-over';
-	}
-	ctx.arc(x, y, r, degStart*Math.PI/180, degEnd*Math.PI/180);
-	if (width) {
-		ctx.lineWidth=width;
-		if (stroke) ctx.strokeStyle=stroke;
-		ctx.stroke();
-	}
-}
-//绘制矩形
-function drawRect(ctx, x, y, w, h, fill, cp, width, stroke){
-	ctx.beginPath();
-	ctx.fillStyle = fill;
-	if (cp){
-		ctx.globalCompositeOperation=cp;
-	}else{
-		ctx.globalCompositeOperation='source-over';
-	}
-	ctx.rect(x, y, w, h);
-	ctx.fill();
-	if (width) {
-		ctx.lineWidth=width;
-		if (stroke) ctx.strokeStyle=stroke;
-		ctx.stroke();
-	}
-}
-//绘制文本
-function drawText(ctx, x, y, words, fontSize, fill){
-	ctx.beginPath();
-	ctx.font = fontSize+'px "Arial, Helvetica, sans-serif"';
-	ctx.fillStyle = fill;
-	ctx.textAlign = 'left';
-	ctx.textBaseline = 'middle';
-	ctx.fillText(words, x, y);
-}
-
-//得到线性渐变的填充对象
-//x 渐变中心横坐标
-//y 渐变中心纵坐标
-//deg 旋转角度
-//r 渐变半径
-function getLinearGradient(ctx,x,y,colorList,deg,r){
-	var cp={
-		x:x,
-		y:y
-	};
-	if (!deg || isNaN(deg-0)) deg=0;
-	if (!r || isNaN(r-0)){
-		if (ctx.canvas.width>ctx.canvas.height){
-			r=ctx.canvas.width;
-		}else{
-			r=ctx.canvas.height;
-		}
-	}
-	var x1,y1,x2,y2;
-	while(deg<-180 || deg>180){
-		if (deg>180){
-			deg-=360;
-		}else if(deg<-180){
-			deg+=360;
-		}
-	}
-	var deg2=deg*Math.PI/180;  //弧度值
-
-	if (deg>=0 && deg<=90){
-		x1=cp.x-Math.cos(deg2)*r;
-		y1=cp.y+Math.sin(deg2)*r;
-		x2=cp.x+Math.cos(deg2)*r;
-		y2=cp.y-Math.sin(deg2)*r;
-	}else if(deg>90 && deg<=180){
-		x1=cp.x+Math.cos(deg2)*r;
-		y1=cp.y+Math.sin(deg2)*r;
-		x2=cp.x-Math.cos(deg2)*r;
-		y2=cp.y-Math.sin(deg2)*r;
-	}else if(deg>=-180 && deg<=-90){
-		x1=cp.x-Math.cos(deg2)*r;
-		y1=cp.y-Math.sin(deg2)*r;
-		x2=cp.x+Math.cos(deg2)*r;
-		y2=cp.y+Math.sin(deg2)*r;
-	}else{
-		x1=cp.x+Math.cos(deg2)*r;
-		y1=cp.y-Math.sin(deg2)*r;
-		x2=cp.x-Math.cos(deg2)*r;
-		y2=cp.y+Math.sin(deg2)*r;
-	}
-	var grad=ctx.createLinearGradient(x1,y1,x2,y2);
-	for (var i=0; i<colorList.length; i++){
-		grad.addColorStop(colorList[i][0],colorList[i][1]);
-	}
-	return grad;
-}
-//加载图片资源
-function loadImages(){
-	for (var i=0; i<imgList.length; i++){
-		imgList[i].obj=new Image();
-		imgList[i].obj.onload=(function(index){
-			return function(){
-				imgList[index].load = true;
-			};
-		})(i);
-		imgList[i].obj.src=imgList[i].path;
-	}
-}
-// 检查图片是否都加载成功
-function checkLoadFlag(){
-	for (var i=0; i<imgList.length; i++){
-		if (imgList[i].load) continue;
-		return false;
-	}
-	return true;
-}
-//绘制石墨层的纹理
-function drawTexture(ctx, rInside, rOutside, x, y){
-	var dCount = parseInt((rOutside-rInside-10)/5)-0;
-	for (var i=0; i<dCount; i++){
-		var arcR = rInside+3+i*5+Math.random()*5;
-		var startDeg1=180;
-		var endDeg1=270;
-		var startDeg2=0;
-		var endDeg2=90;
-		drawCircle(ctx, x, y, arcR, 'transparent', '', 1, '#333');
-		if (Math.random()<0.25){
-			drawCircle(ctx, x, y, arcR+1, 'transparent', '', 1, 'rgba(255,255,255,.1)')
-		}
-	}
-}
-//绘制
-function init(){
-	if (checkLoadFlag()){
-		clearInterval(timeID);
-		timeID='';
-	}else{
-		return;
-	}
-	var shadow=3;
-	var baseColor1='#ccc5af';
-	var baseColor2='#444444';
-	var gr=parseInt(CFG.d4/CFG.scale*1.5);
-	//垫片缠绕部分固定边框线设置
-	var line=CFG.d4/CFG.scale/300;
-	if (line<1) line=1;
-	var r4=CFG.d4/CFG.scale/2;
-	var r3=CFG.d3/CFG.scale/2;
-	var r2=CFG.d2/CFG.scale/2;
-	var r1=CFG.d1/CFG.scale/2;
-	//获取圆心位置
-	var c={
-		x: CFG.w/2,
-		y: CFG.h/2
-	};
-	//重设画布
-	resetCanvas(content, 'transparent', CFG.w, CFG.h);
-
-	//重设画布
-	resetCanvas(content, 'transparent', CFG.w, CFG.h);
-	var grad2=getLinearGradient(content, c.x, c.y, [[0.2,'rgba(255,255,255,0)'],[1,'rgba(255,255,255,0.6)']], 90, gr);
-	if (CFG.style==='normal'){
-		var grad1=getLinearGradient(content, c.x, c.y, [[0.2,'rgba(255,255,255,0)'],[0.7,'rgba(255,255,255,0.7)'],[1,'rgba(255,255,255,0.95)']],90,gr);
-		if(CFG.d4){
-			//绘制d4圆
-			drawCircle(content, c.x, c.y, r4, baseColor1);
-			drawCircle(content, c.x, c.y, r4, grad1);
-			//绘制d3圆
-			drawCircle(content, c.x, c.y, r3, baseColor2, '', line, '#ffffff');
-			if(CFG.twine == 1){
-				//绘制纹理
-				drawTexture(content, r2, r3, c.x, c.y);
-			}
-
-			drawCircle(content, c.x, c.y, r3, grad2);
-			//绘制d2圆
-			drawCircle(content, c.x, c.y, r2, baseColor1, '', line, '#ffffff');
-			drawCircle(content, c.x, c.y, r2, grad1);
-		}else{
-			//绘制d3圆
-			drawCircle(content, c.x, c.y, r3, baseColor2, '', line, '#ffffff');
-			if(CFG.twine == 1){
-				//绘制纹理
-				drawTexture(content, r2, r3, c.x, c.y);
-			}
-			drawCircle(content, c.x, c.y, r3, grad2);
-			//绘制d2圆
-			drawCircle(content, c.x, c.y, r2, baseColor1, '', line, '#ffffff');
-			drawCircle(content, c.x, c.y, r2, grad1);
-		}
-	}else{
-		var grad_1=getLinearGradient(content, c.x, c.y, [[0.45,'rgba(0,0,0,0)'],[0.5,'rgba(0,0,0,1)'],[0.55,'rgba(0,0,0,0)']],30,gr);
-		var grad_2=getLinearGradient(content, c.x, c.y, [[0.46,'rgba(0,0,0,0)'],[0.5,'rgba(0,0,0,0.5)'],[0.54,'rgba(0,0,0,0)']],80,gr);
-		var grad_3=getLinearGradient(content, c.x, c.y, [[0.42,'rgba(255,255,255,0)'],[0.5,'rgba(255,255,255,0.9)'],[0.56,'rgba(255,255,255,0)']],45,gr);
-		var grad_4=getLinearGradient(content, c.x, c.y, [[0.40,'rgba(255,255,255,0.1)'],[0.5,'rgba(255,255,255,0.6)'],[0.6,'rgba(255,255,255,0.1)']],86,gr);
-		var grad_5=getLinearGradient(content, c.x, c.y, [[0.44,'rgba(255,255,255,0)'],[0.5,'rgba(255,255,255,0.4)'],[0.56,'rgba(255,255,255,0)']],20,gr);
-		var grad_6=getLinearGradient(content, c.x, c.y, [[0.44,'rgba(255,255,255,0)'],[0.5,'rgba(255,255,255,0.5)'],[0.56,'rgba(255,255,255,0)']],-10,gr);
-		if(CFG.d4){
-			//绘制d4圆
-			drawCircle(content, c.x, c.y, r4, baseColor1);
-			drawCircle(content, c.x, c.y, r4, grad_1);
-			drawCircle(content, c.x, c.y, r4, grad_2);
-			drawCircle(content, c.x, c.y, r4, grad_3);
-			drawCircle(content, c.x, c.y, r4, grad_4);
-			drawCircle(content, c.x, c.y, r4, grad_5);
-			drawCircle(content, c.x, c.y, r4, grad_6);
-			//绘制d3圆
-			drawCircle(content, c.x, c.y, r3, baseColor2, '', line, '#ffffff');
-			if(CFG.twine == 1) {
-				//绘制纹理
-				drawTexture(content, r2, r3, c.x, c.y);
-			}
-
-			drawCircle(content, c.x, c.y, r3, grad2);
-			//绘制d2圆
-			drawCircle(content, c.x, c.y, r2, baseColor1, '', line, '#ffffff');
-			drawCircle(content, c.x, c.y, r2, grad_1);
-			drawCircle(content, c.x, c.y, r2, grad_2);
-			drawCircle(content, c.x, c.y, r2, grad_3);
-			drawCircle(content, c.x, c.y, r2, grad_4);
-			drawCircle(content, c.x, c.y, r2, grad_5);
-			drawCircle(content, c.x, c.y, r2, grad_6);
-		}else{
-			//绘制d3圆
-			drawCircle(content, c.x, c.y, r3, baseColor2, '', line, '#ffffff');
-			if(CFG.twine == 1) {
-				//绘制纹理
-				drawTexture(content, r2, r3, c.x, c.y);
-			}
-			drawCircle(content, c.x, c.y, r3, grad2);
-			//绘制d2圆
-			drawCircle(content, c.x, c.y, r2, baseColor1, '', line, '#ffffff');
-			drawCircle(content, c.x, c.y, r2, grad_1);
-			drawCircle(content, c.x, c.y, r2, grad_2);
-			drawCircle(content, c.x, c.y, r2, grad_3);
-			drawCircle(content, c.x, c.y, r2, grad_4);
-			drawCircle(content, c.x, c.y, r2, grad_5);
-			drawCircle(content, c.x, c.y, r2, grad_6);
-		}
-	}
-
-
-
-	if(CFG.d1){
-		drawCircle(content, c.x, c.y, r1, '#000000', 'destination-out');
-	}else{
-		drawCircle(content, c.x, c.y, r2, '#000000', 'destination-out');
-	}
-
-	//绘制阴影
-	if(CFG.d4){
-		drawCircle(content, c.x, c.y+shadow, r4+shadow, 'rgba(0,0,0,0.3)', 'destination-over');
-	}else{
-		drawCircle(content, c.x, c.y+shadow, r3+shadow, 'rgba(0,0,0,0.3)', 'destination-over');
-	}
-
-	if(CFG.d1){
-		drawCircle(content, c.x, c.y+shadow, r1-shadow, '#000000', 'destination-out');
-	}else{
-		drawCircle(content, c.x, c.y+shadow, r2-shadow, '#000000', 'destination-out');
-	}
-	if (imgList[0]){
-		var pat=content.createPattern(imgList[0].obj, 'repeat');
-		//绘制背景
-		drawRect(content, 0, 0, CFG.w, CFG.h, pat, 'destination-over');
-	}
-	//绘制文字标签与文字
-	var labelW=180;
-	var labelH=40;
-	drawRect(content, CFG.w-labelW, CFG.h-labelH, labelW, labelH, '#ffffff');
-	drawText(content, CFG.w-labelW+20, CFG.h-labelH+labelH/2+2, CFG.text, 20, '#333333');
-}
-
-//同步view和data
-//type undefined，data回填view, 否则view回填data
-function fitValue(type){
-	if (type){
-		for (var x in CFG){
-			CFG[x]=$('#'+x).val();
-		}
-	}else{
-		for (var x in CFG){
-			$('#'+x).val(CFG[x] || '');
-		}
-	}
-}
-
-var getStandards = function(){
-	$.ajax({
-        type: "get",
-        url: "https://testgw.sealingbang.com/data/standards",
-        dataType: 'json',
-		  headers:{
-			  passToken: '4733F4477C061A7E'
-		  },
-        data: {
-            name: CFG.standardName || '',
-			type: CFG.standardType || '',
-			dn: CFG.dn || '',
-			pn: CFG.pn || '',
-			nps: CFG.nps || '',
-			classs: CFG.classs || '',
-        },
-        success: function (res) {
-            if (res.success) {
-				if(res.data.length >= 1){
-					var points = JSON.parse(res.data[0].points);
-					CFG.d1 = points.d1 || '';
-					CFG.d2 = points.d2 || '';
-					CFG.d3 = points.d3 || '';
-					CFG.d4 = points.d4 || '';
-					fitValue();
-				}
-            } else {
-                alert(res.msg);
-            }
-        }
-    });
-}
-
-var getStandardNames = function(){
-	  $.ajax({
-        type: "get",
-        url: "https://testgw.sealingbang.com/data/standard/names",
-        dataType: 'json',
-		headers:{
-			passToken: '4733F4477C061A7E'
+var vu=new Vue({
+    el: '#app',
+    data: {
+        cfg:{
+			w:600,
+			h:600,
+			scale:1,
+			standName:'',
+			gasketType:'',
+			dn:'',
+			pn:'',
+			nps:'',
+			classs:'',
+			d1:'',
+			d2:'',
+			d3:'',
+			d4:'',
+			text:'示例垫片',
+			material:'metal',  //normal,metal
+			wind:'1'    //1缠绕 0平铺
 		},
-        data: {
-
-        },
-        success: function (res) {
-            if (res.success) {
-                CFG.standards = res.data;
-                var options = '';
-				var types = [];
-                for(var i in res.data){
-                	options += "<option value='"+i+"'>"+i+"</option>";
-                	if(types.length === 0){
-						types = res.data[i];
-						CFG.standardName = i;
+		sizefree:{
+			d1:40,
+			d2:80,
+			d3:140,
+			d4:200
+		},
+		sizeSearch:{
+			d1:'',
+			d2:'',
+			d3:'',
+			d4:''
+		},
+		standard:{},
+		cav:{},  //主画布
+		wcav:{}, //水印预览画布
+		imgList:[   // canvas绘制需要用到的图片资源
+			{path:'images/clothBack.jpg', load:false, obj:''}
+		],
+		timeID:'',
+		UI:{
+			t1:false,
+			t2:false,
+			t3:false,
+			sizeType:'0' //1标准 0手工
+		},
+		decorate:{
+			shadow:3,  //垫片阴影
+			baseColor1:'#ccc5af', //金属面基色
+			baseColor2:'#444444',  //石墨面基色
+			size:20 //字体大小
+		},
+		watermark:{
+			file:'',
+			opacity:1,
+			angle:0
+		}
+    },
+	mounted: function(){
+		
+    },
+	computed: {
+		getGasketType: function(){
+			let result=[];
+			if (this.cfg.standName){
+				result=this.standard[this.cfg.standName];
+			}
+			return result;
+		}
+	},
+	methods: {
+		//获得标准信息
+		getStandName: function(){
+			let me=this;
+			ajax.send({
+				url:'names.php',
+				//url: 'https://testgw.sealingbang.com/data/standard/names',
+				success: function(data){
+					if (data.success){
+						me.standard=data.data;
+					}else{
+						dialog.open('resultShow',{content:data.msg});
 					}
 				}
-                $("#standardName").html(options);
-
-				options = '';
-				for(var i in types){
-					options += "<option value='"+types[i]+"'>"+types[i]+"</option>";
-				}
-				$("#text").val(types[0]);
-				CFG.standardType = types[0];
-				$("#standardType").html(options);
-
-                $("#standardName").on("change", function(){
-					options = '';
-					types = [];
-					CFG.standardName = $(this).val();
-					for(var i in res.data){
-						if($(this).val() === i){
-							types = res.data[i]
-							break;
+			});
+		},
+		//获得标准参数对应下的具体尺寸
+		getStandSize: function(){
+			let me=this;
+			ajax.send({
+				url:'names.php',
+				//url: 'https://testgw.sealingbang.com/data/standards',
+				before: function(){
+					dialog.open('loading');
+				},
+				data: {
+					name: this.cfg.standardName || '',
+					type: this.cfg.gasketType || '',
+					dn: this.cfg.dn || '',
+					pn: this.cfg.pn || '',
+					nps: this.cfg.nps || '',
+					classs: this.cfg.classs || ''
+				},
+				success: function(data){
+					dialog.close('loading');
+					if (data.success){
+						if(data.data.length >= 1){
+							var points = JSON.parse(data.data[0].points);
+							me.sizeSearch.d1 = points.d1 || '';
+							me.sizeSearch.d2 = points.d2 || '';
+							me.sizeSearch.d3 = points.d3 || '';
+							me.sizeSearch.d4 = points.d4 || '';
+						}else{
+							dialog.open('resultShow',{content:'未查到匹配尺寸'});
 						}
+					}else{
+						dialog.open('resultShow',{content:data.msg});
 					}
-					for(var i in types){
-						options += "<option value='"+types[i]+"'>"+types[i]+"</option>";
+				}
+			});
+		},
+		//加载图片资源
+		_loadImages: function(){
+			let me=this;
+			dialog.open('loading',{content:'正在加载所需图片资源...'});
+			for (let i=0; i<this.imgList.length; i++){
+				this.imgList[i].obj=new Image();
+				this.imgList[i].obj.onload=(function(index){
+					return function(){
+						me.imgList[index].load = true;
+					};
+				})(i);
+				this.imgList[i].obj.src=this.imgList[i].path;
+			}
+		},
+		//检查图片是否都加载成功
+		_checkImageLoaded: function(){
+			for (let i=0; i<this.imgList.length; i++){
+				if (this.imgList[i].load) continue;
+				return false;
+			}
+			dialog.close('loading');
+			return true;
+		},
+		//绘制石墨环的纹理
+		/*
+			rInside 石墨环内径
+			rOutside 石墨环外径
+		*/
+		_drawTexture: function(rInside, rOutside){
+			let per=5;
+			let dCount=parseInt((rOutside-rInside-10)/per)-0;
+			if (dCount<2){
+				per=2;
+				dCount=parseInt((rOutside-rInside-3)/per)-0;
+			}
+			for (var i=0; i<dCount; i++){
+				var arcR = rInside+parseInt(per/2)+i*per+Math.random()*per;
+				this.cav.drawArc({r:arcR,sw:1,sf:'#333'});
+				if (Math.random()<0.25){
+					this.cav.drawArc({r:arcR+1,sw:1,sf:'rgba(255,255,255,.1)'})
+				}
+			}
+		},
+		//绘制垫片
+		drawGasket: function(){
+			let me=this;
+			//判定图片资源加载是否完成
+			if (this._checkImageLoaded()){
+				clearInterval(this.timeID);
+				this.timeID='';
+			}else{
+				return;
+			}
+			//尺寸协调
+			if (this.UI.sizeType==='1'){
+				this.cfg.d1=this.sizeSearch.d1;
+				this.cfg.d2=this.sizeSearch.d2;
+				this.cfg.d3=this.sizeSearch.d3;
+				this.cfg.d4=this.sizeSearch.d4;
+			}else{
+				this.cfg.d1=this.sizefree.d1;
+				this.cfg.d2=this.sizefree.d2;
+				this.cfg.d3=this.sizefree.d3;
+				this.cfg.d4=this.sizefree.d4;
+			}
+			if (!this.cfg.d2 || !this.cfg.d3){
+				dialog.open('information',{content:'尺寸d2,d3不能缺失'});
+				return;
+			}
+			dialog.open('loading',{content:'正在绘制图片，请稍等...'});
+			let gr,line,tempRdius;
+			//获取最大外径，用于装饰渐变，绘制金属包边
+			if (this.cfg.d4){
+				gr=parseInt(this.cfg.d4/this.cfg.scale*1.5);
+				line=this.cfg.d4/this.cfg.scale/300;
+			}else{
+				gr=parseInt(this.cfg.d3/this.cfg.scale*1.5);
+				line=this.cfg.d3/this.cfg.scale/300;
+			}
+			if (line<1) line=1;
+			let r4=this.cfg.d4/this.cfg.scale/2;
+			let r3=this.cfg.d3/this.cfg.scale/2;
+			let r2=this.cfg.d2/this.cfg.scale/2;
+			let r1=this.cfg.d1/this.cfg.scale/2;
+			//获取圆心位置
+			let c={
+				x: this.cfg.w/2,
+				y: this.cfg.h/2
+			};
+			//重设画布
+			this.cav.reset({w:this.cfg.w,h:this.cfg.h});
+			//编辑渐变
+			let grad2=this.cav.getLinearGradient({color:[[0.2,'rgba(255,255,255,0)'],[1,'rgba(255,255,255,0.6)']],angle:270,r:gr});
+			if (this.cfg.material==='normal'){
+				let grad1=this.cav.getLinearGradient({color:[[0.2,'rgba(255,255,255,0)'],[0.7,'rgba(255,255,255,0.7)'],[1,'rgba(255,255,255,0.95)']],angle:270,r:gr});
+				if (this.cfg.d4){
+					//绘制d4圆
+					this.cav.drawArc({r:r4, f:me.decorate.baseColor1});
+					this.cav.drawArc({r:r4, f:grad1});
+				}
+				//绘制d3圆
+				this.cav.drawArc({r:r3, f:me.decorate.baseColor2,sw:line,sf:'#fff'});
+				if (this.cfg.wind==='1'){
+					//绘制纹理
+					this._drawTexture(r2, r3);
+				}
+				this.cav.drawArc({r:r3,f:grad2});
+				//绘制d2圆
+				this.cav.drawArc({r:r2,f:me.decorate.baseColor1,sw:line,sf:'#fff'});
+				this.cav.drawArc({r:r2,f:grad1});
+			}else{
+				var angle=parseInt(Math.random()*360)-0;
+				var grad_1=this.cav.getLinearGradient({color:[[0.45,'rgba(0,0,0,0)'],[0.49,'rgba(0,0,0,0.9)'],[0.5,'rgba(0,0,0,1)'],[0.52,'rgba(0,0,0,0.9)'],[0.55,'rgba(0,0,0,0)']],angle:angle,r:gr});
+				var grad_2=this.cav.getLinearGradient({color:[[0.46,'rgba(0,0,0,0)'],[0.5,'rgba(0,0,0,0.6)'],[0.54,'rgba(0,0,0,0)']],angle:angle+50,r:gr});
+				var grad_3=this.cav.getLinearGradient({color:[[0.42,'rgba(255,255,255,0)'],[0.5,'rgba(255,255,255,0.9)'],[0.56,'rgba(255,255,255,0)']],angle:angle+15,r:gr});
+				var grad_4=this.cav.getLinearGradient({color:[[0.40,'rgba(255,255,255,0.1)'],[0.5,'rgba(255,255,255,0.6)'],[0.6,'rgba(255,255,255,0.1)']],angle:angle+56,r:gr});
+				var grad_5=this.cav.getLinearGradient({color:[[0.44,'rgba(255,255,255,0)'],[0.5,'rgba(255,255,255,0.4)'],[0.56,'rgba(255,255,255,0)']],angle:angle-10,r:gr});
+				var grad_6=this.cav.getLinearGradient({color:[[0.44,'rgba(255,255,255,0)'],[0.5,'rgba(255,255,255,0.5)'],[0.56,'rgba(255,255,255,0)']],angle:angle-40,r:gr});
+				if (this.cfg.d4){
+					//绘制d4圆
+					this.cav.drawArc({r:r4,f:this.decorate.baseColor1});
+					this.cav.drawArc({r:r4,f:grad_1});
+					this.cav.drawArc({r:r4,f:grad_2});
+					this.cav.drawArc({r:r4,f:grad_3});
+					this.cav.drawArc({r:r4,f:grad_4});
+					this.cav.drawArc({r:r4,f:grad_5});
+					this.cav.drawArc({r:r4,f:grad_6});
+				}
+				//绘制d3圆
+				this.cav.drawArc({r:r3, f:me.decorate.baseColor2,sw:line,sf:'#fff'});
+				if (this.cfg.wind==='1'){
+					//绘制纹理
+					this._drawTexture(r2, r3);
+				}
+				this.cav.drawArc({r:r3,f:grad2});
+				//绘制d2圆
+				this.cav.drawArc({r:r2,f:me.decorate.baseColor1,sw:line,sf:'#fff'});
+				this.cav.drawArc({r:r2,f:grad_1});
+				this.cav.drawArc({r:r2,f:grad_2});
+				this.cav.drawArc({r:r2,f:grad_3});
+				this.cav.drawArc({r:r2,f:grad_4});
+				this.cav.drawArc({r:r2,f:grad_5});
+				this.cav.drawArc({r:r2,f:grad_6});
+			}
+			
+			//扣空d1
+			tempRdius=this.cfg.d1? r1 : r2;
+			this.cav.drawArc({r:tempRdius,f:'#000',cp:'destination-out'});		
+			//绘制阴影
+			tempRdius=this.cfg.d4? r4 : r3;
+			this.cav.drawArc({y:c.y+this.decorate.shadow,r:tempRdius+this.decorate.shadow,f:'rgba(0,0,0,0.3)',cp:'destination-over'});
+			//扣空d1
+			tempRdius=this.cfg.d1? r1 : r2;
+			this.cav.drawArc({y:c.y+this.decorate.shadow, r:tempRdius-this.decorate.shadow,f:'#000',cp:'destination-out'});
+			
+			if (this.imgList[0]){
+				let pat=this.cav.getPattern({source:me.imgList[0].obj,type:'repeat'});
+				//绘制背景
+				this.cav.drawRect({x:0,y:0,w:me.cfg.w,h:me.cfg.h,f:pat,cp:'destination-over'});
+			}
+			
+			//绘制水印
+			if (this.watermark.file!=='') this.setWatermark();
+			
+			//绘制文字标签与文字
+			if (this.cfg.text){
+				let txtDom=$('#text');
+				txtDom.css('fontSize',this.decorate.size+'px');
+				txtDom.text(this.cfg.text);
+				var labelW=txtDom.width()+20;
+				var labelH=txtDom.height()+20;
+				var lx=this.cfg.w-labelW;
+				var ly=this.cfg.h-labelH;
+				this.cav.drawRect({x:lx,y:ly,w:labelW,h:labelH,f:'rgba(255,255,255,.8)',cp:''});
+				this.cav.drawText({x:lx+labelW/2,y:ly+labelH/2+2,text:this.cfg.text,size:this.decorate.size,f:'#333'});
+			}
+			dialog.close('loading');
+		},
+		//打开水印设置弹窗
+		openWatermark: function(){
+			dialog.open('watermark');
+		},
+		//选择文件变换
+		fileChange: function(){
+			let files=$('#waterFile')[0].files;
+			if (files.length<=0){
+				this.clearWatermark();
+				return;
+			}
+			this.watermark.file=files[0];
+			this.viewWatermark();
+		},
+		//预览水印
+		viewWatermark: function(){
+			if (this.watermark.file==='') return;
+			let reader=new FileReader();
+			reader.readAsDataURL(this.watermark.file);
+			reader.onload=function(e){
+				let img=new Image();
+				img.onload=function(){
+					let w=img.width;
+					let h=img.height;
+					let deg=vu.watermark.angle;
+					let opacity=vu.watermark.opacity;
+					//获取对角线长度
+					let diagonal=Math.sqrt(Math.pow(w,2)+Math.pow(h,2));
+					//求当前范围的容器宽和高
+					let radian=Math.PI/180*deg;
+					let w2=Math.abs(Math.cos(radian)*w)+Math.abs(Math.sin(radian)*h);
+					let h2=Math.abs(Math.cos(radian)*h)+Math.abs(Math.sin(radian)*w);
+					vu.wcav.reset({f:'transparent',w:w2,h:h2});
+					vu.wcav.cav.translate(w2/2,h2/2);
+					vu.wcav.cav.rotate(Math.PI/180*deg);
+					vu.wcav.cav.drawImage(img,-w/2,-h/2,w,h)
+					//获取绘画数据
+					let dataSource=vu.wcav.cav.getImageData(0,0,w2,h2);
+					let tempData=dataSource.data;
+					for (let i=0; i<tempData.length; i+=4){
+						tempData[i+3]*=opacity;
 					}
-					$("#text").val(types[0]);
-					$("#standardType").html(options);
-				});
-
-				$("#standardType").on("change", function(){
-					$("#text").val($(this).val());
-					CFG.standardType = $(this).val();
-				});
-
-				$(document).on("blur", "#nps, #classs, #dn, #pn", function(){
-					fitValue(1);
-					if($("#nps").val() && $("#classs").val() || $("#dn").val() && $("#pn").val()){
-						getStandards();
-					}
-				})
-            } else {
-                alert(res.msg);
-            }
-        }
-    });
-}
-
-
-var CFG={
-	w:600,
-	h:600,
-	scale:0.5,
-	nps: '',
-	classs: '',
-	dn: '',
-	pn: '',
-	d1:50,
-	d2:80,
-	d3:140,
-	d4:200,
-	twine: '0',
-	style:'metal', // normal/metal
-	text:'内环和定位环型'
-};
-
-
-fitValue();
-getStandardNames();
-$('#reset').click(function(){
-	fitValue();
+					vu.wcav.cav.putImageData(dataSource,0,0);
+				}
+				img.src=e.currentTarget.result;
+			};
+		},
+		// 设置水印
+		setWatermark: function(){
+			if (this.watermark.file==='') return;
+			var pat=this.cav.getPattern({source:this.wcav.cav.canvas,type:'repeat'});
+			this.cav.drawRect({x:0,y:0,w:this.cfg.w,h:this.cfg.h,f:pat,cp:''});
+		},
+		// 清除水印
+		clearWatermark: function(){
+			this.watermark.file='';
+			$('#waterFile').val('');
+			this.wcav.reset({cav:$('#wcav')[0],w:140,h:120});
+			this.wcav.drawText({text:'请选择图片',f:'#f00',size:14});
+		}
+	}
 });
-$('#submit').click(function(){
-	if (timeID) return;
-	fitValue(1);
-	init();
+
+var dialog=relaxDialog();
+var ajax=relaxAJAX({
+    type: 'get',
+	dataType: 'json',
+	headers:{
+		passToken: '4733F4477C061A7E'
+	},
+    error: function(code, msg){
+        dialog.close('loading');
+        dialog.open('information',{content:code+' '+msg});
+    }
 });
 
-var imgList = [
-	{path:'images/clothBack.jpg', load:false, obj:''},
-	{path:'images/pineapple.png', load:false, obj:''}
-];
-var canvas=$("#myCanvas")[0];
-var content=canvas.getContext("2d");
-loadImages();
-var timeID=setInterval(init,1000);
+$(function(){
+	vu.cav=new rexCav({cav:$('#drawCloth')[0],w:vu.cfg.w,h:vu.cfg.h});
+	vu.wcav=new rexCav({cav:$('#wcav')[0],w:140,h:120});
+	vu.clearWatermark();
+	vu._loadImages();
+	vu.timeID=setInterval(vu.drawGasket,1000);
+	vu.getStandName();
+	
+	$('body').keyup(function(e){
+		if (e.target.tagName.toLowerCase()==='input') return;
+		vu.drawGasket();
+	});
+});
 </script>
 </body>
 </html>
