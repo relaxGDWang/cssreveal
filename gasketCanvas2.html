@@ -251,10 +251,10 @@ var vu=new Vue({
 			d4:200
 		},
 		sizeSearch:{
-			d1:'',
-			d2:'',
-			d3:'',
-			d4:''
+			d1:40,
+			d2:80,
+			d3:140,
+			d4:200
 		},
 		standard:{},
 		cav:{},  //主画布
@@ -298,8 +298,8 @@ var vu=new Vue({
 		getStandName: function(){
 			let me=this;
 			ajax.send({
-				url:'names.php',
-				//url: 'https://testgw.sealingbang.com/data/standard/names',
+				//url:'names.php',
+				url: 'https://testgw.sealingbang.com/data/standard/names',
 				success: function(data){
 					if (data.success){
 						me.standard=data.data;
@@ -313,8 +313,8 @@ var vu=new Vue({
 		getStandSize: function(){
 			let me=this;
 			ajax.send({
-				url:'names.php',
-				//url: 'https://testgw.sealingbang.com/data/standards',
+				//url:'names.php',
+				url: 'https://testgw.sealingbang.com/data/standards',
 				before: function(){
 					dialog.open('loading');
 				},
@@ -335,12 +335,25 @@ var vu=new Vue({
 							me.sizeSearch.d2 = points.d2 || '';
 							me.sizeSearch.d3 = points.d3 || '';
 							me.sizeSearch.d4 = points.d4 || '';
+							return;
 						}else{
 							dialog.open('resultShow',{content:'未查到匹配尺寸'});
 						}
 					}else{
 						dialog.open('resultShow',{content:data.msg});
 					}
+					me.sizeSearch.d1 = '';
+					me.sizeSearch.d2 = '';
+					me.sizeSearch.d3 = '';
+					me.sizeSearch.d4 = '';
+				},
+				error: function(code,msg){
+					dialog.close('loading');
+					dialog.open('resultShow',{content:code+' '+msg});
+					me.sizeSearch.d1 = '';
+					me.sizeSearch.d2 = '';
+					me.sizeSearch.d3 = '';
+					me.sizeSearch.d4 = '';
 				}
 			});
 		},
