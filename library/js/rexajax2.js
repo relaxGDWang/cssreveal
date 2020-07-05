@@ -5,6 +5,7 @@
 // modify by relax 2019-1-16 应对某些框架下参数放在url中的情况 比如 www.test.com/getlist/1/get/ 这种，无法用静态url直接设置，现在扩展url的处理方法，可以动态应对data中的数据，使用 www.test.com/{id}/{method}这种方式进行协调
 // modify by relax 2019-3-3 把error,before,complete事件在send中可设置开放了出来，事件判定处理统一在_chkEventFunction进行
 // modify by relax 2019-3-4 如果在send时设置某个事件为空字符串，那么即使它在实例化的时候绑定过事件，在本次send方法调用中也不会触发该事件
+// modify by relax 2020-07-05 如果传递参数是空值，且用的get方式，默认会在url后面增加{}导致访问404的问题，现强制判定{}则置空
 function relaxAJAX(config) {
     var CON = {
         url: '',      //ajax访问路劲
@@ -159,6 +160,7 @@ function relaxAJAX(config) {
         }
         //按通信类型匹调整传递参数
         if (CON.contentType === 'json') tempData = JSON.stringify(tempData);
+		if (tempData='{}') tempData='';  //modify by relax 2020/7/5
 
         //加工自定义头
         var headerData = arg.headers ? arg.headers : CON.headers;
