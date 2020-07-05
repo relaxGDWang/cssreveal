@@ -160,7 +160,7 @@ function relaxAJAX(config) {
         }
         //按通信类型匹调整传递参数
         if (CON.contentType === 'json') tempData = JSON.stringify(tempData);
-		if (tempData='{}') tempData='';  //modify by relax 2020/7/5
+		if (tempData==='{}') tempData='';  //modify by relax 2020/7/5
 
         //加工自定义头
         var headerData = arg.headers ? arg.headers : CON.headers;

@@ -89,7 +89,7 @@
 							</li>
 							<li>
 								<label>垫片类型</label>
-								<select id="gasketType" class="rexInput" size="M">
+								<select id="gasketType" class="rexInput" size="M" v-model="cfg.gasketType">
 									<option value="">-请选择-</option>
 									<option v-for="item in getGasketType" :value="item">{{item}}</option>
 								</select>
@@ -267,7 +267,7 @@ var vu=new Vue({
 			t1:false,
 			t2:false,
 			t3:false,
-			sizeType:'0' //1标准 0手工
+			sizeType:'1' //1标准 0手工
 		},
 		decorate:{
 			shadow:3,  //垫片阴影
@@ -319,7 +319,7 @@ var vu=new Vue({
 					dialog.open('loading');
 				},
 				data: {
-					name: this.cfg.standardName || '',
+					name: this.cfg.standName || '',
 					type: this.cfg.gasketType || '',
 					dn: this.cfg.dn || '',
 					pn: this.cfg.pn || '',
