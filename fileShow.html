@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+	<title>文件获取</title>
+	<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+	<link rel="stylesheet" type="text/css" href="library/style/cssreset3.css"/>
+<style type="text/css">
+</style>
+</head>
+<body>
+	<div>
+		<label>选择文件</label>
+		<input id="waterFile" type="file" class="rexInput" size="M" accept="image/jpg"/>
+	</div>
+	<img id="show" width="600"/>
+	<a id="abc">下载</a>
+<script src="library/js/exif.js"></script>
+<script>
+let dom=document.getElementById('waterFile');
+let img=document.getElementById('show');
+dom.addEventListener('change',function(){
+	let _file=this.files[0];
+	let reader=new FileReader();
+	reader.readAsDataURL(_file);
+	reader.onload=function(e){
+		img.src=e.currentTarget.result;
+	}
+
+	EXIF.getData(_file, function(){
+        var _dataTxt = EXIF.pretty(this);
+        var _dataJson = JSON.stringify(EXIF.getAllTags(this));
+		//console.log(_dataTxt);
+        console.log(_dataJson);
+        //demoVal.val(_dataTxt);
+		
+		return;
+        var _rotate = 0;
+        var _orientation = EXIF.getTag(this, 'Orientation');
+
+        if (_orientation == 3) {
+          _rotate = 180;
+        } else if (_orientation == 6) {
+          _rotate = 90;
+        } else if (_orientation == 8) {
+          _rotate = 270;
+        };
+
+        //fileLabel.addClass('rotate-' + _rotate);
+    });
+
+});
+
+var aDom=document.getElementById('abc');
+aDom.download='一个下载';
+aDom.href='canvas.js';
+</script>
+</body>
+</html>
